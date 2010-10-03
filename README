@@ -1,0 +1,5 @@
+1. Download ie: 'git pull git@github.com:nick8888/mediafrontpage.git'
+2. Open mediafrontpage.sh with gedit and edit appropriately
+3. Copy css and media folders to $webroot eg /var/www/
+4. Copy moviesframe.html to xbmc web interface dir
+5. Copy mediafrontpage.sh to /etc/cron.hourly/
