@@ -1,0 +1,58 @@
+body
+{
+  background-color: #222528;
+  color:grey;
+}
+
+a {
+  color: #FF9522;
+  text-decoration:none;
+	margin-left: 30px;
+}
+
+h1
+{
+  color:#FF9522;
+}
+
+div.title h1 {
+	margin: 150px 0px 0px 0px;
+}
+
+img.cover {
+  width:100px;
+}
+
+img.smallcover {
+  width:30px;
+}
+
+#nowplaying {
+	height:2000px;
+	margin: 150px 0 0 180px;
+}
+
+div.title {
+	height: 2000px;
+}
+
+div.plot {
+	margin: 50px auto;
+	width: 700px;
+}
+
+div.options {
+	height:200px;
+}
+
+div.filler {
+	height:2000px;
+}
+
+div.title h1.recentepisodes {
+	margin: 300px 0 0 10;
+}
+
+
+
+

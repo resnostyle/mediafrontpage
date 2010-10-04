@@ -1,0 +1,68 @@
+<html>
+<head>
+<link type="text/css" rel="stylesheet" href="css/basicframe.css">
+<script type="text/javascript" src="js/jsonframe.js"></script>
+<script type="text/javascript" src="js/helpframe.js"></script>
+<script type="text/javascript">
+function CallPlay(episodeid) {
+  var http_request = new XMLHttpRequest();
+  http_request.open( "POST", "/jsonrpc", false );
+  http_request.send('{"jsonrpc": "2.0", "method": "XBMC.Play", "params": { "episodeid": ' + episodeid + ' }, "id": 1}');
+}
+</script>
+</head>
+<body>
+<table class="Navigation">
+<tr class="primary">
+  <td class="unselected"><a href="nowplaying.html"></a></td>
+  <td class="selected"></td>
+  <td class="unselected"><a href="artists.html"></a></td>
+  <td class="unselected"><a href="development.html"></a></td>
+</tr>
+<tr>
+  <td></td><td>
+  <table>
+  <tr class="secondary">
+    <td><a href="videofiles.html"></a></td>
+    <td><a href="movies.html"></a></td>
+    <td></td>
+  </tr>
+  </table></td>
+</tr>
+</table>
+<br>
+
+<script type="text/javascript">
+
+
+var http_request = new XMLHttpRequest();
+http_request.open( "POST", "/jsonrpc", false );
+http_request.send('{"jsonrpc": "2.0", "method": "VideoLibrary.GetRecentlyAddedEpisodes", "params": {"fields": ["plot"], "sortmethod": "title", "sortorder": "ascending", "start": 0, "end": 10}, "id": 1}');
+
+var the_object = JSON.parse(http_request.responseText);
+var result = the_object["result"];
+if (result) {
+  var array = result["episodes"];
+  var n = 1 
+    document.write('<div class="recentepisodes">');
+  for (var i in array) {
+    var item = array[i];
+    document.write('<div id="' + n + '" class ="title"><br/>');
+
+    document.write('<h1>' + item["label"] + '</h1><div class="plot">');
+    if (item["plot"])
+      document.write(item["plot"]);
+
+    document.write('</div></div>');
+n = n+1
+
+  }
+  document('</div>');
+} else {
+  document.write("Error");
+}
+
+</script>
+<div class="filler"></div>
+</body>
+</html>

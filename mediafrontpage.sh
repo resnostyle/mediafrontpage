@@ -280,7 +280,7 @@ echo "    <table border='0' width='300px'>" >>  $webroot/front.html
 
 echo "      <tr>" >>  $webroot/front.html
 echo "        <td>" >>  $webroot/front.html
-echo "          <a href=/xbmc/recentepisodeslite.html#1 target='middle'>" >>  $webroot/front.html
+echo "          <a href=/xbmc/recentepisodeframe.html#1 target='middle'>" >>  $webroot/front.html
 tv1=$(awk "NR==1{print}" $webroot/tvshows.html)
 tv1a=${tv1%\.*}
 
@@ -291,7 +291,7 @@ echo "      </tr>" >>  $webroot/front.html
 
 echo "      <tr>" >>  $webroot/front.html
 echo "        <td>" >>  $webroot/front.html
-echo "          <a href=/xbmc/recentepisodeslite.html#2 target='middle'>" >>  $webroot/front.html
+echo "          <a href=/xbmc/recentepisodeframe.html#2 target='middle'>" >>  $webroot/front.html
 tv2=$(awk "NR==2{print}" $webroot/tvshows.html)
 tv2a=${tv2%\.*}
 echo "$tv2a" >>  $webroot/front.html
@@ -301,7 +301,7 @@ echo "      </tr>" >>  $webroot/front.html
 
 echo "      <tr>" >>  $webroot/front.html
 echo "        <td>" >>  $webroot/front.html
-echo "          <a href=/xbmc/recentepisodeslite.html#3 target='middle'>" >>  $webroot/front.html
+echo "          <a href=/xbmc/recentepisodeframe.html#3 target='middle'>" >>  $webroot/front.html
 tv3=$(awk "NR==3{print}" $webroot/tvshows.html)
 tv3a=${tv3%\.*}
 echo "$tv3a" >>  $webroot/front.html
@@ -311,7 +311,7 @@ echo "      </tr>" >>  $webroot/front.html
 
 echo "      <tr>" >>  $webroot/front.html
 echo "        <td>" >>  $webroot/front.html
-echo "          <a href=/xbmc/recentepisodeslite.html#4 target='middle'>" >>  $webroot/front.html
+echo "          <a href=/xbmc/recentepisodeframe.html#4 target='middle'>" >>  $webroot/front.html
 tv4=$(awk "NR==4{print}" $webroot/tvshows.html)
 tv4a=${tv4%\.*}
 echo "$tv4a" >>  $webroot/front.html
@@ -321,7 +321,7 @@ echo "      </tr>" >>  $webroot/front.html
 
 echo "      <tr>" >>  $webroot/front.html
 echo "        <td>" >>  $webroot/front.html
-echo "          <a href=/xbmc/recentepisodeslite.html#5 target='middle'>" >>  $webroot/front.html
+echo "          <a href=/xbmc/recentepisodeframe.html#5 target='middle'>" >>  $webroot/front.html
 tv5=$(awk "NR==5{print}" $webroot/tvshows.html)
 tv5a=${tv5%\.*}
 echo "$tv5a" >>  $webroot/front.html
@@ -331,7 +331,7 @@ echo "      </tr>" >>  $webroot/front.html
 
 echo "      <tr>" >>  $webroot/front.html
 echo "        <td>" >>  $webroot/front.html
-echo "          <a href=/xbmc/recentepisodeslite.html#6 target='middle'>" >>  $webroot/front.html
+echo "          <a href=/xbmc/recentepisodeframe.html#6 target='middle'>" >>  $webroot/front.html
 tv6=$(awk "NR==6{print}" $webroot/tvshows.html)
 tv6a=${tv6%\.*}
 echo "$tv6a" >>  $webroot/front.html
@@ -341,7 +341,7 @@ echo "      </tr>" >>  $webroot/front.html
 
 echo "      <tr>" >>  $webroot/front.html
 echo "        <td>" >>  $webroot/front.html
-echo "          <a href=/xbmc/recentepisodeslite.html#7 target='middle'>" >>  $webroot/front.html
+echo "          <a href=/xbmc/recentepisodeframe.html#7 target='middle'>" >>  $webroot/front.html
 tv7=$(awk "NR==7{print}" $webroot/tvshows.html)
 tv7a=${tv7%\.*}
 echo "$tv7a" >>  $webroot/front.html
@@ -351,7 +351,7 @@ echo "      </tr>" >>  $webroot/front.html
 
 echo "      <tr>" >>  $webroot/front.html
 echo "        <td>" >>  $webroot/front.html
-echo "          <a href=/xbmc/recentepisodeslite.html#8 target='middle'>" >>  $webroot/front.html
+echo "          <a href=/xbmc/recentepisodeframe.html#8 target='middle'>" >>  $webroot/front.html
 tv8=$(awk "NR==8{print}" $webroot/tvshows.html)
 tv8a=${tv8%\.*}
 echo "$tv8a" >>  $webroot/front.html
@@ -361,7 +361,7 @@ echo "      </tr>" >>  $webroot/front.html
 
 echo "      <tr>" >>  $webroot/front.html
 echo "        <td>" >>  $webroot/front.html
-echo "          <a href=/xbmc/recentepisodeslite.html#9 target='middle'>" >>  $webroot/front.html
+echo "          <a href=/xbmc/recentepisodeframe.html#9 target='middle'>" >>  $webroot/front.html
 tv9=$(awk "NR==9{print}" $webroot/tvshows.html)
 tv9a=${tv9%\.*}
 echo "$tv9a" >>  $webroot/front.html
@@ -371,7 +371,7 @@ echo "      </tr>" >>  $webroot/front.html
 
 echo "      <tr>" >>  $webroot/front.html
 echo "        <td>" >>  $webroot/front.html
-echo "          <a href=/xbmc/recentepisodeslite.html#10 target='middle'>" >>  $webroot/front.html
+echo "          <a href=/xbmc/recentepisodeframe.html#10 target='middle'>" >>  $webroot/front.html
 tv10=$(awk "NR==10{print}" $webroot/tvshows.html)
 tv10a=${tv10%\.*}
 echo "$tv10a" >>  $webroot/front.html
