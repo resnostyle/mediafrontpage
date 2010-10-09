@@ -62,9 +62,9 @@ a:visited {
 --------------------*/
 
 #home {
-  background: url(/media/home.png) no-repeat;   
+  background: url(../media/home.png) no-repeat;   
   text-indent: -9999em;
-  height:34px;
+  height:35px;
   width:56px
   overflow: hidden;
   float: left;
@@ -74,14 +74,14 @@ a:visited {
 }
 
 #home a { 
-  height:34px;
+  height:35px;
   width:56px; 
   display: block;
 }
 
 
 #nav-menu {
-  background:url(/media/bgNavTile.png) repeat-x;
+  background:url(../media/bgNavTile.png) repeat-x;
   display: block;
   font-size:1em;
   margin-top:0px;
@@ -112,7 +112,7 @@ a:visited {
   padding:0 26px 0 24px;
   position: relative;
   text-shadow: rgba(0,0,0,.5) 0px 1px 0px;
-  background:url(/media/bgNavSep.png) no-repeat right center;
+  background:url(../media/bgNavSep.png) no-repeat right center;
 }
 
 #nav-menu li a:hover {
