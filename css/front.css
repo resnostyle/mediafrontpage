@@ -8,7 +8,7 @@ body {
   line-height:150%;
   color: #eee;
   height: 100%;
-  margin: 0 15px;
+  margin: 5px 15px;
 }
 
 
@@ -37,7 +37,7 @@ h3 {
 p {
   color: #eee;
   margin: .5em 0;
-  font-size: 1em;
+  font-size: 12px;
   line-height: 140%;
 }
 
@@ -175,13 +175,13 @@ div.progressbar div.progress {
 div.movietitle h1 {
   color: #FF9522;
   border: none;
-  font-size: 25px;
+  font-size: 20px;
   margin: 0 0 0 150px;
 }
 
-div.movieinfo {
+div.movieinfo p {
   margin: 5px 10px;
-  font-size: 15px;
+  font-size: 12px;
   line-height: 15px;
   text-align: justify;
 }
