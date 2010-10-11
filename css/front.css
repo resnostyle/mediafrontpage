@@ -67,8 +67,8 @@ a:visited {
 #main {
   position:relative;
   clear:both;
-  float:left;
-  width:100%;			
+  width:1220px;
+  margin:0 auto;			
   overflow:hidden;
 }
 
@@ -99,7 +99,7 @@ a:visited {
 
 #hdstats {
   display: block;	
-  margin: 10px 0 0;
+  margin: 20px 0 0;
 }
 
 #hdstats table {
@@ -127,7 +127,7 @@ div.harddrive div.usage {
 
 #nowplaying  {
   display:block;
-  margin: 10px 0 0;
+  margin: 20px 0 0;
 }
 
 #nowplaying img {
@@ -159,10 +159,15 @@ div.progressbar div.progress {
   height:2200px;
 }
 
+#sickbeard-iframe {
+  width:750px;
+  margin:0 -10px;
+}
+ 
 #sickbeard-iframe iframe {
   width:750px;
   height:2200px;
-  margin:-167px 0 0 0px; 
+  margin:-170px 0px 0 0px; 
   zoom: 0.9;
   -moz-transform: scale(0.9);
   -moz-transform-origin: 0 0;
@@ -195,5 +200,12 @@ div.movieinfo img {
 
 div.movieoptions {
 
+}
+
+marquee  {
+display:block;
+float:left;
+vertical-align:text-bottom;
+width:132px;
 }
 

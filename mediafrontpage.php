@@ -108,7 +108,7 @@
   echo "      <h1>Recent TV Shows</h1>";
 
   //get the recent episodes
-  $request2 = '{"jsonrpc" : "2.0", "method" : "VideoLibrary.GetRecentlyAddedEpisodes", "params" : { "start" : 0 , "end" : 10 , "fields": [ "showtitle", "season", "episode" ] }, "id" : 1 }';
+  $request2 = '{"jsonrpc" : "2.0", "method" : "VideoLibrary.GetRecentlyAddedEpisodes", "params" : { "start" : 0 , "end" : 15 , "fields": [ "showtitle", "season", "episode" ] }, "id" : 1 }';
 
   curl_setopt($ch, CURLOPT_POSTFIELDS, $request2);
   $array2 = json_decode(curl_exec($ch),true);
@@ -132,7 +132,7 @@
   echo "      <h1>Recent Movies</h1>";
 
   //get the results from the directory
-  $request2 = '{"jsonrpc" : "2.0", "method" : "VideoLibrary.GetRecentlyAddedMovies", "params" : { "start" : 0 , "end" : 10 , "fields" : [ "year" ] }, "id" : 1 }';
+  $request2 = '{"jsonrpc" : "2.0", "method" : "VideoLibrary.GetRecentlyAddedMovies", "params" : { "start" : 0 , "end" : 15 , "fields" : [ "year" ] }, "id" : 1 }';
   curl_setopt($ch, CURLOPT_POSTFIELDS, $request2);
   $array2 = json_decode(curl_exec($ch),true);
 
