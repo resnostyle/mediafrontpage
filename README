@@ -1,3 +1,5 @@
 1. Download ie: 'git pull git@github.com:nick8888/mediafrontpage.git'
-2. Open config.php with gedit and edit appropriately
-3. Copy all files to  to web server directory eg /var/www/ 
+2. Open empty-config.php with gedit and edit appropriately
+3. Rename default-config.php to config.php
+4. Copy all files to  to web server directory eg /var/www/ 
+5. 'sudo apt-get install php5-curl'  

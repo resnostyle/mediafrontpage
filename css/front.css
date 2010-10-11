@@ -4,10 +4,11 @@ body {
   background: #222528; 
   background-repeat: no-repeat;
   font-family: 'Helvetica Neue','HelveticaNeue',Helvetica, Arial, sans-serif;
-  font-size: 12px;
-  line-height: 12px;
+  font-size:11px;
+  line-height:150%;
   color: #eee;
   height: 100%;
+  margin: 0 15px;
 }
 
 
@@ -17,7 +18,7 @@ body {
 
 h1 {
   text-align: center;
-  font-size: 19px;
+  font-size: 15px;
   font-weight: bold;
   padding-bottom: 4px;
   border-bottom: 1px solid;
@@ -35,18 +36,20 @@ h3 {
 
 p {
   color: #eee;
-  margin: .5em 0 1.5em 0;
+  margin: .5em 0;
   font-size: 1em;
   line-height: 140%;
 }
 
 table {
-  font-size: 12px;
+  font-size: 10px;
 }
 
 
 ul, li { 
-  margin: 5px 0 5px 10px;
+  margin: 0;
+  padding:0;
+  list-style-type:none;
 }
 
 a:link {
@@ -61,94 +64,131 @@ a:visited {
   color:#FF9522;
 }
 
+#main {
+  position:relative;
+  clear:both;
+  float:left;
+  width:100%;			
+  overflow:hidden;
+}
+
+#left-sidebar {
+  float:left;
+  width:20%;			
+  position:relative;	
+}
+
+#middle {
+  float:left;
+  width:57%;		
+  position:relative;	
+  padding: 0 10px;
+}
+
+#right-sidebar {
+  float:right;
+  width:20%;		
+  position:relative;
+  white-space: nowrap; 	
+}
+
 #quick-links {
-  display: inline;
-  float: left;	
-  width: 300px;
-  margin: -10px 0 0 15px;
+  display: block;	
+  margin: 10px 0 0;
 }
 
 #hdstats {
-  display: inline;
-  float: left;	
-  width: 300px;
-  margin: 185px 0 0 -300px;
+  display: block;	
+  margin: 10px 0 0;
 }
 
-#recent-tv {
-  display: inline;
-  float: left;	
-  width: 300px;
-  margin: 400px 0 0 -300px;
-}
-
-
-#recentmovies {
-  display:inline;
-  left:1120px;
-  margin-top:-10px;
-  position:absolute;
-  width:250px;
-}
-
-#recordings  {
-  display:inline;
-  left:1120px;
-  margin-top:-10px;
-  position:absolute;
-  width:250px;
-  top: 375px;
-}
-   
-#upcoming-frame {
-  display: inline;
-  overflow:hidden;
-  float:left;
-  position:absolute;
-  left: 330px;
-  top:15px;
-  width: 770px;
-}
-
-
-#upcoming-frame iframe {
-  border:0 solid;
-  float:left;
-  height:3000px;
-  margin:-148px 0 0;
-  width:775px
-}
-
-#upcoming {
-  display:block;
-  float: left;
-  width: 750px;
-}
-
-#upcoming h1{
-  margin: 3 0 0 22px;
-  width: 750px;
-}
-
-
-
-div.dd { 
-    /*position: relative; /* IE is dumb */
+div.harddrive { 
+    /*position: relative; */
   display: block;                 
   float: left;    
-  width: 100px; 
+  width: 80px; 
   height: 16px; 
   margin: 0 0 2px; 
   background: #333; 
 }
 
-div.dd div.blue { 
+div.harddrive div.usage { 
     /*position: relative; */
   background: #FF9522; 
   height: 16px; 
-  width: 75%; 
   text-align:right; 
   display:block;
 }
 
+#nowplaying  {
+  display:block;
+  margin: 10px 0 0;
+}
+
+#nowplaying img {
+  height: 100px;
+  padding:0 10px 10px 0px;
+  float: left;
+}
+
+div.progressbar { 
+    /*position: relative; */
+  display: block;                 
+  float: left;    
+  width: 250px; 
+  height: 10px; 
+  margin: 0 0 2px; 
+  background: #333; 
+}
+
+div.progressbar div.progress { 
+    /*position: relative; */
+  background: #FF9522; 
+  height: 10px; 
+  text-align:right; 
+  display:block;
+}
+
+#middle iframe {
+  width: 100%;
+  height:2200px;
+}
+
+#sickbeard-iframe iframe {
+  width:750px;
+  height:2200px;
+  margin:-167px 0 0 0px; 
+  zoom: 0.9;
+  -moz-transform: scale(0.9);
+  -moz-transform-origin: 0 0;
+  -o-transform: scale(0.9);
+  -o-transform-origin: 0 0;
+  -webkit-transform: scale(0.9);
+  -webkit-transform-origin: 0 0;
+}
+
+div.movietitle h1 {
+  color: #FF9522;
+  border: none;
+  font-size: 25px;
+  margin: 0 0 0 150px;
+}
+
+div.movieinfo {
+  margin: 5px 10px;
+  font-size: 15px;
+  line-height: 15px;
+  text-align: justify;
+}
+
+div.movieinfo img {
+  width: 150px;
+  float: left;
+  margin: 0px 20px 0 0;
+}
+
+
+div.movieoptions {
+
+}
 

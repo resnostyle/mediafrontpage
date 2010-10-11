@@ -1,38 +1,8 @@
 <?php
  
+  include "topline.php";
   include "config.php";
-  
-  function to_readable_size($size) {
-    switch (true) {
-      case ($size > 1000000000000):
-            $size /= 1000000000000;
-            $suffix = 'Tb';
-      break;
-      case ($size > 1000000000):  
-            $size /= 1000000000;
-            $suffix = 'Gb';
-      break;
-      case ($size > 1000000):
-            $size /= 1000000;
-            $suffix = 'Mb';   
-      break;
-      case ($size > 1000):
-            $size /= 1000;
-            $suffix = 'Kb';
-      break;
-      default:
-        $suffix = 'b';
-    }
-    return round($size, 0)." ".$suffix;
-  }
-  
-  function disk_used_space($value) {
-    return disk_total_space("$value") - disk_free_space("$value");
-  }
-
-  function disk_used_percentage($value) {
-    return round(disk_used_space("$value") / disk_total_space("$value") * 100, 2);
-  }
+  include "functions.php";
 
   echo "<html>";
   echo "  <head>";
@@ -40,45 +10,102 @@
   echo "      <link rel='stylesheet' type='text/css' href='css/front.css'>";
   echo "  </head>";
   echo "  <body>";
-  echo "    <div id=quick-links>";
-  echo "      <h1>Control</h1>";
+  echo "    <div id='main'>";
+  echo "    <div id='left-sidebar'>";
+  echo "      <div id=quick-links>";
+  echo "        <h1>Control</h1>";
   echo "        <ul>";
   foreach( $shortcut as $shortcutlabel => $shortcutpath) {
     echo "          <li><a class='shortcut' href='".$shortcutpath."' target=middle>".$shortcutlabel."</a><br/></li>";
   }
-  echo "      </ul>";
-  echo "    </div>";
+  echo "        </ul>";
+  echo "      </div>";
 
   // show drive usage
-  echo "    <div id=hdstats>";
-  echo "      <h1>Hard Drives</h1>";
-  echo "      <table border='0' width='300px'>";
-  echo "        <tr>";
-  echo "          <th>Disk</th>";
-  echo "          <th>Capacity</th>";
-  echo "          <th>Remaining</th>";
-  echo "          <th>%</th>";
-  echo "        </tr>";
-
+  echo "      <div id=hdstats>";
+  echo "        <h1>Hard Drives</h1>";
+  echo "        <table border='0'>";
+  echo "          <tr>";
+  echo "            <th>Disk</th>";
+  echo "            <th>Capacity</th>";
+  echo "            <th>Remaining</th>";
+  echo "            <th>%</th>";
+  echo "          </tr>";
   foreach( $drive as $drivelabel => $drivepath) {
-    echo "        <tr>";
-    echo "          <td>".$drivelabel."</td>";
-    echo "          <td>".to_readable_size(disk_total_space($drivepath))."</td>";
-    echo "          <td>".to_readable_size(disk_free_space($drivepath))."</td>";
-    echo "          <td><div class='dd'><div class='blue' style='width:".(disk_used_percentage($drivepath))."%';</div></div></td>";
-    echo "        </tr>";
+    echo "          <tr>";
+    echo "            <td>".$drivelabel."</td>";
+    echo "            <td>".to_readable_size(disk_total_space($drivepath))."</td>";
+    echo "            <td>".to_readable_size(disk_free_space($drivepath))."</td>";
+    echo "            <td><div class='harddrive'><div class='usage' style='width:".(disk_used_percentage($drivepath))."%';</div></div></td>";
+    echo "          </tr>";
   }
-  echo "      </table>";
-  echo "    </div>";
-  echo "    <div id=recent-tv>";
-  echo "      <h1>Recent TV Shows</h1>";
-  echo "      <table border='0' width='300px'>";
+  echo "        </table>";
+  echo "      </div>";
 
    //json rpc call procedure
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
   curl_setopt($ch, CURLOPT_POST, 1);
   curl_setopt($ch, CURLOPT_URL, $xbmcjsonservice);
+
+  //now playing section
+  echo "      <div id='nowplaying'>";
+  echo "        <h1>Now Playing</h1>";
+
+  //get active players
+  $request = '{"jsonrpc": "2.0", "method": "Player.GetActivePlayers", "id": 1}';
+  curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
+  $results = json_decode(curl_exec($ch),true);
+
+  //video Player
+   if (($results['result']['video']) == 1) {
+     echo "Video Player active"; echo "<br><br>"; 
+     echo "        <tr><td>$activeplayer</td></tr>";
+   }
+
+   elseif (($results['result']['audio']) == 1) {
+
+     //get playlist items
+     $request = '{"jsonrpc": "2.0", "method": "AudioPlaylist.GetItems", "params": { "fields": ["title", "album", "artist", "duration"] }, "id": 1}';
+     curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
+     $results = json_decode(curl_exec($ch),true);
+     $items = $results['result']['items'];
+     $current = $results['result']['current'];
+     
+     $thumb = $items[$current]['thumbnail'];
+     $artist = $items[$current]['artist'];
+     $title = $items[$current]['title'];
+     $album = $items[$current]['album'];
+     echo "        <img src=".$xbmcimgpath.$thumb."></img>";
+     echo "        <p>".$artist."</p>";
+     echo "        <p>".$title."</p>";
+     echo "        <p>".$album."</p>";
+     echo "        <p>1:10 - 2:56</p>";
+
+     //progress bar
+     $request = '{"jsonrpc": "2.0", "method": "AudioPlayer.GetPercentage", "id": 1}';
+     curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
+     $results = json_decode(curl_exec($ch),true);
+     $percentage = $results['result'];
+    echo "        <div class='progressbar'><div class='progress' style='width:".$percentage."%';</div></div>";
+   }
+   else {
+     echo "Nothing Playing";
+   } 
+  echo "      </div>";
+  echo "    </div>";
+
+  //iframe
+  echo "    <div id='middle'>";
+  echo "      <iframe src ='sickbeardframe' name='middle' scrolling='no' frameborder='0' border='0' framespacing='0'>";
+  echo "        <p>Your browser does not support iframes.</p>";
+  echo "      </iframe>";
+  echo "    </div>";
+
+  //recent tv section
+  echo "    <div id='right-sidebar'>";
+  echo "    <div id=recent-tv>";
+  echo "      <h1>Recent TV Shows</h1>";
 
   //get the recent episodes
   $request2 = '{"jsonrpc" : "2.0", "method" : "VideoLibrary.GetRecentlyAddedEpisodes", "params" : { "start" : 0 , "end" : 10 , "fields": [ "showtitle", "season", "episode" ] }, "id" : 1 }';
@@ -96,39 +123,33 @@
       $showtitle = $value['showtitle'];
       $season = $value['season'];
       $episode = $value['episode'];
-      echo "<tr><td><a href=\"recentepisodes.php?episode=$label2\" target='middle'>$showtitle - ".$season."x".$episode." - $label</a></td></tr>";
+      $display = $showtitle." - ".$season."x".$episode." - ".$label;
+      echo "<a href=\"recentepisodes.php?episode=$label2\" target='middle'>$display</a><br/>";
     }
   }
-  echo "      </table>";
   echo "    </div>";
   echo "    <div id=recentmovies>";
   echo "      <h1>Recent Movies</h1>";
-  echo "      <table border='0' width='250px'>";
 
   //get the results from the directory
-  $request2 = '{"jsonrpc" : "2.0", "method" : "VideoLibrary.GetRecentlyAddedMovies", "params" : { "start" : 0 , "end" : 10 }, "id" : 1 }';
+  $request2 = '{"jsonrpc" : "2.0", "method" : "VideoLibrary.GetRecentlyAddedMovies", "params" : { "start" : 0 , "end" : 10 , "fields" : [ "year" ] }, "id" : 1 }';
   curl_setopt($ch, CURLOPT_POSTFIELDS, $request2);
   $array2 = json_decode(curl_exec($ch),true);
 
   //query below contains movies
-  $xbmcresults = $array2['result'];
+  $results = $array2['result']['movies'];
 
-  if (array_key_exists('movies', $xbmcresults)) {
-    $movies = $xbmcresults['movies'];
-    foreach ($movies as $value) {
-      $label = $value['label'];
-      $display = urlencode($value['file']);
-      $label2 = urlencode($label);
-      echo "<tr><td><a href=\"recentmovies.php?movie=$label2\" class='recent-movie' target='middle'>$label</a></td></tr>";
+  if (!empty($results)) {
+
+    foreach ($results as $value) {
+      $movie = $value['label'];
+      $movie1 = $movie." ".$value['year'];
+      $movie2 = urlencode($movie1);
+      $display = $movie." &nbsp;(".$value['year'].")";
+      echo "<a href=\"movieinfo?movie=$movie2\" class='recent-movie' target='middle'>$display</a><br/>";
     }
   }
-
-  echo "      </table>";
   echo "    </div>";
-  echo "    <div id='upcoming-frame'>";
-  echo "      <iframe src ='/sickbeard/comingEpisodes' name='middle' scrolling='no' frameborder='0' border='0' framespacing='0'>";
-  echo "        <p>Your browser does not support iframes.</p>";
-  echo "      </iframe>";
   echo "    </div>";
   echo "  </body>";
   echo "</html>";
