@@ -102,11 +102,16 @@ a:visited {
   margin: 10px 0 0;
 }
 
+#hdstats table {
+  text-align: center;
+  width: 250px;
+}
+
 div.harddrive { 
     /*position: relative; */
   display: block;                 
   float: left;    
-  width: 80px; 
+  width: 100px; 
   height: 16px; 
   margin: 0 0 2px; 
   background: #333; 
