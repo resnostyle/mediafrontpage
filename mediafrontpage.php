@@ -1,9 +1,7 @@
 <?php
- 
 	include "config.php";
 	include "functions.php";
-
-	echo <<<HTML_HEAD
+?>
 <html>
 	<head>
 		<title>Media Front Page</title>
@@ -32,7 +30,7 @@
 				var iFrameBody = document.getElementById("middlecontent");
 				iFrameBody.innerHTML = serverResponse;
 
-				adjustHeight();
+				//adjustHeight();
 			}
 
 			function adjustHeight() {
@@ -43,11 +41,45 @@
 					objWrapper.style.height = windowHeight + 'px';
 				}
 			}
-		//-->
+
+			function ajaxRequest() {
+				var activexmodes=["Msxml2.XMLHTTP", "Microsoft.XMLHTTP"]; //activeX versions to check for in IE
+				if (window.ActiveXObject){ //Test for support for ActiveXObject in IE first (as XMLHttpRequest in IE7 is broken)
+					for (var i=0; i<activexmodes.length; i++) {
+						try {
+							return new ActiveXObject(activexmodes[i]);
+						}
+						catch(e){
+							//suppress error
+						}
+					}
+				} else if (window.XMLHttpRequest) {// if Mozilla, Safari etc
+					return new XMLHttpRequest();
+				} else {
+					return false;
+				}
+			}
+			function loadNowPlaying() {
+				var nowPlayingRequest = new ajaxRequest();
+				nowPlayingRequest.open("GET", "nowplaying.php", true);
+				nowPlayingRequest.onreadystatechange = function() {
+
+					if (nowPlayingRequest.readyState==4) {
+						if (nowPlayingRequest.status==200 || window.location.href.indexOf("http")==-1) {
+							document.getElementById("nowplayingwrapper").innerHTML=nowPlayingRequest.responseText;
+						} else {
+							//alert("An error has occured making the request");
+						}
+					}
+				}
+				nowPlayingRequest.send(null);
+			}
+			
+			setInterval("loadNowPlaying()", 1000);  ///////// 1 second
+			//-->
 		</script>
 	</head>
-HTML_HEAD;
-
+<?php
 	echo "  <body>";
 	echo "    <div id='main'>";
 	echo "    <div id='left-sidebar'>";
@@ -88,104 +120,7 @@ HTML_HEAD;
 	curl_setopt($ch, CURLOPT_URL, $xbmcjsonservice);
 
 	//now playing section
-	echo "      <div id='nowplaying'>";
-	echo "        <h1>Now Playing</h1>";
-
-	//get active players
-	$request = '{"jsonrpc": "2.0", "method": "Player.GetActivePlayers", "id": 1}';
-	curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
-	$results = json_decode(curl_exec($ch),true);
-
-  //video Player
-	if (($results['result']['video']) == 1) {
-		//get playlist items
-		$request = '{"jsonrpc": "2.0", "method": "VideoPlaylist.GetItems", "params": { "fields": ["title", "season", "episode", "plot", "duration", "showtitle"] }, "id": 1}';
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
-		$results = json_decode(curl_exec($ch),true);
-		$items = $results['result']['items'];
-		$current = $results['result']['current'];
-
-		$thumb = $items[$current]['thumbnail'];
-		if(strlen($thumb) == 0) {
-			$thumb = $items[$current]['fanart'];
-		}
-		$show  = $items[$current]['showtitle'];
-		$title = $items[$current]['title'];
-		if(strlen($title) == 0) {
-			$title = $items[$current]['label'];
-		}
-		if(strlen($show) == 0) {
-			$show = $title;
-			$title = "";
-		}
-		if(strlen($show) == 0) {
-			$info = pathinfo($items[$current]['file']);
-			$show =  $info['filename'];
-		}
-
-		if(strlen($thumb) > 0) {
-			echo "        <img src=".$xbmcimgpath.$thumb."></img>";
-		}
-		echo "        <p>".$show."</p>";
-		echo "        <p>".$title."</p>";
-		//progress time
-		$request = '{"jsonrpc": "2.0", "method": "VideoPlayer.GetTime", "id": 1}';
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
-		$results = json_decode(curl_exec($ch),true);
-		$time = $results['result']['time'];
-		$total = $results['result']['total'];
-		echo "        <p>".formattimes($time, $total)."</p>";
-		if($results['result']['paused']) {
-			echo "        <p>Paused</p>";
-		}
-
-		//progress bar
-		$request = '{"jsonrpc": "2.0", "method": "VideoPlayer.GetPercentage", "id": 1}';
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
-		$results = json_decode(curl_exec($ch),true);
-		$percentage = $results['result'];
-		echo "        <div class='progressbar'><div class='progress' style='width:".$percentage."%';</div></div>";
-
-
-	} elseif (($results['result']['audio']) == 1) {
-		//get playlist items
-		$request = '{"jsonrpc": "2.0", "method": "AudioPlaylist.GetItems", "params": { "fields": ["title", "album", "artist", "duration"] }, "id": 1}';
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
-		$results = json_decode(curl_exec($ch),true);
-		$items = $results['result']['items'];
-		$current = $results['result']['current'];
-
-		$thumb = $items[$current]['thumbnail'];
-		$artist = $items[$current]['artist'];
-		$title = $items[$current]['title'];
-		$album = $items[$current]['album'];
-		if(strlen($thumb) > 0) {
-			echo "        <img src=".$xbmcimgpath.$thumb."></img>";
-		}
-		echo "        <p>".$artist."</p>";
-		echo "        <p>".$title."</p>";
-		echo "        <p>".$album."</p>";
-
-		//progress time
-		$request = '{"jsonrpc": "2.0", "method": "AudioPlayer.GetTime", "id": 1}';
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
-		$results = json_decode(curl_exec($ch),true);
-		$time = $results['result']['time'];
-		$total = $results['result']['total'];
-		echo "        <p>".formattimes($time, $total)."</p>";
-		if($results['result']['paused']) {
-			echo "        <p>Paused</p>";
-		}
-
-		//progress bar
-		$request = '{"jsonrpc": "2.0", "method": "AudioPlayer.GetPercentage", "id": 1}';
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
-		$results = json_decode(curl_exec($ch),true);
-		$percentage = $results['result'];
-		echo "        <div class='progressbar'><div class='progress' style='width:".$percentage."%';</div></div>";
-	} else {
-		echo "Nothing Playing";
-	} 
+	echo "      <div id='nowplayingwrapper'>";
 	echo "      </div>";
 	echo "    </div>";
 
