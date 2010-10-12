@@ -1,16 +1,15 @@
 <?php
  
-	include "topline.php";
 	include "config.php";
 	include "functions.php";
 
 	echo <<<HTML_HEAD
 <html>
 	<head>
-		<title>Media Front Page</title>";
-		<link rel='stylesheet' type='text/css' href='css/front.css'>";
-
+		<title>Media Front Page</title>
+		<link rel='stylesheet' type='text/css' href='css/front.css'>
 		<link rel="stylesheet" type="text/css" href="css/comingepisodes.css">
+
 		<script type="text/javascript" language="javascript">
 		<!--
 			function extractIFrameBody(iFrameEl) {
@@ -30,7 +29,7 @@
 			function onIFrameLoad(iFrameElement) {
 				var serverResponse = extractIFrameBody(iFrameElement).innerHTML;
 
-				var iFrameBody = document.getElementById("middle");
+				var iFrameBody = document.getElementById("middlecontent");
 				iFrameBody.innerHTML = serverResponse;
 
 				adjustHeight();
@@ -119,6 +118,10 @@ HTML_HEAD;
 			$show = $title;
 			$title = "";
 		}
+		if(strlen($show) == 0) {
+			$info = pathinfo($items[$current]['file']);
+			$show =  $info['filename'];
+		}
 
 		if(strlen($thumb) > 0) {
 			echo "        <img src=".$xbmcimgpath.$thumb."></img>";
@@ -188,6 +191,7 @@ HTML_HEAD;
 
 	//iframe
 	echo "    <div id='middle'>";
+	echo "      <div id='middlecontent'></div>";
 	echo "      <iframe onload='onIFrameLoad(this);' src ='".$sickbeardcomingepisodes."' name='middle' scrolling='no' frameborder='0' border='0' framespacing='0'>";
 	echo "        <p>Your browser does not support iframes.</p>";
 	echo "      </iframe>";
