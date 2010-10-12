@@ -22,7 +22,7 @@
 	curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
 	$results = json_decode(curl_exec($ch),true);
 
-  //video Player
+	//video Player
 	if (($results['result']['video']) == 1) {
 		//get playlist items
 		$request = '{"jsonrpc": "2.0", "method": "VideoPlaylist.GetItems", "params": { "fields": ["title", "season", "episode", "plot", "duration", "showtitle"] }, "id": 1}';

@@ -75,6 +75,12 @@
 				nowPlayingRequest.send(null);
 			}
 			
+			function cmdNowPlaying(cmd) {
+				var cmdPlayingRequest = new ajaxRequest();
+				cmdPlayingRequest.open("GET", "remoteexec.php?command="+cmd, true);
+				cmdPlayingRequest.send(null);
+			}
+
 			setInterval("loadNowPlaying()", 1000);  ///////// 1 second
 			//-->
 		</script>
@@ -120,7 +126,11 @@
 	curl_setopt($ch, CURLOPT_URL, $xbmcjsonservice);
 
 	//now playing section
-	echo "      <div id='nowplayingwrapper'>";
+	echo "      <div id='nowplayingblock'>";
+	echo "        <div id='nowplayingwrapper'>";
+	echo "        </div>";
+	echo "        <a class='controlbutton' onclick='cmdNowPlaying(\"PlayPause\");' href='#'><img src='media/btnPlayPause.png' alt='Play/Pause'/></a>";
+	echo "        <a class='controlbutton' onclick='cmdNowPlaying(\"Stop\");' href='#'><img src='media/btnStop.png' alt='Stop'/></a>";
 	echo "      </div>";
 	echo "    </div>";
 
