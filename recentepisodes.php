@@ -1,6 +1,5 @@
 <?php
 
-  include "topline.php";
   include "config.php";
   include "functions.php";
 

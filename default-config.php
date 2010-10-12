@@ -1,6 +1,6 @@
 <?php
 // enter hostname and port of the xbmc json service here. By default 8080
-$xbmcjsonservice = "http://localhost:8080/jsonrpc";
+$xbmcjsonservice = "http://USER:PASSWORD@localhost:8080/jsonrpc"; //remove 'USER:PASSWORD@' if your xbmc install does not require a password.
 $xbmcimgpath = '/vfs/'; //leave as default if unsure
 
 // enter path to sickbeards's coming episodes page
