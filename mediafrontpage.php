@@ -8,8 +8,8 @@
 	<head>
 		<title>Media Front Page</title>
 		<link rel='stylesheet' type='text/css' href='css/front.css'>
-
 		<link rel="stylesheet" type="text/css" href="css/comingepisodes.css">
+
 		<script type="text/javascript" language="javascript">
 		<!--
 			function extractIFrameBody(iFrameEl) {

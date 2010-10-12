@@ -22,6 +22,7 @@ h1 {
   font-weight: bold;
   padding-bottom: 4px;
   border-bottom: 1px solid;
+  margin-top: 0px;
 }
 
 h2 {
@@ -94,7 +95,7 @@ a:visited {
 
 #quick-links {
   display: block;	
-  margin: 10px 0 0;
+  margin: 0;
 }
 
 #hdstats {
@@ -159,22 +160,9 @@ div.progressbar div.progress {
   height:2200px;
 }
 
-#sickbeard-iframe {
-  width:750px;
-  margin:0 -10px;
-}
- 
-#sickbeard-iframe iframe {
-  width:750px;
-  height:2200px;
-  margin:-170px 0px 0 0px; 
-  zoom: 0.9;
-  -moz-transform: scale(0.9);
-  -moz-transform-origin: 0 0;
-  -o-transform: scale(0.9);
-  -o-transform-origin: 0 0;
-  -webkit-transform: scale(0.9);
-  -webkit-transform-origin: 0 0;
+#recentmovies  {
+  display:block;
+  margin: 20px 0 0;
 }
 
 div.movietitle h1 {
@@ -196,7 +184,6 @@ div.movieinfo img {
   float: left;
   margin: 0px 20px 0 0;
 }
-
 
 div.movieoptions {
 
