@@ -7,7 +7,7 @@
 	curl_setopt($ch, CURLOPT_POST, 1);
 	curl_setopt($ch, CURLOPT_URL, $xbmcjsonservice);
 
-	$command = $_GET["command"];;
+	$command = $_GET["command"];
 	/*
 		// Commands
 		PlayPause,            Pauses or unpause playback
@@ -35,7 +35,7 @@
 	//Music Player
 	} elseif (($results['result']['audio']) == 1) {
 		//get playlist items
-		$player = "AudioPlaylist";
+		$player = "AudioPlayer";
 	} else {
 		// Nothing Playing
 	}
