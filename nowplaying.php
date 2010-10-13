@@ -30,7 +30,10 @@
 		$results = json_decode(curl_exec($ch),true);
 		$items = $results['result']['items'];
 		$current = $results['result']['current'];
-
+		if(strlen($current) == 0) {
+			$current=0;
+		}
+		
 		$thumb = $items[$current]['thumbnail'];
 		if(strlen($thumb) == 0) {
 			$thumb = $items[$current]['fanart'];
