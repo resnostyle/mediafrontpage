@@ -126,15 +126,31 @@ div.harddrive div.usage {
   display:block;
 }
 
+#nowplayingblock  {
+  display:block;
+  clear:both;
+}
 #nowplaying  {
   display:block;
   margin: 20px 0 0;
 }
-
-#nowplaying img {
+#thumbblock {
   height: 100px;
+  width: 100px;
   padding:0 10px 10px 0px;
   float: left;
+}
+#nowplaying img {
+  max-height: 100px;
+  max-width: 100px;
+}
+#sabnzbdblock  {
+  display:block;
+  clear:both;
+  margin: 20px 0 0;
+}
+#sabnzbdblock h1 {
+  margin: 20px 0 0;
 }
 
 div.progressbar { 

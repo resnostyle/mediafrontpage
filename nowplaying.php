@@ -40,17 +40,23 @@
 		if(strlen($title) == 0) {
 			$title = $items[$current]['label'];
 		}
+		$season = $items[$current]['season'];
+		$episode = $items[$current]['episode'];
+		if((strlen($season) > 0) && (strlen($episode) > 0)) {
+			$title = $season."x".str_pad($episode, 2, '0', STR_PAD_LEFT)." ".$title;
+		}
+		
 		if(strlen($show) == 0) {
 			$show = $title;
 			$title = "";
 		}
 		if(strlen($show) == 0) {
 			$info = pathinfo($items[$current]['file']);
-			$show =  $info['filename'];
+			$show = $info['filename'];
 		}
 
 		if(strlen($thumb) > 0) {
-			echo "        <img src=".$xbmcimgpath.$thumb."></img>";
+			echo "        <div id='thumbblock'><img src=\"".$xbmcimgpath.$thumb."\" alt=\"".htmlentities($items[$current]['plot'], ENT_QUOTES)."\" /></div>";
 		}
 		echo "        <p>".$show."</p>";
 		echo "        <p>".$title."</p>";
@@ -71,7 +77,6 @@
 		$results = json_decode(curl_exec($ch),true);
 		$percentage = $results['result'];
 		echo "        <div class='progressbar'><div class='progress' style='width:".$percentage."%';</div></div>";
-
 
 	} elseif (($results['result']['audio']) == 1) {
 		//get playlist items
