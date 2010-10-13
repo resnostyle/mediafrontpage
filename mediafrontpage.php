@@ -59,14 +59,14 @@
 					return false;
 				}
 			}
-			function loadNowPlaying() {
+			function loadLocal(page, div) {
 				var nowPlayingRequest = new ajaxRequest();
-				nowPlayingRequest.open("GET", "nowplaying.php", true);
+				nowPlayingRequest.open("GET", page, true);
 				nowPlayingRequest.onreadystatechange = function() {
 
 					if (nowPlayingRequest.readyState==4) {
 						if (nowPlayingRequest.status==200 || window.location.href.indexOf("http")==-1) {
-							document.getElementById("nowplayingwrapper").innerHTML=nowPlayingRequest.responseText;
+							document.getElementById(div).innerHTML=nowPlayingRequest.responseText;
 						} else {
 							//alert("An error has occured making the request");
 						}
@@ -81,7 +81,8 @@
 				cmdPlayingRequest.send(null);
 			}
 
-			setInterval("loadNowPlaying()", 1000);  ///////// 1 second
+			setInterval("loadLocal('nowplaying.php', 'nowplayingwrapper')", 1000);  // 1 second
+			setInterval("loadLocal('sabnzbd.php', 'sabnzbdwrapper')", 5000);  // 5 seconds
 			//-->
 		</script>
 	</head>
@@ -132,6 +133,13 @@
 	echo "        <a class='controlbutton' onclick='cmdNowPlaying(\"PlayPause\");' href='#'><img src='media/btnPlayPause.png' alt='Play/Pause'/></a>";
 	echo "        <a class='controlbutton' onclick='cmdNowPlaying(\"Stop\");' href='#'><img src='media/btnStop.png' alt='Stop'/></a>";
 	echo "      </div>";
+
+	//sabnzb section
+	echo "      <div id='sabnzbdblock'>";
+	echo "        <div id='sabnzbdwrapper'>";
+	echo "        </div>";
+	echo "      </div>";
+
 	echo "    </div>";
 
 	//iframe
