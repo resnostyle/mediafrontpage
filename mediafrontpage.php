@@ -2,6 +2,7 @@
 require_once "config.php";
 require_once "functions.php";
 require_once "layout.php";
+require_once "widgets.php";
 	
 ?>
 <html>
