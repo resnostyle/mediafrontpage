@@ -34,5 +34,6 @@ require_once "layout.php";
 				echo "\n\t</div><!-- ".$sectionId." -->\n";
 			}
 ?>
+		</div><!-- main -->
 	</body>
 </html>
