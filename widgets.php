@@ -6,7 +6,7 @@ require_once "functions.php";
 $wdgtControl = array("type" => "inline", "function" => "widgetControl();");
 $wdgtHardDrive = array("type" => "inline", "function" => "widgetHardDrive();");
 $wdgtNowPlayingAjax = array("type" => "ajax", "block" => "nowplayingwrapper", "call" => "nowplaying.php", "interval" => 1000);
-$wdgtNowPlayingControls = array("type" => "inline", "function" => "widgetNowPlayingControls();");
+$wdgtNowPlayingControls = array("type" => "inline", "function" => "widgetNowPlayingControls();", "headerfunction" => "widgetNowPlayingHeader();");
 $wdgtNowPlaying = array("type" => "mixed", "parts" => array($wdgtNowPlayingAjax, $wdgtNowPlayingControls));
 $wdgtSabnzbd = array("type" => "ajax", "block" => "sabnzbdwrapper", "call" => "sabnzbd.php", "interval" => 5000);
 
@@ -49,6 +49,12 @@ function widgetHardDrive() {
 }
 function widgetNowPlayingControls() {
 	echo <<< NOWPLAYINGCONTROLS
+        <a class='controlbutton' onclick='cmdNowPlaying("PlayPause");' href='#'><img src='media/btnPlayPause.png' alt='Play/Pause'/></a>
+		<a class='controlbutton' onclick='cmdNowPlaying("Stop");' href='#'><img src='media/btnStop.png' alt='Stop'/></a>
+NOWPLAYINGCONTROLS;
+}
+function widgetNowPlayingHeader() {
+	echo <<< NOWPLAYINGHEADER
 		<script type="text/javascript" language="javascript">
 		<!--
 			function cmdNowPlaying(cmd) {
@@ -58,9 +64,8 @@ function widgetNowPlayingControls() {
 			}
 		-->
 		</script>
-        <a class='controlbutton' onclick='cmdNowPlaying("PlayPause");' href='#'><img src='media/btnPlayPause.png' alt='Play/Pause'/></a>
-		<a class='controlbutton' onclick='cmdNowPlaying("Stop");' href='#'><img src='media/btnStop.png' alt='Stop'/></a>
-NOWPLAYINGCONTROLS;
+
+NOWPLAYINGHEADER;
 }
 function widgetRecentTV() {
 	echo "      <h1>Recent TV Shows</h1>";
