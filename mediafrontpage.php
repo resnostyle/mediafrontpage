@@ -5,7 +5,7 @@ require_once "widgets.php";
 
 //turn off warnings
 $errlevel = error_reporting();
-//error_reporting(E_ALL & ~E_WARNING);
+error_reporting(E_ALL & ~E_WARNING);
 if(!include('layout.php'))
 {
   // file was missing so include default theme 
