@@ -9,7 +9,7 @@ require_once "widgets.php";
 	<head>
 		<title>Media Front Page</title>
 		<link rel='stylesheet' type='text/css' href='css/front.css' />
-		<script type="text/javascript" language="javascript" src="ajax.js" />
+		<script type="text/javascript" language="javascript" src="ajax/ajax.js" />
 		
 		<!-- START: Dynamic Header Inserts From Widgets -->
 <?php

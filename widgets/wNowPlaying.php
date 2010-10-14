@@ -1,5 +1,5 @@
 <?php
-$wdgtNowPlayingAjax = array("type" => "ajax", "block" => "nowplayingwrapper", "call" => "nowplaying.php", "interval" => 1000);
+$wdgtNowPlayingAjax = array("type" => "ajax", "block" => "nowplayingwrapper", "call" => "ajax/nowplaying.php", "interval" => 1000);
 $wdgtNowPlayingControls = array("type" => "inline", "function" => "widgetNowPlayingControls();", "headerfunction" => "widgetNowPlayingHeader();");
 $wdgtNowPlaying = array("type" => "mixed", "parts" => array($wdgtNowPlayingAjax, $wdgtNowPlayingControls));
 function widgetNowPlayingControls() {
@@ -14,7 +14,7 @@ function widgetNowPlayingHeader() {
 		<!--
 			function cmdNowPlaying(cmd) {
 				var cmdPlayingRequest = new ajaxRequest();
-				cmdPlayingRequest.open("GET", "remoteexec.php?command="+cmd, true);
+				cmdPlayingRequest.open("GET", "ajax/remoteexec.php?command="+cmd, true);
 				cmdPlayingRequest.send(null);
 			}
 		-->
