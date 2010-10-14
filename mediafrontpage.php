@@ -9,6 +9,8 @@ require_once "layout.php";
 		<title>Media Front Page</title>
 		<link rel='stylesheet' type='text/css' href='css/front.css' />
 		<script type="text/javascript" language="javascript" src="ajax.js" />
+		
+		<!-- START: Dynamic Header Inserts From Widgets -->
 <?php
 		foreach( $arrLayout as $sectionId => $widgets ) {
 			foreach( $widgets as $widgetId => $widget ) {
@@ -16,18 +18,20 @@ require_once "layout.php";
 			}
 		}
 ?>
+
+		<!-- END: Dynamic Header Inserts From Widgets -->
 	</head>
 	<body>
 		<div id='main'>
 <?php
 			foreach( $arrLayout as $sectionId => $widgets ) {
-				echo "\n<div id=\"".$sectionId."\">\n";
+				echo "\n\t<div id=\"".$sectionId."\">\n";
 				foreach( $widgets as $widgetId => $widget ) {
-					echo "\n<div id=\"".$widgetId."\">\n";
+					echo "\n\t\t<div id=\"".$widgetId."\">\n";
 					renderWidget($widget);
-					echo "\n</div><!-- ".$widgetId." -->\n";
+					echo "\n\t\t</div><!-- ".$widgetId." -->\n";
 				}
-				echo "\n</div><!-- ".$sectionId." -->\n";
+				echo "\n\t</div><!-- ".$sectionId." -->\n";
 			}
 ?>
 	</body>

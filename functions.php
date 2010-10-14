@@ -6,9 +6,10 @@ function renderWidget($widget) {
 		case "inline":
 			if($DEBUG) { echo "\n<!-- Calling Function:".$widget["function"]." -->\n"; }
 			eval($widget["function"]);
+			echo "\n";
 			break;
 		case "ajax":
-			echo "\n<div id=\"".$widget["block"]."\"></div>\n";
+			echo "\n\t\t\t<div id=\"".$widget["block"]."\"></div>\n";
 			break;
 		case "mixed":
 			foreach( $widget["parts"] as $widgetsub ) {
