@@ -1,6 +1,6 @@
 <?php
- 	include "config.php";
-	include "functions.php";
+require_once "config.php";
+require_once "functions.php";
 ?>
 <html>
 	<head>
@@ -12,22 +12,13 @@
 		<h1>Now Playing</h1>
 <?php
 	//json rpc call procedure
-	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($ch, CURLOPT_POST, 1);
-	curl_setopt($ch, CURLOPT_URL, $xbmcjsonservice);
-
-	//get active players
-	$request = '{"jsonrpc": "2.0", "method": "Player.GetActivePlayers", "id": 1}';
-	curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
-	$results = json_decode(curl_exec($ch),true);
+	$results = jsoncall('{"jsonrpc": "2.0", "method": "Player.GetActivePlayers", "id": 1}');
 
 	//video Player
 	if (($results['result']['video']) == 1) {
 		//get playlist items
-		$request = '{"jsonrpc": "2.0", "method": "VideoPlaylist.GetItems", "params": { "fields": ["title", "season", "episode", "plot", "duration", "showtitle"] }, "id": 1}';
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
-		$results = json_decode(curl_exec($ch),true);
+		$results = jsoncall('{"jsonrpc": "2.0", "method": "VideoPlaylist.GetItems", "params": { "fields": ["title", "season", "episode", "plot", "duration", "showtitle"] }, "id": 1}');
+
 		$items = $results['result']['items'];
 		$current = $results['result']['current'];
 		if(strlen($current) == 0) {
@@ -64,9 +55,7 @@
 		echo "        <p>".$show."</p>";
 		echo "        <p>".$title."</p>";
 		//progress time
-		$request = '{"jsonrpc": "2.0", "method": "VideoPlayer.GetTime", "id": 1}';
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
-		$results = json_decode(curl_exec($ch),true);
+		$results = jsoncall('{"jsonrpc": "2.0", "method": "VideoPlayer.GetTime", "id": 1}');
 		$time = $results['result']['time'];
 		$total = $results['result']['total'];
 		echo "        <p>".formattimes($time, $total)."</p>";
@@ -75,17 +64,13 @@
 		}
 
 		//progress bar
-		$request = '{"jsonrpc": "2.0", "method": "VideoPlayer.GetPercentage", "id": 1}';
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
-		$results = json_decode(curl_exec($ch),true);
+		$results = jsoncall('{"jsonrpc": "2.0", "method": "VideoPlayer.GetPercentage", "id": 1}');
 		$percentage = $results['result'];
 		echo "        <div class='progressbar'><div class='progress' style='width:".$percentage."%';</div></div>";
 
 	} elseif (($results['result']['audio']) == 1) {
 		//get playlist items
-		$request = '{"jsonrpc": "2.0", "method": "AudioPlaylist.GetItems", "params": { "fields": ["title", "album", "artist", "duration"] }, "id": 1}';
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
-		$results = json_decode(curl_exec($ch),true);
+		$results = jsoncall('{"jsonrpc": "2.0", "method": "AudioPlaylist.GetItems", "params": { "fields": ["title", "album", "artist", "duration"] }, "id": 1}');
 		$items = $results['result']['items'];
 		$current = $results['result']['current'];
 
@@ -101,9 +86,7 @@
 		echo "        <p>".$album."</p>";
 
 		//progress time
-		$request = '{"jsonrpc": "2.0", "method": "AudioPlayer.GetTime", "id": 1}';
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
-		$results = json_decode(curl_exec($ch),true);
+		$results = jsoncall('{"jsonrpc": "2.0", "method": "AudioPlayer.GetTime", "id": 1}');
 		$time = $results['result']['time'];
 		$total = $results['result']['total'];
 		echo "        <p>".formattimes($time, $total)."</p>";
@@ -112,9 +95,7 @@
 		}
 
 		//progress bar
-		$request = '{"jsonrpc": "2.0", "method": "AudioPlayer.GetPercentage", "id": 1}';
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
-		$results = json_decode(curl_exec($ch),true);
+		$results = jsoncall('{"jsonrpc": "2.0", "method": "AudioPlayer.GetPercentage", "id": 1}');
 		$percentage = $results['result'];
 		echo "        <div class='progressbar'><div class='progress' style='width:".$percentage."%';</div></div>";
 	} else {

@@ -1,6 +1,5 @@
 <?php
- 	include "config.php";
-	//include "functions.php";
+require_once "config.php";
 ?>
 <html>
 	<head>

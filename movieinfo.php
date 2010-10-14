@@ -1,94 +1,84 @@
 <?php
+require_once "config.php";
+require_once "functions.php";
 
-  include "config.php";
-  include "functions.php";
+$request = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params" : { "sortorder" : "ascending", "fields" : [ "genre", "director", "trailer", "tagline", "plot", "plotoutline", "title", "originaltitle", "lastplayed", "runtime", "year", "playcount", "rating"] }, "id": 1}';
+$array = jsoncall($request);
 
-  $ch = curl_init();
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  curl_setopt($ch, CURLOPT_POST, 1);
-  curl_setopt($ch, CURLOPT_URL, $xbmcjsonservice);
+//results movies
+$results = $array['result']['movies'];
 
-  //prepare the field values being posted to the service
-  $request = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params" : { "sortorder" : "ascending", "fields" : [ "genre", "director", "trailer", "tagline", "plot", "plotoutline", "title", "originaltitle", "lastplayed", "runtime", "year", "playcount", "rating"] }, "id": 1}';
-  curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
-  $array = json_decode(curl_exec($ch),true);
+if(!empty($_GET['play'])) {
 
-  //results movies
-  $results = $array['result']['movies'];
+	//get selected video
+	$playmovie = $_GET['play'];
 
-  if(!empty($_GET['play'])) {
+	$i = 0;
 
-    //get selected video
-    $playmovie = $_GET['play'];
+	//For Each file in the directory
+	foreach ($results as $value) {
+		$movie10 = $value['label'];
+		$year10 = $value['year'];
+		$movie11 = $movie10." ".$year10;
+		$movie12 = urlencode($movie11);
 
-    $i = 0;
+		//Check if label equals selected video
+		if ($movie11 == $playmovie) {
+			//Get location of selected video
+			$arrayvideos = $results[$i];
+			$videolocation = $arrayvideos['file'];
 
-    //For Each file in the directory
-    foreach ($results as $value) {
-      $movie10 = $value['label'];
-      $year10 = $value['year'];
-      $movie11 = $movie10." ".$year10;
-      $movie12 = urlencode($movie11);
+			//Play video
+			$request = '{"jsonrpc" : "2.0", "method": "XBMC.Play", "params" : { "file" : "' . $videolocation . '"}, "id": 1}';
+			$array = jsoncall($request);
+		}
 
-      //Check if label equals selected video
-      if ($movie11 == $playmovie) {
-        //Get location of selected video
-        $arrayvideos = $results[$i];
-        $videolocation = $arrayvideos['file'];
+		//increase value of i by 1
+		$i++;
+	}
+}
 
-        //Play video
-        $request = '{"jsonrpc" : "2.0", "method": "XBMC.Play", "params" : { "file" : "' . $videolocation . '"}, "id": 1}';
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
-        $array = json_decode(curl_exec($ch),true);
-      }
+if(!empty($_GET['movie']) || !empty($_GET['play'])) {
+	$movie = $_GET['movie'].$_GET['play'];
+	$i = 0;
 
-      //increase value of i by 1
-      $i++;
-    }
-  }
+	//For Each file in the directory
+	foreach ($results as $value) {
+		$movielabel = $value['label'];
+		$movieyear = $value['year'];
+		$movie2 = $movielabel." ".$movieyear;
 
-  if(!empty($_GET['movie']) || !empty($_GET['play'])) {
-    $movie = $_GET['movie'].$_GET['play'];
-    $i = 0;
+		//Check if label equals selected video
+		if ($movie == $movie2) {
 
-    //For Each file in the directory
-    foreach ($results as $value) {
-      $movielabel = $value['label'];
-      $movieyear = $value['year'];
-      $movie2 = $movielabel." ".$movieyear;
+			//Get location of selected video
+			$moviearray = $results[$i];
+			$videolocation = $moviearray['file'];
 
-      //Check if label equals selected video
-      if ($movie == $movie2) {
+			//show movie info
+			echo "<div id='movies'>";
+			$moviename = $moviearray['label'];
+			$movieyear = $moviearray['year'];
+			$moviename2 = $moviename." ".$movieyear;
+			$movieurl = urlencode($moviename2);
+			$movieplot = $moviearray['plot'];
+			$moviegenre = $moviearray['genre'];
+			$moviefanart = $moviearray['fanart'];
+			$moviethumb = $moviearray['thumbnail'];
+			echo "<div class='movietitle'><h1>".$moviename." &nbsp;(".$movieyear.")</h1></div>";
+			echo "<div class='movieinfo'><img src='".$xbmcimgpath.$moviethumb."'></img>";
+			echo "<p>".$movieplot."</p>";
+			echo "<div class='movieoptions'><a href=movieinfo.php?play=$movieurl>Play</a></div>";
+			echo "</div>";
+		} 
 
-        //Get location of selected video
-        $moviearray = $results[$i];
-        $videolocation = $moviearray['file'];
+		//increase value of i by 1
+		$i++;
+	}
+} else {
+	echo "No movie specified";
+}
 
-        //show movie info
-        echo "<div id='movies'>";
-        $moviename = $moviearray['label'];
-        $movieyear = $moviearray['year'];
-        $moviename2 = $moviename." ".$movieyear;
-        $movieurl = urlencode($moviename2);
-        $movieplot = $moviearray['plot'];
-        $moviegenre = $moviearray['genre'];
-        $moviefanart = $moviearray['fanart'];
-        $moviethumb = $moviearray['thumbnail'];
-        echo "<div class='movietitle'><h1>".$moviename." &nbsp;(".$movieyear.")</h1></div>";
-        echo "<div class='movieinfo'><img src='".$xbmcimgpath.$moviethumb."'></img>";
-        echo "<p>".$movieplot."</p>";
-        echo "<div class='movieoptions'><a href=movieinfo.php?play=$movieurl>Play</a></div>";
-        echo "</div>";
-      } 
-
-      //increase value of i by 1
-      $i++;
-    }
-  } 
-  else {
-    echo "No movie specified";
-  }
-
-  include "downline.php";
+//include "downline.php";
 
 ?>
