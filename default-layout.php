@@ -15,4 +15,6 @@ $arrLayout = array(
 								, "recentmovies" => $wdgtRecentMovies
 								)
 	);
+
+$customStyleSheet = "";
 ?>

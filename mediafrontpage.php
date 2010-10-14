@@ -28,6 +28,9 @@ error_reporting($errlevel);
 				renderWidgetHeaders($widget);
 			}
 		}
+		if(strlen($customStyleSheet) > 0) {
+			echo "\t\t<link rel=\"stylesheet\" type=\"text/css\" href=\"".$customStyleSheet."\">\n";
+		}
 ?>
 
 		<!-- END: Dynamic Header Inserts From Widgets -->
