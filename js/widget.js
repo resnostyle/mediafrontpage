@@ -1,4 +1,4 @@
-var iNettuts = {
+var widgets = {
     
     jQuery : $,
     
@@ -32,12 +32,12 @@ var iNettuts = {
     },
     
     addWidgetControls : function () {
-        var iNettuts = this,
+        var widgets = this,
             $ = this.jQuery,
             settings = this.settings;
             
         $(settings.widgetSelector, $(settings.sections)).each(function () {
-            var thisWidgetSettings = iNettuts.getWidgetSettings(this.id);
+            var thisWidgetSettings = widgets.getWidgetSettings(this.id);
             if (thisWidgetSettings.removable) {
                 $('<a href="#" class="remove">CLOSE</a>').mousedown(function (e) {
                     /* STOP event bubbling */
@@ -91,7 +91,7 @@ var iNettuts = {
                 }).click(function(){
                     $(this).parents(settings.widgetSelector).toggleClass('collapsed');
                     /* Save prefs: */
-                    iNettuts.savePreferences();
+                    widgets.savePreferences();
                     return false;    
                 }).prependTo($(settings.handleSelector,this));
             }
@@ -100,7 +100,7 @@ var iNettuts = {
         $('.edit-box').each(function () {
             $('input',this).keyup(function () {
                 $(this).parents(settings.widgetSelector).find('h3').text( $(this).val().length>20 ? $(this).val().substr(0,20)+'...' : $(this).val() );
-                iNettuts.savePreferences();
+                widgets.savePreferences();
             });
             $('ul.colors li',this).click(function () {
                 
@@ -111,7 +111,7 @@ var iNettuts = {
                         .removeClass(thisWidgetColorClass[0])
                         .addClass($(this).attr('class').match(colorStylePattern)[0]);
                     /* Save prefs: */
-                    iNettuts.savePreferences();
+                    widgets.savePreferences();
                 }
                 return false;
                 
@@ -126,13 +126,13 @@ var iNettuts = {
     },
     
     makeSortable : function () {
-        var iNettuts = this,
+        var widgets = this,
             $ = this.jQuery,
             settings = this.settings,
             $sortableItems = (function () {
                 var notSortable = '';
                 $(settings.widgetSelector,$(settings.sections)).each(function (i) {
-                    if (!iNettuts.getWidgetSettings(this.id).movable) {
+                    if (!widgets.getWidgetSettings(this.id).movable) {
                         if(!this.id) {
                             this.id = 'widget-no-id-' + i;
                         }
@@ -174,13 +174,13 @@ var iNettuts = {
                 $(ui.item).css({width:''}).removeClass('dragging');
                 $(settings.sections).sortable('enable');
                 /* Save prefs: */
-                iNettuts.savePreferences();
+                widgets.savePreferences();
             }
         });
     },
     
     savePreferences : function () {
-        var iNettuts = this,
+        var widgets = this,
             $ = this.jQuery,
             settings = this.settings,
             arrLayout = '';
@@ -206,16 +206,16 @@ var iNettuts = {
                 arrLayout += ')';
         });
                 arrLayout += '); ?>';
-        $.post("index.php","value="+arrLayout);
+        $.post("mediafrontpage.php","value="+arrLayout);
 
     },
     
     sortWidgets : function () {
-        var iNettuts = this,
+        var widgets = this,
             $ = this.jQuery,
             settings = this.settings;
     }
   
 };
 
-iNettuts.init();
+widgets.init();

