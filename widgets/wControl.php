@@ -1,5 +1,7 @@
 <?php
 $wdgtControl = array("type" => "inline", "function" => "widgetControl();");
+$wIndex[wControl] = $wdgtControl;
+
 function widgetControl() {
 	global $shortcut;
 

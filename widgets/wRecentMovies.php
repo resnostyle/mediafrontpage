@@ -1,5 +1,7 @@
 <?php
 $wdgtRecentMovies = array("type" => "inline", "function" => "widgetRecentMovies();");
+$wIndex[wRecentMovies] = $wdgtRecentMovies;
+
 function widgetRecentMovies() {
 
 	//get the results from the directory

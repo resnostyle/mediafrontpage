@@ -2,7 +2,7 @@
 require_once "config.php";
 require_once "functions.php";
 require_once "widgets.php";
-include "widgets/wIndex.php";
+//include "widgets/wIndex.php";
 
 
 //turn off warnings

@@ -1,5 +1,7 @@
 <?php
 $wdgtRecentTV = array("type" => "inline", "function" => "widgetRecentTV();");
+$wIndex[wRecentTV] = $wdgtRecentTV;
+
 function widgetRecentTV() {
 
 	//get the recent episodes

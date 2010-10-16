@@ -2,6 +2,8 @@
 require_once "config.php";
 require_once "functions.php";
 
+$wIndex = array();
+
 foreach (glob("widgets/*.php") as $filename) {
     include_once $filename;
 }

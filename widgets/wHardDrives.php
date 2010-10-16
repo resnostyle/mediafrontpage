@@ -1,5 +1,7 @@
 <?php
 $wdgtHardDrives = array("type" => "inline", "function" => "widgetHardDrives();");
+$wIndex[wHardDrives] = $wdgtHardDrives;
+
 function widgetHardDrives() {
 	global $drive;
 
