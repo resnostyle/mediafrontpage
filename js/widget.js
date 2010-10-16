@@ -201,7 +201,7 @@ var widgets = {
                 arrLayout += $(this).attr('class').match(/\bcolor-[\w]{1,}\b/) + '\', \'display\' => \'';
 
                 /* Collapsed/not collapsed widget? : */
-                arrLayout += $(settings.contentSelector,this).css('display') === 'none\')' ? 'collapsed\')' : 'not-collapsed\')';
+                arrLayout += $(settings.contentSelector,this).css('display') === 'none' ? 'collapsed\')' : '\')';
             });
                 arrLayout += ')';
         });
