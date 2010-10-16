@@ -1,9 +1,8 @@
 <?php
-$wdgtHardDrive = array("type" => "inline", "function" => "widgetHardDrive();");
-function widgetHardDrive() {
+$wdgtHardDrives = array("type" => "inline", "function" => "widgetHardDrives();");
+function widgetHardDrives() {
 	global $drive;
-	
-	echo "        <h1>Hard Drives</h1>";
+
 	echo "        <table border='0'>";
 	echo "          <tr>";
 	echo "            <th>Disk</th>";

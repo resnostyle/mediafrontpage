@@ -1,7 +1,6 @@
 <?php
 $wdgtRecentMovies = array("type" => "inline", "function" => "widgetRecentMovies();");
 function widgetRecentMovies() {
-	echo "      <h1>Recent Movies</h1>";
 
 	//get the results from the directory
 	$arrResult = jsoncall('{"jsonrpc" : "2.0", "method" : "VideoLibrary.GetRecentlyAddedMovies", "params" : { "start" : 0 , "end" : 15 , "fields" : [ "year" ] }, "id" : 1 }');

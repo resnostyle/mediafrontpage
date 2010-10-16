@@ -1,7 +1,11 @@
-div#middle iframe {
+#wComingEpisodes iframe {
   display     : none;
   visibility  : hidden;
   height      : 1px;
+}
+#middlecontent h1 {
+  display     : none;
+  visibility  : hidden;
 }
 
 div#sickbeardWrapper {
@@ -16,7 +20,7 @@ div#header, span.MainMenu, span.SubMenu {
 
 #outerWrapper {
   width: 100%;
-  margin: -17px auto 0px auto;
+  margin: -40px auto 0px auto;
   font: 9pt arial;
 }
 
@@ -35,6 +39,8 @@ div#header, span.MainMenu, span.SubMenu {
 }
 
 #listingWrapper h1 {
+  display:block;
+  visibility: visible;
   border-bottom: 0px;
   text-align: left;
   margin:0 0 -8 20px;
@@ -138,7 +144,7 @@ div#header, span.MainMenu, span.SubMenu {
 }
 
 div.footer {
-  margin-top: -420px;
+  margin-top: -380px;
 }
 
 

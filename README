@@ -1,4 +1,4 @@
-1. Download ie: 'git pull git@github.com:nick8888/mediafrontpage.git'
+1. Download ie: 'git clone git@github.com:nick8888/mediafrontpage.git'
 2. Open default-config.php with gedit and edit appropriately
 3. Rename default-config.php to config.php
 4. Copy all files to  to web server directory eg /var/www/ 

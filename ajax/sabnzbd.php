@@ -8,7 +8,6 @@ require_once "../config.php";
 	</head>
 	<body>
 	<div id='sabnzbd'>
-		<h1>SABnzbd</h1>
 <?php
 	function sabQuery($command, $values = array()) {
 		global $saburl, $sabapikey;

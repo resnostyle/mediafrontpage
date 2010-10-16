@@ -1,7 +1,6 @@
 <?php
 $wdgtRecentTV = array("type" => "inline", "function" => "widgetRecentTV();");
 function widgetRecentTV() {
-	echo "      <h1>Recent TV Shows</h1>";
 
 	//get the recent episodes
 	$arrResult = jsoncall('{"jsonrpc" : "2.0", "method" : "VideoLibrary.GetRecentlyAddedEpisodes", "params" : { "start" : 0 , "end" : 15 , "fields": [ "showtitle", "season", "episode" ] }, "id" : 1 }');

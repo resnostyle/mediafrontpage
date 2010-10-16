@@ -42,8 +42,8 @@ function renderWidgetHeaders($widget) {
 			}
 			break;
 	}
-	if(strlen($widget["sytlesheet"]) > 0) {
-		echo "\t\t<link rel=\"stylesheet\" type=\"text/css\" href=\"".$widget["sytlesheet"]."\">\n";
+	if(strlen($widget["stylesheet"]) > 0) {
+		echo "\t\t<link rel=\"stylesheet\" type=\"text/css\" href=\"".$widget["stylesheet"]."\">\n";
 	}
 	if(strlen($widget["script"]) > 0) {
 		echo "\t\t<link type=\"text/javascript\" language=\"javascript\ src=\"".$widget["script"]."\">\n";

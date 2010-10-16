@@ -1,0 +1,59 @@
+
+
+/* Colors */
+.color-yellow {}
+.color-red    {}
+.color-blue   {}
+.color-white  {}
+.color-orange {}
+.color-green  {}
+.color-yellow h3,
+.color-white h3,
+.color-green h3 {}
+.color-red h3,
+.color-blue h3,
+.color-orange h3 {}
+/* End Colors */
+
+/* Main section */
+
+#main #section1 { 
+    width: 25%;
+}
+
+#main #section2 { 
+    width: 50%;
+}
+	
+#main #section3 { 
+    width: 25%;
+}
+	
+#main .section {
+    float: left;
+    min-height: 400px;
+    height: auto !important; 
+}
+
+#main #section1 .widget { margin:0px; }
+#main #section3 .widget { margin:0px; }
+#main .section .widget {
+    margin:0px;
+
+}
+#main .widget .widget-head {
+    overflow: hidden;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+}
+#main .widget .widget-head h3 {
+   border-bottom: 0px;
+   padding: 0 5px;
+}
+#main .widget .widget-content {
+    padding: 1px 5px 10px;
+    overflow: hidden;
+}
+/* End Main section */
+

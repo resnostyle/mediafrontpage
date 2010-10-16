@@ -9,7 +9,6 @@ require_once "../functions.php";
 	</head>
 	<body>
 	<div id='nowplaying'>
-		<h1>Now Playing</h1>
 <?php
 	//json rpc call procedure
 	$results = jsoncall('{"jsonrpc": "2.0", "method": "Player.GetActivePlayers", "id": 1}');
