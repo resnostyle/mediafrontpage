@@ -14,7 +14,7 @@ function jsoncall($request, $service_uri = "") {
 	curl_setopt($ch, CURLOPT_URL, $service_uri);
 
 	curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
-	$arrResult = json_decode(curl_exec($ch),true);
+	$arrResult = json_decode(curl_exec($ch), true);
 
 	curl_close($ch);
 	
@@ -78,4 +78,30 @@ function formattimes($input1, $input2) {
 	return $output1." - ".$output2;
 }
 
+function return_array_code($array) {
+	//Example call:
+	//$layout_code_string = "$arrLayout = ".return_array_code($arrLayout).";";
+
+	$first = true;
+
+	$output = "array(";
+
+	foreach($array as $key => $value) {
+		if($first) {
+			$first = false;
+		} else {
+			$output .= ", ";
+		}
+		
+		if(is_array($value)) {
+			$value = return_array_code($value);
+			$output .= '"'.$key.'" => '.$value;
+		} else {
+			$output .= '"'.$key.'" => "'.$value.'"';
+		}
+	}
+	$output .= ")";
+
+	return $output;
+}
 ?>

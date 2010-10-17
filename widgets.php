@@ -8,7 +8,9 @@ foreach (glob("widgets/*.php") as $filename) {
     include_once $filename;
 }
 
-function renderWidget($widget) {
+function renderWidget($widget, $params = "") {
+	global $DEBUG;
+	
 	switch ($widget["type"]) {
 		case "inline":
 			if($DEBUG) { echo "\n<!-- Calling Function:".$widget["function"]." -->\n"; }
@@ -28,7 +30,7 @@ function renderWidget($widget) {
 	}
 }
 //Support the Widget "sytlesheet", "headerfunction", "headerinclude", "script" properties
-function renderWidgetHeaders($widget) {
+function renderWidgetHeaders($widget, $params = "") {
 	switch ($widget["type"]) {
 		case "ajax":
 			echo "\t\t<script type=\"text/javascript\" language=\"javascript\">\n";

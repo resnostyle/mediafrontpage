@@ -2,29 +2,27 @@
 require_once "config.php";
 require_once "functions.php";
 require_once "widgets.php";
-//include "widgets/wIndex.php";
 
+if(!empty($_REQUEST["value"])) { 
+
+	$value=$_REQUEST["value"];
+
+	$fp = fopen('layout.php', 'w');
+
+	fwrite($fp, $value);
+}
 
 //turn off warnings
 $errlevel = error_reporting();
 error_reporting(E_ALL & ~E_WARNING);
 if(!include('layout.php'))
 {
-  // file was missing so include default theme 
-  require('default-layout.php');
+	// file was missing so include default theme 
+	require('default-layout.php');
 }
 // Turn on warnings
 error_reporting($errlevel); 
 
-if(!empty($_REQUEST["value"])) { 
-  
-  $value=$_REQUEST["value"];
-  
-  $fp = fopen('layout.php', 'w');
-
-  fwrite($fp, $value);
-}
-	
 ?>
 <html>
 	<head>
@@ -66,7 +64,7 @@ if(!empty($_REQUEST["value"])) {
 					echo "</div>";
 					echo "<div class=\"widget-content\">";
 
-						renderWidget($wIndex[$wId]);
+						renderWidget($wIndex[$wId], $wAttribute['params']);
 
 					echo "</div>";
 					echo "\n\t\t</li><!-- ".$wId." -->\n";
@@ -77,5 +75,5 @@ if(!empty($_REQUEST["value"])) {
 		</div><!-- main -->
     	<script type="text/javascript" src="js/jquery.js"></script>
     	<script type="text/javascript" src="js/widget.js"></script>
-	</body>
+		</body>
 </html>
