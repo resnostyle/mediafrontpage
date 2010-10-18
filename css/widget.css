@@ -36,6 +36,7 @@
 #main .widget .widget-head h3 {
    border-bottom: 0px;
    padding: 0 5px;
+   display:inline;
 }
 #main .widget .widget-content {
     padding: 1px 5px 10px;
