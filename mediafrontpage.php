@@ -51,6 +51,10 @@ error_reporting($errlevel);
 		<div id="main">
 		
 <?php
+		$arrResult = jsoncall('{"jsonrpc" : "2.0", "method" : "VideoLibrary.GetRecentlyAddedEpisodes", "params" : { "start" : 0 , "end" : 15 , "fields": [ "showtitle", "season", "episode" ] }, "id" : 1 }');
+		if(!is_array($arrResult)) {
+			echo "<br/>\n<strong>XBMC's JSON API did not respond.</strong><br/>\n<br/>\nCheck your configuration (config.php) and that the JSON service variable is configured correctly and that the <a href=\"".$xbmcjsonservice."\">Service</a> is running.";
+		} else {
 			foreach( $arrLayout as $sectionId => $widgets ) {
 				echo "\n\t<ul id=\"".$sectionId."\" class=\"section ui-sortable\">\n";
 				foreach( $widgets as $wId => $wAttribute ) {
@@ -71,6 +75,7 @@ error_reporting($errlevel);
 				}
 				echo "\n\t</ul><!-- ".$sectionId." -->\n";
 			}
+		}
 ?>
 		</div><!-- main -->
     	<script type="text/javascript" src="js/jquery.js"></script>
