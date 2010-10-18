@@ -7,7 +7,12 @@ function widgetComingEpisodes() {
 	global $sickbeardcomingepisodes;
 	
 	echo "      <div id='middlecontent' /></div>";
-	echo "      <iframe onload='onIFrameLoad(this);' src ='".$sickbeardcomingepisodes."' name='middle' scrolling='no' frameborder='0' border='0' framespacing='0'>";
+	if(strpos($sickbeardcomingepisodes, "http://")===false) {
+		$iFrameSource = $sickbeardcomingepisodes;
+	} else {
+		$iFrameSource= 'widgets/wComingEpisodes.php?display=yes';
+	}
+	echo "      <iframe onload='onIFrameLoad(this);' src ='".$iFrameSource."' name='middle' scrolling='no' frameborder='0' border='0' framespacing='0'>";
 	echo "        <p>Your browser does not support iframes.</p>";
 	echo "      </iframe>";
 }
@@ -50,5 +55,19 @@ function widgetComingEpisodesHeader() {
 		</script>
 
 ComingEpisodesSCRIPT;
+}
+if(!empty($_GET["display"])) {
+	include_once "../config.php";
+
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_HTTPGET, 1);
+	curl_setopt($ch, CURLOPT_URL, $sickbeardcomingepisodes);
+
+	$result = curl_exec($ch);
+
+	curl_close($ch);
+	
+	echo $result;
 }
 ?>

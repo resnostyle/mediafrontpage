@@ -79,6 +79,4 @@
   }
 
   echo "</ul></div>";
-
-include "downline.php";
 ?>
