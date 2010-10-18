@@ -64,7 +64,7 @@ error_reporting($errlevel);
 					
 					echo "\">";
 					echo "<div class=\"widget-head\">";
-					echo "<h3>".$wAttribute['title']."</h3>";
+					echo "<span><h3>".$wAttribute['title']."</h3></span>";
 					echo "</div>";
 					echo "<div class=\"widget-content\">";
 

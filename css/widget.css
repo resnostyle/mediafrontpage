@@ -1,20 +1,3 @@
-
-
-/* Colors */
-.color-yellow {}
-.color-red    {}
-.color-blue   {}
-.color-white  {}
-.color-orange {}
-.color-green  {}
-.color-yellow h3,
-.color-white h3,
-.color-green h3 {}
-.color-red h3,
-.color-blue h3,
-.color-orange h3 {}
-/* End Colors */
-
 /* Main section */
 
 #main #section1 { 
@@ -46,6 +29,9 @@
     width: 100%;
     height: 30px;
     line-height: 30px;
+}
+#main .widget .widget-head span {
+   text-align:center;
 }
 #main .widget .widget-head h3 {
    border-bottom: 0px;
