@@ -6,6 +6,10 @@ function widgetRecentMovies($params = array('count' => 10)) {
 
 	//check the parameter
 	$count = $params['count'];
+
+	if (empty($count)) {
+		$count = 15;
+	}
 	
 	//get the results from the directory
 	$arrResult = jsoncall('{"jsonrpc" : "2.0", "method" : "VideoLibrary.GetRecentlyAddedMovies", "params" : { "start" : 0 , "end" : '.$count.' , "fields" : [ "year" ] }, "id" : 1 }');
