@@ -13,7 +13,6 @@ var widgets = {
             removable: true,
             collapsible: true,
             editable: true,
-            colorClasses : ['color-yellow', 'color-red', 'color-blue', 'color-white', 'color-orange', 'color-green']
         },
         widgetIndividual : {}
     },
@@ -40,7 +39,7 @@ var widgets = {
             var thisWidgetSettings = widgets.getWidgetSettings(this.id);
             if (thisWidgetSettings.removable) {
                 $('<a href="#" class="remove">CLOSE</a>').mousedown(function (e) {
-                    /* STOP event bubbling */
+                    // STOP event bubbling
                     e.stopPropagation();    
                 }).click(function () {
                     if(confirm('This widget will be removed, ok?')) {
@@ -56,9 +55,9 @@ var widgets = {
                 }).appendTo($(settings.handleSelector, this));
             }
             
-           /* if (thisWidgetSettings.editable) {
+           if (thisWidgetSettings.editable) {
                 $('<a href="#" class="edit">EDIT</a>').mousedown(function (e) {
-                    # STOP event bubbling 
+                    // STOP event bubbling 
                     e.stopPropagation();    
                 }).toggle(function () {
                     $(this).css({backgroundPosition: '-66px 0', width: '55px'})
@@ -72,17 +71,10 @@ var widgets = {
                     return false;
                 }).appendTo($(settings.handleSelector,this));
                 $('<div class="edit-box" style="display:none;"/>')
-                    .append('<ul><li class="item"><label>Change the title?</label><input value="' + $('h3',this).text() + '"/></li>')
-                    .append((function(){
-                        var colorList = '<li class="item"><label>Available colors:</label><ul class="colors">';
-                        $(thisWidgetSettings.colorClasses).each(function () {
-                            colorList += '<li class="' + this + '"/>';
-                        });
-                        return colorList + '</ul>';
-                    })())
+                    .append('<ul><li class="item"><label>Title:</label><input value="' + $('h3',this).text() + '"/></li>')
                     .append('</ul>')
                     .insertAfter($(settings.handleSelector,this));
-            }*/
+            }
             
             if (thisWidgetSettings.collapsible) {
                 $('<a href="#" class="collapse">COLLAPSE</a>').mousedown(function (e) {
@@ -101,20 +93,6 @@ var widgets = {
             $('input',this).keyup(function () {
                 $(this).parents(settings.widgetSelector).find('h3').text( $(this).val().length>20 ? $(this).val().substr(0,20)+'...' : $(this).val() );
                 widgets.savePreferences();
-            });
-            $('ul.colors li',this).click(function () {
-                
-                var colorStylePattern = /\bcolor-[\w]{1,}\b/,
-                    thisWidgetColorClass = $(this).parents(settings.widgetSelector).attr('class').match(colorStylePattern)
-                if (thisWidgetColorClass) {
-                    $(this).parents(settings.widgetSelector)
-                        .removeClass(thisWidgetColorClass[0])
-                        .addClass($(this).attr('class').match(colorStylePattern)[0]);
-                    /* Save prefs: */
-                    widgets.savePreferences();
-                }
-                return false;
-                
             });
         });
         
@@ -195,10 +173,7 @@ var widgets = {
                 arrLayout += $(this).attr('id') + '\' => array( \'title\' => \'';
 
                 /* Title of widget (replaced used characters) */
-                arrLayout += $('h3:eq(0)',this).text().replace(/\|/g,'[-PIPE-]').replace(/,/g,'[-COMMA-]') + '\', \'color\' => \'';
-
-                /* Color of widget (color classes) */
-                arrLayout += $(this).attr('class').match(/\bcolor-[\w]{1,}\b/) + '\', \'display\' => \'';
+                arrLayout += $('h3:eq(0)',this).text().replace(/\|/g,'[-PIPE-]').replace(/,/g,'[-COMMA-]') + '\', \'display\' => \'';
 
                 /* Collapsed/not collapsed widget? : */
                 arrLayout += $(settings.contentSelector,this).css('display') === 'none' ? 'collapsed\')' : '\')';
