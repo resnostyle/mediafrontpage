@@ -1,0 +1,150 @@
+#wComingEpisodes iframe {
+  display     : none;
+  visibility  : hidden;
+  height      : 1px;
+}
+#middlecontent h1 {
+  display     : none;
+  visibility  : hidden;
+}
+
+div#sickbeardWrapper {
+
+}
+
+div#header, span.MainMenu, span.SubMenu {
+  display     : none;
+  visibility  : hidden;
+  height      : 1px;
+}
+
+#outerWrapper {
+  width: 100%;
+  margin: -40px auto 0px auto;
+  font: 9pt arial;
+}
+
+#listingWrapper {
+  padding: 1px 10px 10px 10px;
+  overflow: auto;
+  width:122%;
+  height:auto!important;
+  zoom: 0.8;
+  -moz-transform: scale(0.8);
+  -moz-transform-origin: 0 0;
+  -o-transform: scale(0.8);
+  -o-transform-origin: 0 0;
+  -webkit-transform: scale(0.8);
+  -webkit-transform-origin: 0 0;
+}
+
+#listingWrapper h1 {
+  display:block;
+  visibility: visible;
+  border-bottom: 0px;
+  text-align: left;
+  margin:0 0 -8 20px;
+}
+
+.listing {
+  padding: 10px 20px 10px 10px;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+  overflow: hidden;
+  background-color: inherit;
+}
+
+.listing_current{
+  //background-color: #ddffdd;
+}
+
+.listing_waiting{
+  //background-color: #99ff99;
+}
+
+.listing_overdue{
+  //background-color: #ffdddd;
+}
+
+.listing_toofar{
+  //background-color: #ddddff;
+}
+
+.listing_unknown{
+  //background-color: #ffdc89;
+}
+
+.listingThumb {
+  width: 100px;
+  height: 147px;
+  float: left;
+  border: 1px solid #000;
+  background-image: url(/sickbeard/images/poster.png);
+}
+
+.listing > div {
+  margin-left: 120px;
+}
+
+.listing h1 {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin: 10px 0px;
+  padding: 0;
+  border-bottom: 0px none #000;
+  text-align: left;
+}
+
+.listing h1 > .icons {
+  float: right;
+}
+
+.listing h1 > .icons a { 
+  font-size: 0.7em;
+  font-weight: normal;
+  color: #222528
+}
+
+.listing h1 > .icons a img {
+  width: 16px;
+  height: 16px;
+}
+
+.listing p {
+  font-size: 1.1em;
+  padding: 0px 0px 0px 5px;
+}
+
+.listing p > .title {
+
+}
+
+.listing p > .info {
+  font-weight: bold;
+}
+
+.listing p > .ended {
+  color: red;
+}
+
+.listing p > .unknown {
+  color: blue;
+}
+
+.listing p.next {
+  //border: 1px solid #ccc;
+  //background-color: #eee;
+  padding: 5px;
+}
+
+.listing p.noMargin {
+  margin-bottom: 0;
+}
+
+div.footer {
+  margin-top: -380px;
+}
+
+
