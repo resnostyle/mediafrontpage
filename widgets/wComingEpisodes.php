@@ -59,15 +59,45 @@ ComingEpisodesSCRIPT;
 if(!empty($_GET["display"])) {
 	include_once "../config.php";
 
+	//$html = file_get_contents("http://www.google.com");
+
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($ch, CURLOPT_HTTPGET, 1);
 	curl_setopt($ch, CURLOPT_URL, $sickbeardcomingepisodes);
 
-	$result = curl_exec($ch);
-
-	curl_close($ch);
+	$html = curl_exec($ch);
 	
-	echo $result;
+	curl_close($ch);
+
+	//$body = preg_replace("/.*<body[^>]*>|<\/body>.*/si", "", $html);  //Need a faster way to do this.
+	$body = $html;
+
+	$urldata = parse_url($sickbeardcomingepisodes);
+	$pos = strrpos($sickbeardcomingepisodes, "/");
+	if($pos < strlen($sickbeardcomingepisodes)) {
+		$uri_full = substr($sickbeardcomingepisodes, 0, $pos + 1);
+	} else {
+		$uri_full = $sickbeardcomingepisodes;
+	}
+	$uri_domain = str_replace($urldata["path"], "", $sickbeardcomingepisodes);
+	
+	$regex  = '/(<[(img)|(a)]\s*(.*?)\s*[(src)|(href)]=(?P<link>[\'"]+?\s*\S+\s*[\'"])+?\s*(.*?)\s*>)/i';
+
+	preg_match_all($regex, $body, $matches);
+	
+	foreach($matches['link'] as $link) {
+		$pos = strpos($link, "/");
+		if($pos && strpos($link, "//")===false) {
+			if($pos==1) {
+				$newlink = substr($link , 0, 1).$uri_domain.substr($link , 1);
+			} else {
+				$newlink = substr($link , 0, 1).$uri_full.substr($link , 1);
+			}
+		}
+		$body = str_replace($link, $newlink, $body);
+	}
+
+	echo $body;
 }
 ?>
