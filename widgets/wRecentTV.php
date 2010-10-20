@@ -1,25 +1,50 @@
 <?php
-$wdgtRecentTV = array("type" => "inline", "function" => "widgetRecentTV();");
+$wdgtRecentTV = array("type" => "ajax", "block" => "recenttvwrapper", "call" => "ajax/recentMoviesTV.php?t=t&a=l&c=15", "interval" => 0, "headerfunction" => "widgetRecentTVHeader(\$params);");
 $wIndex[wRecentTV] = $wdgtRecentTV;
 
-function widgetRecentTV() {
+function widgetRecentTVHeader($params = array('count' => 15)) {
+	//check the parameter
+	$count = $params['count'];
 
-	//get the recent episodes
-	$arrResult = jsoncall('{"jsonrpc" : "2.0", "method" : "VideoLibrary.GetRecentlyAddedEpisodes", "params" : { "start" : 0 , "end" : 15 , "fields": [ "showtitle", "season", "episode" ] }, "id" : 1 }');
+	if (empty($count)) {
+		$count = 15;
+	}	
 	
-	//query below contains episodes
-	$xbmcresults = $arrResult['result'];
-	if (array_key_exists('episodes', $xbmcresults)) {
-		$episodes = $xbmcresults['episodes'];
-		foreach ($episodes as $value) {
-			$label = $value['label'];
-			$label2 = urlencode($label);
-			$showtitle = $value['showtitle'];
-			$season = $value['season'];
-			$episode = $value['episode'];
-			$display = $showtitle." - ".$season."x".$episode." - ".$label;
-			echo "<a href=\"recentepisodes.php?episode=$label2\" target='middle'>$display</a><br/>";
-		}
-	}
+	echo <<< RECENTTVHEADER
+		<script type="text/javascript" language="javascript">
+		<!--
+			function cmdRecentTV(action, param) {
+				var cmdPlayingRequest = new ajaxRequest();
+				
+				var request = "ajax/recentMoviesTV.php?t=t&a=l&c="+param;
+				switch(action) {
+					case "p":
+						request = "ajax/recentMoviesTV.php?t=t&a=p&id="+param;
+						break;
+					case "d":
+						request = "ajax/recentMoviesTV.php?t=t&a=d&id="+param;
+						break;
+				}
+				
+				cmdPlayingRequest.open("GET", request, true);
+
+				if(action!="p") {
+					cmdPlayingRequest.onreadystatechange = function() {
+						if (cmdPlayingRequest.readyState==4) {
+							if (cmdPlayingRequest.status==200 || window.location.href.indexOf("http")==-1) {
+								document.getElementById("recenttvwrapper").innerHTML=cmdPlayingRequest.responseText;
+							} else {
+								alert("An error has occured making the request");
+							}
+						}
+					}
+				}
+				cmdPlayingRequest.send(null);
+			}
+		-->
+		</script>
+
+RECENTTVHEADER;
 }
+
 ?>

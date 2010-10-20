@@ -183,34 +183,46 @@ a.controlbutton img {
 }
 
 #recentmovies  {
-  display:block;
-  margin: 20px 0 0;
+	display:block;
+	margin: 20px 0 0;
 }
 
-div.movietitle h1 {
-  color: #FF9522;
-  border: none;
-  font-size: 20px;
-  margin: 0 0 0 150px;
+div.movietitle h1, div.tvtitle h1 {
+	color: #FF9522;
+	border: none;
+	font-size: 20px;
+	display:block;
+	float: none;
+}
+div.movieinfo, div.tvinfo {
+	display:block;
+	/*float: none;*/
 }
 
-div.movieinfo p {
-  margin: 5px 10px;
-  font-size: 12px;
-  line-height: 15px;
-  text-align: justify;
+div.movieinfo p, div.tvinfo p {
+	display:block;
+	margin: 5px 10px;
+	font-size: 12px;
+	line-height: 15px;
+	text-align: justify;
+}
+div.movieinfo p.plot, div.tvinfo p.plot {
+	text-align: left;
+	white-space: normal;
 }
 
-div.movieinfo img {
-  width: 150px;
-  float: left;
-  margin: 0px 20px 0 0;
+div.movieinfo img, div.tvinfo img {
+	width: 150px;
+	float: left;
+	margin: 0px 20px 0 0;
 }
 
 #wRecentTV {
-  white-space:nowrap;
+	white-space:nowrap;
 }
 
-div.movieoptions {
-
+div.movieoptions, div.tvoptions  {
+	display:block;
+	clear: both;
+	float: right;
 }

@@ -1,6 +1,8 @@
 <?php
 require_once "config.php";
 
+$COMM_ERROR = "\n<p><strong>XBMC's JSON API did not respond.</strong></p>\n<p>Check your configuration (config.php) and that the JSON service variable is configured correctly and that the <a href=\"".$xbmcjsonservice."\">Service</a> is running.</p>\n";
+
 function jsoncall($request, $service_uri = "") {
 	global $xbmcjsonservice;
 	

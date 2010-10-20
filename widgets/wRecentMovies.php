@@ -1,30 +1,50 @@
 <?php
-$wdgtRecentMovies = array("type" => "inline", "function" => "widgetRecentMovies(\$params);");
-$wIndex["wRecentMovies"] = $wdgtRecentMovies;
+$wdgtRecentMovie = array("type" => "ajax", "block" => "recentmoviewrapper", "call" => "ajax/recentMoviesTV.php?t=m&a=l&c=15", "interval" => 0, "headerfunction" => "widgetRecentMovieHeader(\$params);");
+$wIndex["wRecentMovies"] = $wdgtRecentMovie;
 
-function widgetRecentMovies($params = array('count' => 10)) {
-
+function widgetRecentMovieHeader($params = array('count' => 15)) {
 	//check the parameter
 	$count = $params['count'];
 
 	if (empty($count)) {
 		$count = 15;
-	}
+	}	
 	
-	//get the results from the directory
-	$arrResult = jsoncall('{"jsonrpc" : "2.0", "method" : "VideoLibrary.GetRecentlyAddedMovies", "params" : { "start" : 0 , "end" : '.$count.' , "fields" : [ "year" ] }, "id" : 1 }');
+	echo <<< RECENTTMOVIEHEADER
+		<script type="text/javascript" language="javascript">
+		<!--
+			function cmdRecentMovie(action, param) {
+				var cmdPlayingRequest = new ajaxRequest();
+				
+				var request = "ajax/recentMoviesTV.php?t=m&a=l&c="+param;
+				switch(action) {
+					case "p":
+						request = "ajax/recentMoviesTV.php?t=m&a=p&id="+param;
+						break;
+					case "d":
+						request = "ajax/recentMoviesTV.php?t=m&a=d&id="+param;
+						break;
+				}
+				
+				cmdPlayingRequest.open("GET", request, true);
 
-	//query below contains movies
-	$results = $arrResult['result']['movies'];
+				if(action!="p") {
+					cmdPlayingRequest.onreadystatechange = function() {
+						if (cmdPlayingRequest.readyState==4) {
+							if (cmdPlayingRequest.status==200 || window.location.href.indexOf("http")==-1) {
+								document.getElementById("recentmoviewrapper").innerHTML=cmdPlayingRequest.responseText;
+							} else {
+								alert("An error has occured making the request");
+							}
+						}
+					}
+				}
+				cmdPlayingRequest.send(null);
+			}
+		-->
+		</script>
 
-	if (!empty($results)) {
-		foreach ($results as $value) {
-			$movie = $value['label'];
-			$movie1 = $movie." ".$value['year'];
-			$movie2 = urlencode($movie1);
-			$display = $movie." &nbsp;(".$value['year'].")";
-			echo "\t\t\t\t<a href=\"movieinfo?movie=$movie2\" class='recent-movie' target='middle'>$display</a><br/>\n";
-		}
-	}
+RECENTTMOVIEHEADER;
 }
+
 ?>
