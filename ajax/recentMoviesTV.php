@@ -19,13 +19,14 @@ if(empty($count)) {
 
 $videoId = $_GET['id'];
 
+$videodetailfields = '"genre", "director", "trailer", "tagline", "plot", "plotoutline", "title", "originaltitle", "lastplayed", "showtitle", "firstaired", "duration", "season", "episode", "runtime", "year", "playcount", "rating", "writer", "studio", "mpaa", "premiered", "album"';
+
 if($type=="t") {
-	$fields = '"playcount", "director", "date", "runtime", "duration", "firstaired", "premiered", "year", "rating","showtitle", "season", "episode", "plot", "thumbnail", "fanart"';
 
 	if(($action=="d") || ($action=="p")) {
-		$request = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetRecentlyAddedEpisodes", "params" : { "fields": [ '.$fields.' ] }, "id" : 1 }';
+		$request = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetRecentlyAddedEpisodes", "params" : { "fields": [ '.$videodetailfields.' ] }, "id" : 1 }';
 	} else {
-		$request = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetRecentlyAddedEpisodes", "params" : { "start" : 0 , "end" : '.$count.' , "fields": [ '.$fields.' ] }, "id" : 1 }';
+		$request = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetRecentlyAddedEpisodes", "params" : { "start" : 0 , "end" : '.$count.' , "fields": [ '.$videodetailfields.' ] }, "id" : 1 }';
 	}
 	$results = jsoncall($request);
 	$videos = $results['result']['episodes'];
@@ -38,13 +39,17 @@ if($type=="t") {
 						echo "<div id='recentTV'>\n";
 						echo "\t<div class='tvtitle'><h1>".$episodeInfo['showtitle']."</h1></div>\n";
 						echo "\t<div class='tvinfo'>\n";
+						echo "\t<span class='tvimg'>\n";
 						if(!empty($episodeInfo['thumbnail'])) {
 							echo "\t\t<img src='".$xbmcimgpath.$episodeInfo['thumbnail']."' />\n";
 						} elseif(!empty($episodeInfo['fanart'])) {
 							echo "\t\t<img src='".$xbmcimgpath.$episodeInfo['fanart']."' />\n";
 						}
+						echo "\t</span>\n";
+						echo "\t<span class='tvdesc'>\n";
 						echo "\t\t<p>";
-						echo "\t\t\t<strong>".$episodeInfo['season']."x".str_pad($episodeInfo['episode'], 2, '0', STR_PAD_LEFT)."<br />".$episodeInfo['label']."</strong>";
+						echo "\t\t\t<strong>Season: ".$episodeInfo['season']." Episode: ".$episodeInfo['episode']."<br />".$episodeInfo['label']."</strong>";
+						//echo "\t\t\t<strong>".$episodeInfo['season']."x".str_pad($episodeInfo['episode'], 2, '0', STR_PAD_LEFT)."<br />".$episodeInfo['label']."</strong>";
 						echo "\t\t</p>\n";
 						echo "\t\t<p class=\"plot\">".$episodeInfo['plot']."</p>\n";
 						if(!empty($episodeInfo['firstaired'])) {
@@ -59,6 +64,7 @@ if($type=="t") {
 						if(!empty($episodeInfo['rating'])) {
 							echo "\t\t<p>Rating: ".number_format($episodeInfo['rating'], 1)."</p>\n";
 						}
+						echo "\t</span>\n";
 						echo "\t</div>\n";
 						echo "\t<div class='tvoptions'><a href=\"#\" onclick=\"cmdRecentTV('p', ".$episodeInfo["episodeid"].");\">Play</a> | <a href=\"#\" onclick=\"cmdRecentTV('l', ".$count.");\">Back</a></div>\n";
 						echo "</div>\n";
@@ -95,9 +101,9 @@ if($type=="t") {
 	}
 } else {
 	if(($action=="d") || ($action=="p")) {
-		$request = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": { "sortorder" : "ascending", "fields" : [ "genre", "director", "trailer", "tagline", "plot", "plotoutline", "title", "originaltitle", "lastplayed", "runtime", "year", "playcount", "rating", "premiered"] }, "id": 1}';
+		$request = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": { "sortorder" : "ascending", "fields" : [ '.$videodetailfields.' ] }, "id": 1}';
 	} else {
-		$request = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetRecentlyAddedMovies", "params": { "start" : 0 , "end" : '.$count.' , "fields" : [ "genre", "director", "trailer", "tagline", "plot", "plotoutline", "title", "originaltitle", "lastplayed", "runtime", "year", "playcount", "rating"] }, "id" : 1 }';
+		$request = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetRecentlyAddedMovies", "params": { "start" : 0 , "end" : '.$count.' , "fields" : [ '.$videodetailfields.' ] }, "id" : 1 }';
 	}
 	$results = jsoncall($request);
 	$videos = $results['result']['movies'];
@@ -110,11 +116,14 @@ if($type=="t") {
 						echo "<div id='movies'>\n";
 						echo "\t<div class='movietitle'><h1>".$movieInfo['label']." &nbsp;(".$movieInfo['year'].")</h1></div>\n";
 						echo "\t<div class='movieinfo'>\n";
+						echo "\t<span class='movieimg'>\n";
 						if(!empty($movieInfo['thumbnail'])) {
 							echo "\t\t<img src='".$xbmcimgpath.$movieInfo['thumbnail']."' />\n";
 						} elseif(!empty($movieInfo['fanart'])) {
 							echo "\t\t<img src='".$xbmcimgpath.$movieInfo['fanart']."' />\n";
 						}
+						echo "\t</span>\n";
+						echo "\t<span class='moviedesc'>\n";
 						if($movieInfo['originaltitle'] != $movieInfo['title']) {
 							echo "\t\t<p>".$movieInfo['originaltitle']."</p>\n";
 						}
@@ -132,6 +141,7 @@ if($type=="t") {
 						if(!empty($movieInfo['rating'])) {
 							echo "\t\t<p>Rating: ".number_format($movieInfo['rating'], 1)."</p>\n";
 						}
+						echo "\t</span>\n";
 						echo "\t</div>\n";
 						echo "\t<div class='movieoptions'><a href=\"#\" onclick=\"cmdRecentMovie('p', ".$movieInfo["movieid"].");\">Play</a> | <a href=\"#\" onclick=\"cmdRecentMovie('l', ".$count.");\">Back</a></div>\n";
 						echo "</div>\n";

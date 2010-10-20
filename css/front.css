@@ -196,7 +196,7 @@ div.movietitle h1, div.tvtitle h1 {
 }
 div.movieinfo, div.tvinfo {
 	display:block;
-	/*float: none;*/
+	white-space: normal;
 }
 
 div.movieinfo p, div.tvinfo p {
@@ -204,17 +204,17 @@ div.movieinfo p, div.tvinfo p {
 	margin: 5px 10px;
 	font-size: 12px;
 	line-height: 15px;
-	text-align: justify;
 }
-div.movieinfo p.plot, div.tvinfo p.plot {
-	text-align: left;
-	white-space: normal;
-}
-
-div.movieinfo img, div.tvinfo img {
-	width: 150px;
+div.movieinfo span.movieimg, div.tvinfo span.tvimg {
+	display: table-cell;
 	float: left;
-	margin: 0px 20px 0 0;
+}
+div.movieinfo span.moviedesc, div.tvinfo span.tvdesc {
+	display: table-cell;
+}
+div.movieinfo img, div.tvinfo img {
+	width: 125px;
+	margin: 0px 5px 0 0;
 }
 
 #wRecentTV {
