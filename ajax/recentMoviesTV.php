@@ -20,7 +20,7 @@ if(empty($count)) {
 $videoId = $_GET['id'];
 
 if($type=="t") {
-	$fields = '"playcount", "director", "date", "runtime", "firstaired", "premiered", "year", "rating","showtitle", "season", "episode", "plot", "thumbnail", "fanart"';
+	$fields = '"playcount", "director", "date", "runtime", "duration", "firstaired", "premiered", "year", "rating","showtitle", "season", "episode", "plot", "thumbnail", "fanart"';
 
 	if(($action=="d") || ($action=="p")) {
 		$request = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetRecentlyAddedEpisodes", "params" : { "fields": [ '.$fields.' ] }, "id" : 1 }';
@@ -50,7 +50,10 @@ if($type=="t") {
 						if(!empty($episodeInfo['firstaired'])) {
 							echo "\t\t<p>Aired: ".$episodeInfo['firstaired']."</p>\n";
 						}
-						if(!empty($episodeInfo['runtime'])) {
+						
+						if(!empty($episodeInfo['duration'])) {
+							echo "\t\t<p>Runtime: ".(int)($episodeInfo['duration']/60)." min.</p>\n";
+						} elseif(!empty($episodeInfo['runtime'])) {
 							echo "\t\t<p>Runtime: ".$episodeInfo['runtime']." min.</p>\n";
 						}
 						if(!empty($episodeInfo['rating'])) {
