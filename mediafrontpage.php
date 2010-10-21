@@ -37,7 +37,7 @@ error_reporting($errlevel);
 		foreach( $wIndex as $wId => $widget ) {
 			renderWidgetHeaders($widget);	
 		}
-		if(strlen($customStyleSheet) > 0) {
+		if(!empty($customStyleSheet)) {
 			echo "\t\t<link rel=\"stylesheet\" type=\"text/css\" href=\"".$customStyleSheet."\">\n";
 		}
 ?>
@@ -67,8 +67,11 @@ error_reporting($errlevel);
 					echo "<span><h3>".$wAttribute['title']."</h3></span>";
 					echo "</div>";
 					echo "<div class=\"widget-content\">";
-
+					if(empty($wAttribute['params'])) {
+						renderWidget($wIndex[$wId]);
+					} else {
 						renderWidget($wIndex[$wId], $wAttribute['params']);
+					}
 
 					echo "</div>";
 					echo "\n\t\t</li><!-- ".$wId." -->\n";

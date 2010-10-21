@@ -4,11 +4,11 @@ $wIndex["wRecentMovies"] = $wdgtRecentMovie;
 
 function widgetRecentMovieHeader($params = array('count' => 15)) {
 	//check the parameter
-	$count = $params['count'];
-
-	if (empty($count)) {
+	if (empty($params['count'])) {
 		$count = 15;
-	}	
+	} else {
+		$count = $params['count'];
+	}
 	
 	echo <<< RECENTTMOVIEHEADER
 		<script type="text/javascript" language="javascript">

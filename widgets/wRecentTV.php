@@ -1,14 +1,14 @@
 <?php
 $wdgtRecentTV = array("type" => "ajax", "block" => "recenttvwrapper", "call" => "ajax/recentMoviesTV.php?t=t&a=l&c=15", "interval" => 0, "headerfunction" => "widgetRecentTVHeader(\$params);");
-$wIndex[wRecentTV] = $wdgtRecentTV;
+$wIndex["wRecentTV"] = $wdgtRecentTV;
 
 function widgetRecentTVHeader($params = array('count' => 15)) {
 	//check the parameter
-	$count = $params['count'];
-
-	if (empty($count)) {
+	if (empty($params['count'])) {
 		$count = 15;
-	}	
+	} else {
+		$count = $params['count'];
+	}
 	
 	echo <<< RECENTTVHEADER
 		<script type="text/javascript" language="javascript">

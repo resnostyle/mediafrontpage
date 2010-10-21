@@ -31,6 +31,8 @@ function renderWidget($widget, $params = "") {
 }
 //Support the Widget "sytlesheet", "headerfunction", "headerinclude", "script" properties
 function renderWidgetHeaders($widget, $params = "") {
+	global $DEBUG;
+	
 	switch ($widget["type"]) {
 		case "ajax":
 			echo "\t\t<script type=\"text/javascript\" language=\"javascript\">\n";
@@ -46,16 +48,16 @@ function renderWidgetHeaders($widget, $params = "") {
 			}
 			break;
 	}
-	if(strlen($widget["stylesheet"]) > 0) {
+	if(!empty($widget["stylesheet"]) && (strlen($widget["stylesheet"]) > 0)) {
 		echo "\t\t<link rel=\"stylesheet\" type=\"text/css\" href=\"".$widget["stylesheet"]."\">\n";
 	}
-	if(strlen($widget["script"]) > 0) {
+	if(!empty($widget["script"]) && (strlen($widget["script"]) > 0)) {
 		echo "\t\t<link type=\"text/javascript\" language=\"javascript\ src=\"".$widget["script"]."\">\n";
 	}
-	if(strlen($widget["headerinclude"]) > 0) {
+	if(!empty($widget["headerinclude"]) && (strlen($widget["headerinclude"]) > 0)) {
 		echo "\t\t".$widget["headerinclude"]."\n";
 	}
-	if(strlen($widget["headerfunction"]) > 0) {
+	if(!empty($widget["headerfunction"]) && (strlen($widget["headerfunction"]) > 0)) {
 		if($DEBUG) { echo "\n<!-- Calling Function:".$widget["headerfunction"]." -->\n"; }
 		eval($widget["headerfunction"]);
 	}
