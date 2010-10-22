@@ -5,7 +5,7 @@ require_once "widgets.php";
 
 if(!empty($_REQUEST["value"])) { 
 
-	$value=$_REQUEST["value"];
+	$value=stripslashes($_REQUEST["value"]);
 
 	$fp = fopen('layout.php', 'w');
 
