@@ -31,7 +31,37 @@ error_reporting($errlevel);
 		<script type="text/javascript" src="http://jqueryjs.googlecode.com/files/jquery-1.2.6.min.js"></script>
 		<link href="css/front.css" rel="stylesheet" type="text/css" />	
 		<link href="css/widget.css" rel="stylesheet" type="text/css" />	
-		
+		<script type="text/javascript" src="js/highslide/highslide.js"></script>
+		<link rel="stylesheet" type="text/css" href="js/highslide/highslide.css" />
+		<script type="text/javascript">
+			//<![CDATA[
+			// override Highslide settings here
+			// instead of editing the highslide.js file
+			hs.registerOverlay({
+				html: '<div class="closebutton" onclick="return hs.close(this)" title="Close"></div>',
+				position: 'top right',
+				fade: 2 // fading the semi-transparent overlay looks bad in IE
+			});
+			
+			hs.showCredits = false; 
+			hs.graphicsDir = 'js/highslide/graphics/';
+			hs.wrapperClassName = 'borderless';
+			//hs.outlineType = 'outer-glow';
+			//hs.outlineType = 'borderless';
+			//hs.outlineType = 'rounded-white';
+			hs.outlineType = null;
+			//hs.wrapperClassName = 'outer-glow';
+			hs.dimmingOpacity = 0.75;
+			//]]>
+		</script>
+		<style type="text/css">
+			.highslide-dimming {
+				background: black;
+			}
+			a.highslide {
+				border: 0;
+			}
+		</style>		
 		<!-- START: Dynamic Header Inserts From Widgets -->
 <?php
 		foreach( $wIndex as $wId => $widget ) {

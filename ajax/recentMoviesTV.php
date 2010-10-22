@@ -40,11 +40,21 @@ if($type=="t") {
 						echo "\t<div class='tvtitle'><h1>".$episodeInfo['showtitle']."</h1></div>\n";
 						echo "\t<div class='tvinfo'>\n";
 						echo "\t<span class='tvimg'>\n";
+
 						if(!empty($episodeInfo['thumbnail'])) {
-							echo "\t\t<img src='".$xbmcimgpath.$episodeInfo['thumbnail']."' />\n";
+							echo "\t\t<a href=\"".$xbmcimgpath.$episodeInfo['thumbnail']."\" class=\"highslide\" onclick=\"return hs.expand(this)\">\n";
+							echo "\t\t\t<img src='".$xbmcimgpath.$episodeInfo['thumbnail']."' title='Click to enlarge'/>\n";
+							echo "\t\t<a>\n";
 						} elseif(!empty($episodeInfo['fanart'])) {
-							echo "\t\t<img src='".$xbmcimgpath.$episodeInfo['fanart']."' />\n";
+							echo "\t\t<a href=\"".$xbmcimgpath.$episodeInfo['fanart']."\" class=\"highslide\" onclick=\"return hs.expand(this)\">\n";
+							echo "\t\t\t<img src='".$xbmcimgpath.$episodeInfo['fanart']."' title='Click to enlarge'/>\n";
+							echo "\t\t<a>";
 						}
+						echo "<div class=\"highslide-caption\">"; 
+						echo $episodeInfo['showtitle']." - ".$episodeInfo['season']."x".str_pad($episodeInfo['episode'], 2, '0', STR_PAD_LEFT)." - ".$episodeInfo['label']."<br />\n";
+						echo "\t\t".$episodeInfo['plot']."\n";
+ 						echo "\t\t</div>\n"; 
+
 						echo "\t</span>\n";
 						echo "\t<span class='tvdesc'>\n";
 						echo "\t\t<p>";
@@ -117,11 +127,21 @@ if($type=="t") {
 						echo "\t<div class='movietitle'><h1>".$movieInfo['label']." &nbsp;(".$movieInfo['year'].")</h1></div>\n";
 						echo "\t<div class='movieinfo'>\n";
 						echo "\t<span class='movieimg'>\n";
+
 						if(!empty($movieInfo['thumbnail'])) {
-							echo "\t\t<img src='".$xbmcimgpath.$movieInfo['thumbnail']."' />\n";
+							echo "\t\t<a href=\"".$xbmcimgpath.$movieInfo['thumbnail']."\" class=\"highslide\" onclick=\"return hs.expand(this)\">\n";
+							echo "\t\t\t<img src='".$xbmcimgpath.$movieInfo['thumbnail']."' title='Click to enlarge'/>\n";
+							echo "\t\t<a>\n";
 						} elseif(!empty($movieInfo['fanart'])) {
-							echo "\t\t<img src='".$xbmcimgpath.$movieInfo['fanart']."' />\n";
+							echo "\t\t<a href=\"".$xbmcimgpath.$movieInfo['thumbnail']."\" class=\"highslide\" onclick=\"return hs.expand(this)\">\n";
+							echo "\t\t\t<img src='".$xbmcimgpath.$movieInfo['fanart']."' title='Click to enlarge'/>\n";
+							echo "\t\t<a>\n";
 						}
+						echo "\t\t<div class=\"highslide-caption\">\n"; 
+						echo "\t\t".$movieInfo['label']." &nbsp;(".$movieInfo['year'].")<br />\n";
+						echo "\t\t".$movieInfo['plot']."\n";
+ 						echo "\t\t</div>\n"; 
+
 						echo "\t</span>\n";
 						echo "\t<span class='moviedesc'>\n";
 						if($movieInfo['originaltitle'] != $movieInfo['title']) {
