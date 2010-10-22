@@ -27,7 +27,7 @@ error_reporting($errlevel);
 <html>
 	<head>
 		<title>Media Front Page</title>
-		<script type="text/javascript" language="javascript" src="ajax/ajax.js"></script>
+		<script type="text/javascript" language="javascript" src="js/ajax.js"></script>
 		<script type="text/javascript" src="http://jqueryjs.googlecode.com/files/jquery-1.2.6.min.js"></script>
 		<link href="css/front.css" rel="stylesheet" type="text/css" />	
 		<link href="css/widget.css" rel="stylesheet" type="text/css" />	
@@ -81,7 +81,7 @@ error_reporting($errlevel);
 		<div id="main">
 		
 <?php
-		$arrResult = jsoncall('{"jsonrpc" : "2.0", "method" : "VideoLibrary.GetRecentlyAddedEpisodes", "params" : { "start" : 0 , "end" : 15 , "fields": [ "showtitle", "season", "episode" ] }, "id" : 1 }');
+		$arrResult = jsoncall('{"jsonrpc": "2.0", "method": "JSONRPC.Version", "id": 1}');
 		if(!is_array($arrResult)) {
 			echo $COMM_ERROR;
 		} else {
