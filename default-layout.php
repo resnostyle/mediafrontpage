@@ -1,1 +1,42 @@
-<?php $arrLayout = array( 'section1' => array( 'wControl' => array( 'title' => 'Control', 'color' => 'color-yellow', 'display' => 'not-collapsed'), 'wRecentTV' => array( 'title' => 'Recent TV', 'color' => 'color-blue', 'display' => 'not-collapsed'), 'wSabnzbd' => array( 'title' => 'Sabnzbd', 'color' => 'color-blue', 'display' => 'not-collapsed')), 'section2' => array( 'wComingEpisodes' => array( 'title' => 'Coming Episdes', 'color' => 'color-red', 'display' => 'not-collapsed')), 'section3' => array( 'wNowPlaying' => array( 'title' => 'Now Playing', 'color' => 'color-green', 'display' => 'not-collapsed'), 'wHardDrives' => array( 'title' => 'Hard Drives', 'color' => 'color-yellow', 'display' => 'not-collapsed'), 'wRecentMovies' => array( 'title' => 'Recent Movies', 'color' => 'color-blue', 'display' => 'not-collapsed'))); ?>
+<?php
+$arrLayout = array(
+		"section1" => array(
+			"wControl" => array(
+				"title" => "Control",
+				"display" => ""
+			),
+			"wRecentTV" => array(
+				"title" => "Recent TV",
+				"display" => ""
+			),
+			"wXBMCLibrary" => array(
+				"title" => "XBMC Library",
+				"display" => ""
+			),
+			"wSabnzbd" => array(
+				"title" => "Sabnzbd",
+				"display" => ""
+			)
+		),
+		"section2" => array(
+			"wComingEpisodes" => array(
+				"title" => "Coming Episdes",
+				"display" => ""
+			)
+		),
+		"section3" => array(
+			"wNowPlaying" => array(
+				"title" => "Now Playing",
+				"display" => ""
+			),
+			"wHardDrives" => array(
+				"title" => "Hard Drives",
+				"display" => ""
+			),
+			"wRecentMovies" => array(
+				"title" => "Recent Movies",
+				"display" => ""
+			)
+		)
+	);
+?>
