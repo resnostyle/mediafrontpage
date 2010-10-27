@@ -20,13 +20,16 @@ function renderWidget($widget, $params = "") {
 		case "ajax":
 			echo "\n\t\t\t<div id=\"".$widget["block"]."\"></div>\n";
 			break;
+		case "header":
+			//Support header only widgets.
+			break;
 		case "mixed":
 			foreach( $widget["parts"] as $widgetsub ) {
 				renderWidget($widgetsub);
 			}
 			break;
 		default:
-			echo "\n\n<strong>INVALID WIDGET SPECIFIED (".$widgetId.") in section ".$sectionId."</strong>\n<pre>".print_r($widget)."</pre>\n";
+			echo "\n\n<strong>INVALID WIDGET SPECIFIED (".$widget["block"].") in section ".$sectionId."</strong>\n<pre>".print_r($widget)."</pre>\n";
 	}
 }
 //Support the Widget "sytlesheet", "headerfunction", "headerinclude", "script" properties
