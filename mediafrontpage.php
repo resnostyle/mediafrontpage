@@ -3,24 +3,6 @@ require_once "config.php";
 require_once "functions.php";
 require_once "widgets.php";
 
-if(!empty($_REQUEST["value"])) { 
-
-	$value = stripslashes($_REQUEST["value"]);
-	$value = str_replace("<?php", "", $value);
-	$value = str_replace("?>", "", $value);
-	eval ($value);
-	$layout_code_string = "<?php\n";
-    if (empty ($arrLayout)) {
-		$layout_code_string .= "// Value = $value\n\n";
-		$layout_code_string .= "/*\n".print_r($arrLayout, 1)."\n*/\n";
-	}
-	$layout_code_string .= '$arrLayout = '.return_array_code($arrLayout).";\n?>\n";
-	
-	$fp = fopen('layout.php', 'w');
-
-	fwrite($fp, $layout_code_string);
-}
-
 //turn off warnings
 $errlevel = error_reporting();
 error_reporting(E_ALL & ~E_WARNING);

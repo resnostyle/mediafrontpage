@@ -159,30 +159,36 @@ var widgets = {
     
     savePreferences : function () {
         var widgets = this,
-            $ = this.jQuery,
-            settings = this.settings,
-            arrLayout = '';
- 
-        /* Assemble the layout array */
+			$ = this.jQuery,
+			settings = this.settings,
+			arrLayout = '';
+		var jsonLayout = '';
+			
+        // Assemble the layout array in json
         $(settings.sections).each(function(i){
-
-            arrLayout += (i===0) ? '<?php $arrLayout = array( \'section'+(i+1)+'\' => array( ' : ', \'section'+(i+1)+'\' => array( ';
+            jsonLayout += (i===0) ? '{ "method" : "SaveLayout", "params" : { "section'+(i+1)+'" : { ' : ', "section'+(i+1)+'" : { ';
             $(settings.widgetSelector,this).each(function(i){
-                arrLayout += (i===0) ? '\'' : ', \'';
-                /* ID of widget: */
-                arrLayout += $(this).attr('id') + '\' => array( \'title\' => \'';
+                jsonLayout += (i===0) ? '"' : ', "';
+                // ID of widget:
+                jsonLayout += $(this).attr('id') + '" : { "title" : "';
 
-                /* Title of widget (replaced used characters) */
-                arrLayout += $('h3:eq(0)',this).text().replace(/\|/g,'[-PIPE-]').replace(/,/g,'[-COMMA-]') + '\', \'display\' => \'';
+                // Title of widget (replaced used characters)
+                jsonLayout += $('h3:eq(0)',this).text().replace(/\|/g,'[-PIPE-]').replace(/,/g,'[-COMMA-]') + '", "display" : "';
 
-                /* Collapsed/not collapsed widget? : */
-                arrLayout += $(settings.contentSelector,this).css('display') === 'none' ? 'collapsed\')' : '\')';
+                // Collapsed/not collapsed widget? :
+                jsonLayout += $(settings.contentSelector,this).css('display') === 'none' ? 'collapsed" }' : '" }';
             });
-                arrLayout += ')';
+            jsonLayout += ' }';
         });
-                arrLayout += '); ?>';
-        $.post("mediafrontpage.php","value="+arrLayout);
-
+		jsonLayout += ' } }';
+		
+		// Call json service to save the layout.
+        var jsonResponse = "";
+		$.post("jsonservice.php", jsonLayout, function(jsonResponse) {
+			if(jsonResponse.error) {
+				alert ('Problem saving layout file.\n\nError: '+jsonResponse.error.message);
+			}
+		}, "json");
     },
     
     sortWidgets : function () {
