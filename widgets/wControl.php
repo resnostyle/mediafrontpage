@@ -1,14 +1,16 @@
 <?php
-$wdgtControl = array("type" => "inline", "function" => "widgetControl();");
+$wdgtControl = array("name" => "Control", "type" => "inline", "function" => "widgetControl();");
 $wIndex["wControl"] = $wdgtControl;
 
 function widgetControl() {
 	global $shortcut;
 
-	echo "        <ul>";
+	echo "\t\t<ul class=\"widget-list\">";
+	$alt = false;
 	foreach( $shortcut as $shortcutlabel => $shortcutpath) {
-		echo "          <li><a class='shortcut' href='".$shortcutpath."' target=middle>".$shortcutlabel."</a><br/></li>";
+		echo "\t\t\t<li".(($alt) ? " class=\"alt\"" : "")."><a class=\"shortcut\" href='".$shortcutpath."' target=middle>".$shortcutlabel."</a><br/></li>";
+		$alt = !$alt;
 	}
-	echo "        </ul>";
+	echo "\t\t</ul>";
 }
 ?>

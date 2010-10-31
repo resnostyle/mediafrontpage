@@ -175,32 +175,32 @@ a.controlbutton img {
    display:block;
    margin: 20px 0 0;
 }
-div.movietitle h1, div.tvtitle h1 {
+div.library-title h2 {
    color: #FF9522;
    border: none;
    font-size: 20px;
    display:block;
    float: none;
 }
-div.movieinfo, div.tvinfo {
+div.library-info {
    display:block;
    white-space: normal;
 }
 
-div.movieinfo p, div.tvinfo p {
+div.library-info p {
    display:block;
    margin: 5px 10px;
    font-size: 12px;
    line-height: 15px;
 }
-div.movieinfo span.movieimg, div.tvinfo span.tvimg {
+div.library-info span.library-img {
    display: table-cell;
    float: left;
 }
-div.movieinfo span.moviedesc, div.tvinfo span.tvdesc {
+div.library-info span.library-desc {
    display: table-cell;
 }
-div.movieinfo img, div.tvinfo img {
+div.library-info img {
    width: 125px;
    margin: 0px 5px 0 0;
 }
@@ -211,7 +211,7 @@ div.movieinfo img, div.tvinfo img {
    white-space:nowrap;
 }
 
-div.movieoptions, div.tvoptions  {
+div.widget-control  {
    display:block;
    clear: both;
    float: right;

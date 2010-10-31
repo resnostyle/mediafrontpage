@@ -28,8 +28,10 @@ function renderWidget($widget, $params = "") {
 				renderWidget($widgetsub);
 			}
 			break;
-		default:
-			echo "\n\n<strong>INVALID WIDGET SPECIFIED (".$widget["block"].") in section ".$sectionId."</strong>\n<pre>".print_r($widget)."</pre>\n";
+		default:	
+			if(!empty($widget)) {
+				echo "\n\n<strong>INVALID WIDGET SPECIFIED (".$widget["block"].") in section ".$sectionId."</strong>\n<pre>".print_r($widget)."</pre>\n";
+			}
 	}
 }
 //Support the Widget "sytlesheet", "headerfunction", "headerinclude", "script" properties

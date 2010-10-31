@@ -1,11 +1,11 @@
 <?php
-$wdgtXbmcLibrary = array("type" => "ajax", "block" => "xbmclibrarywrapper", "call" => "widgets/wXBMCLibrary.php?w=l&style=w&a=l", "interval" => 0, "headerfunction" => "widgetLibraryHeader(\$params);");
+$wdgtXbmcLibrary = array("name" => "XBMC Library", "type" => "ajax", "block" => "xbmclibrarywrapper", "call" => "widgets/wXBMCLibrary.php?w=l&style=w&a=l", "interval" => 0, "headerfunction" => "widgetLibraryHeader(\$params);");
 $wIndex["wXBMCLibrary"] = $wdgtXbmcLibrary;
 
-$wdgtRecentMovie = array("type" => "ajax", "block" => "recentmoviewrapper", "call" => "widgets/wXBMCLibrary.php?w=rm&style=w&a=rm&c=15", "interval" => 0);
+$wdgtRecentMovie = array("name" => "Recent Movies", "type" => "ajax", "block" => "recentmoviewrapper", "call" => "widgets/wXBMCLibrary.php?w=rm&style=w&a=rm&c=15", "interval" => 0);
 $wIndex["wRecentMovies"] = $wdgtRecentMovie;
 
-$wdgtRecentTV = array("type" => "ajax", "block" => "recenttvwrapper", "call" => "widgets/wXBMCLibrary.php?w=re&style=w&a=re&c=15", "interval" => 0);
+$wdgtRecentTV = array("name" => "Recent Episodes", "type" => "ajax", "block" => "recenttvwrapper", "call" => "widgets/wXBMCLibrary.php?w=re&style=w&a=re&c=15", "interval" => 0);
 $wIndex["wRecentTV"] = $wdgtRecentTV;
 
 

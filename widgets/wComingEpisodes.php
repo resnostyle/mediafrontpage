@@ -1,12 +1,12 @@
 <?php
 //Note this example uses the "stylesheet", and "headerfunction" properties.
-$wdgtComingEpisodes = array("type" => "inline", "function" => "widgetComingEpisodes();", "stylesheet" => "css/comingepisodes.css", "headerfunction" => "widgetComingEpisodesHeader();");
+$wdgtComingEpisodes = array("name" => "Coming Episodes", "type" => "inline", "function" => "widgetComingEpisodes();", "stylesheet" => "css/comingepisodes.css", "headerfunction" => "widgetComingEpisodesHeader();");
 $wIndex["wComingEpisodes"] = $wdgtComingEpisodes;
 
 function widgetComingEpisodes() {
 	global $sickbeardcomingepisodes;
 	
-	echo "      <div id='middlecontent' /></div>";
+	echo "      <div id=\"wComingEpisodes\" class=\"widget1\"/></div>";
 	if(strpos($sickbeardcomingepisodes, "http://")===false) {
 		$iFrameSource = $sickbeardcomingepisodes;
 	} else {
@@ -37,7 +37,7 @@ function widgetComingEpisodesHeader() {
 			function onIFrameLoad(iFrameElement) {
 				var serverResponse = extractIFrameBody(iFrameElement).innerHTML;
 
-				var iFrameBody = document.getElementById("middlecontent");
+				var iFrameBody = document.getElementById("wComingEpisodes");
 				iFrameBody.innerHTML = serverResponse;
 
 				//adjustHeight();

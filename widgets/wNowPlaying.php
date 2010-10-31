@@ -1,7 +1,7 @@
 <?php
 $wdgtNowPlayingAjax = array("type" => "ajax", "block" => "nowplayingwrapper", "call" => "widgets/wNowPlaying.php?ajax=w", "interval" => 1000);
 $wdgtNowPlayingControls = array("type" => "inline", "function" => "widgetNowPlayingControls();", "headerfunction" => "widgetNowPlayingHeader();");
-$wdgtNowPlaying = array("type" => "mixed", "parts" => array($wdgtNowPlayingAjax, $wdgtNowPlayingControls));
+$wdgtNowPlaying = array("name" => "Now Playing", "type" => "mixed", "parts" => array($wdgtNowPlayingAjax, $wdgtNowPlayingControls));
 $wIndex["wNowPlaying"] = $wdgtNowPlaying;
 
 function widgetNowPlayingControls() {

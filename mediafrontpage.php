@@ -6,14 +6,16 @@ require_once "widgets.php";
 //turn off warnings
 $errlevel = error_reporting();
 error_reporting(E_ALL & ~E_WARNING);
-if(!include('layout.php'))
-{
+if (!include ("layout.php")){
 	// file was missing so include default theme 
-	require('default-layout.php');
+	require("default-layout.php");
 }
 // Turn on warnings
 error_reporting($errlevel); 
 
+if (empty ($arrLayout)) {
+	require_once("default-layout.php");
+}
 ?>
 <html>
 	<head>
@@ -76,32 +78,34 @@ error_reporting($errlevel);
 		if(!is_array($arrResult)) {
 			echo $COMM_ERROR;
 		} else {
-			foreach( $arrLayout as $sectionId => $widgets ) {
+			foreach ($arrLayout as $sectionId => $widgets) {
 				echo "\n\t<ul id=\"".$sectionId."\" class=\"section ui-sortable\">\n";
-				foreach( $widgets as $wId => $wAttribute ) {
-					echo "\n\t\t<li id=\"".$wId."\" class=\"widget ";
-                                	
-					echo $wAttribute['color']." ".$wAttribute['display'];
-					
+				foreach ($widgets as $wId => $wAttribute) {
+					echo "\t\t<li id=\"".$wId."\" class=\"widget";
+                    if (strlen($wAttribute["color"]) > 0) {
+						echo " ".$wAttribute["color"];
+					}
+                    if (strlen($wAttribute["display"]) > 0) {
+						echo " ".$wAttribute["display"];
+					}
 					echo "\">";
-					echo "<div class=\"widget-head\">";
-					echo "<span><h3>".$wAttribute['title']."</h3></span>";
-					echo "</div>";
-					echo "<div class=\"widget-content\">";
+					echo "\t\t\t<div class=\"widget-head\">";
+					echo "\t\t\t\t<h3>".$wAttribute['title']."</h3>\n";
+					echo "\t\t\t</div><!-- .widget-head -->\n";
+					echo "\t\t\t<div class=\"widget-content\">\n";
 					if(empty($wAttribute['params'])) {
 						renderWidget($wIndex[$wId]);
 					} else {
 						renderWidget($wIndex[$wId], $wAttribute['params']);
 					}
-
-					echo "</div>";
-					echo "\n\t\t</li><!-- ".$wId." -->\n";
+					echo "\t\t\t</div><!-- .widget-content -->\n";
+					echo "\t\t</li><!-- #".$wId." .widget -->\n";
 				}
-				echo "\n\t</ul><!-- ".$sectionId." -->\n";
+				echo "\t</ul><!-- #".$sectionId." .section -->\n";
 			}
 		}
 ?>
-		</div><!-- main -->
+		</div><!-- #main -->
     	<script type="text/javascript" src="js/jquery.js"></script>
     	<script type="text/javascript" src="js/widget.js"></script>
 		</body>
