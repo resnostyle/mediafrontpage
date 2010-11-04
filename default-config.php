@@ -20,6 +20,11 @@ $navlink["Sabnzbd"] = "/sabnzbd";
 
 // enter shortcut links for control section
 $shortcut;
+$shortcut["Shutdown XBMC"] = array("cmd" => 'shutdown');
+$shortcut["Update XBMC Video Library"] = array("cmd" => 'vidscan');
+$shortcut["Update XBMC Audio Library"] = array("json" => '{"jsonrpc": "2.0", "method": "AudioLibrary.ScanForContent", "id" : 1 }');
+$shortcut["Google"] = "http://www.google.com/";
+/*
 $shortcut["Input - XBMC"] = "/input/xbmc";
 $shortcut["Input - Pay TV"] = "/input/cable";
 $shortcut["Input - Games"] = "/input/games";
@@ -28,7 +33,7 @@ $shortcut["Turn TV On"] = "/tv/on";
 $shortcut["Turn TV Off"] = "/tv/off";
 $shortcut["Turn Xbox On"] = "/xbox/on";
 $shortcut["Turn Xbox Off"] = "/xbox/off";
-$shortcut["Update XBMC"] = "/updatevideolibrary";
+*/
 
 // enter directories for hard drive section
 $drive;
