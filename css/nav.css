@@ -1,10 +1,9 @@
 html,body { 
-  height: 100%; -webkit-font-smoothing: antialiased;
+  height: 100%;
 }
 
 body {
-  background: #222528; 
-  background-repeat: no-repeat;
+  background:url(../media/bgNav.png);
   font-family: 'Helvetica Neue','HelveticaNeue',Helvetica, Arial, sans-serif;
   font-size:100%;
   color: #eee;
@@ -82,7 +81,7 @@ a:visited {
 
 
 #nav-menu {
-  background:url(../media/bgNavTile.png) repeat-x;
+
   display: block;
   font-size:1em;
   margin-top:0px;
