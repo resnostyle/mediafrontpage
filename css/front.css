@@ -1,12 +1,8 @@
-/* css for MediaFrontPage and default widgets */
-
-/* BASE */ 
-
 html,body { 
    height: 100%; -webkit-font-smoothing: antialiased;
 }
 body {
-   background: #222528 no-repeat; 
+   background:url(../media/background.png) #222528;
    font-family: 'Helvetica Neue','HelveticaNeue',Helvetica, Arial, sans-serif;
    font-size:12px;
    line-height:140%;
