@@ -20,7 +20,7 @@ $arrLayout = array(
 		),
 		"section2" => array(
 			"wComingEpisodes" => array(
-				"title" => "Coming Episdes",
+				"title" => "Coming Episodes",
 				"display" => ""
 			)
 		),
