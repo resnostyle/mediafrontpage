@@ -6,7 +6,12 @@ $wIndex["wComingEpisodes"] = $wdgtComingEpisodes;
 function widgetComingEpisodes() {
 	global $sickbeardcomingepisodes;
 	
-	echo "      <div id=\"wComingEpisodes\" class=\"widget1\"/></div>";
+	//echo "<div class=\"widget-head\">\n";
+	//echo "\t<h3>Coming Episodes</h3>\n"; 
+	//echo "</div><!-- .widget-head -->\n ";
+	echo "<div class=\"widget-content\">\n ";
+	echo "\t<div id=\"comingepisodeswrapper\"></div>\n";
+	echo "</div><!-- .widget-content -->\n";
 	if(strpos($sickbeardcomingepisodes, "http://")===false) {
 		$iFrameSource = $sickbeardcomingepisodes;
 	} else {
@@ -15,6 +20,7 @@ function widgetComingEpisodes() {
 	echo "      <iframe onload='onIFrameLoad(this);' src ='".$iFrameSource."' name='middle' scrolling='no' frameborder='0' border='0' framespacing='0'>";
 	echo "        <p>Your browser does not support iframes.</p>";
 	echo "      </iframe>";
+
 }
 function widgetComingEpisodesHeader() {
 	echo <<< ComingEpisodesSCRIPT
@@ -37,7 +43,7 @@ function widgetComingEpisodesHeader() {
 			function onIFrameLoad(iFrameElement) {
 				var serverResponse = extractIFrameBody(iFrameElement).innerHTML;
 
-				var iFrameBody = document.getElementById("wComingEpisodes");
+				var iFrameBody = document.getElementById("comingepisodeswrapper");
 				iFrameBody.innerHTML = serverResponse;
 
 				//adjustHeight();
