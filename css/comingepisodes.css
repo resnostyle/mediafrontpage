@@ -25,17 +25,20 @@ div#header, span.MainMenu, span.SubMenu {
 }
 
 #listingWrapper {
-  padding: 1px 10px 10px 10px;
-  overflow: auto;
-  width:122%;
-  height:auto!important;
-  zoom: 0.8;
-  -moz-transform: scale(0.8);
-  -moz-transform-origin: 0 0;
-  -o-transform: scale(0.8);
-  -o-transform-origin: 0 0;
-  -webkit-transform: scale(0.8);
-  -webkit-transform-origin: 0 0;
+	padding: 1px 10px 10px 10px;
+	overflow: auto;
+	height:auto!important;
+	font-size: 0.8em;
+/*
+	width:122%;
+	zoom: 0.8;
+	-moz-transform: scale(0.8);
+	-moz-transform-origin: 0 0;
+	-o-transform: scale(0.8);
+	-o-transform-origin: 0 0;
+	-webkit-transform: scale(0.8);
+	-webkit-transform-origin: 0 0;
+*/
 }
 
 #listingWrapper h1 {
@@ -77,19 +80,19 @@ div#header, span.MainMenu, span.SubMenu {
 }
 
 .listingThumb {
-  width: 100px;
-  height: 147px;
+  width: 80px;
+  height: 118px;
   float: left;
   border: 1px solid #000;
   background-image: url(/sickbeard/images/poster.png);
 }
 
 .listing > div {
-  margin-left: 120px;
+  margin-left: 100px;
 }
 
 .listing h1 {
-  font-size: 1.5em;
+  font-size: 1.2em;
   font-weight: bold;
   margin: 10px 0px;
   padding: 0;
@@ -102,18 +105,18 @@ div#header, span.MainMenu, span.SubMenu {
 }
 
 .listing h1 > .icons a { 
-  font-size: 0.7em;
+  font-size: 0.5em;
   font-weight: normal;
   color: #222528
 }
 
 .listing h1 > .icons a img {
-  width: 16px;
-  height: 16px;
+  width: 12px;
+  height: 12px;
 }
 
 .listing p {
-  font-size: 1.1em;
+  /* font-size: 1.1em; */
   padding: 0px 0px 0px 5px;
 }
 
@@ -143,8 +146,9 @@ div#header, span.MainMenu, span.SubMenu {
   margin-bottom: 0;
 }
 
+/*
 div.footer {
   margin-top: -380px;
 }
-
+*/
 
