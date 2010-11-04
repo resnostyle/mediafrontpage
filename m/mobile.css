@@ -1,0 +1,34 @@
+/* css for MediaFrontPage mobile base */
+
+/* BASE */ 
+
+html,body { 
+	height: 100%; -webkit-font-smoothing: antialiased;
+}
+body {
+	font-family: 'Helvetica Neue','HelveticaNeue',Helvetica, Arial, sans-serif;
+	font-size:12px;
+	line-height:140%;
+	height: 100%;
+	margin: 5px 5px;
+}
+#header ul {
+	margin: 0;
+	padding:0;
+	list-style-type:none;
+	display: block;
+}
+#header li {
+	padding: 0px 5px 0px 5px;
+	float: left;
+}
+#main {
+	/* margin: 10px 0px 0px 0px;*/
+	padding: 10px 5px 5px 5px;
+	clear: both;
+}
+#main ul {
+	margin: 0;
+	padding:0;
+	list-style-type:none;
+}

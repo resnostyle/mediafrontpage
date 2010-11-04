@@ -198,9 +198,9 @@ function displayLibraryMenu($style, $params) {
 					  );
 	} else {
 		$data = array (
-							  "menu-lp" => array( "href" => "wXBMCLibrary.php?style=s&a=lp&bc=l", "onclick" => "", "label" => "Photos")
-						, "menu-lv" => array( "href" => "wXBMCLibrary.php?style=s&a=lv&bc=l", "onclick" => "", "label" => "Videos")
-						, "menu-lm" => array( "href" => "wXBMCLibrary.php?style=s&a=lm&bc=l", "onclick" => "", "label" => "Music")
+							  "menu-lp" => array( "href" => "?style=".$style."&a=lp&bc=l", "onclick" => "", "label" => "Photos")
+						, "menu-lv" => array( "href" => "?style=".$style."&a=lv&bc=l", "onclick" => "", "label" => "Videos")
+						, "menu-lm" => array( "href" => "?style=".$style."&a=lm&bc=l", "onclick" => "", "label" => "Music")
 					  );
 	}
 
@@ -223,11 +223,11 @@ function displayLibraryVideoMenu($style, $params) {
 					  );
 	} else {
 		$data = array (
-						  "menu-t" => array( "href" => "wXBMCLibrary.php?style=s&a=t&bc=l|lv", "onclick" => "", "label" => "TV Shows")
-						, "menu-m" => array( "href" => "wXBMCLibrary.php?style=s&a=m&bc=l|lv", "onclick" => "", "label" => "Movies")
-						, "menu-re" => array( "href" => "wXBMCLibrary.php?style=s&a=re&bc=l|lv", "onclick" => "", "label" => "Recent Episodes")
-						, "menu-rm" => array( "href" => "wXBMCLibrary.php?style=s&a=rm&bc=l|lv", "onclick" => "", "label" => "Recent Movies")
-						, "menu-mv" => array( "href" => "wXBMCLibrary.php?style=s&a=mv&bc=l|lv", "onclick" => "", "label" => "Music")
+						  "menu-t" => array( "href" => "?style=".$style."&a=t&bc=l|lv", "onclick" => "", "label" => "TV Shows")
+						, "menu-m" => array( "href" => "?style=".$style."&a=m&bc=l|lv", "onclick" => "", "label" => "Movies")
+						, "menu-re" => array( "href" => "?style=".$style."&a=re&bc=l|lv", "onclick" => "", "label" => "Recent Episodes")
+						, "menu-rm" => array( "href" => "?style=".$style."&a=rm&bc=l|lv", "onclick" => "", "label" => "Recent Movies")
+						, "menu-mv" => array( "href" => "?style=".$style."&a=mv&bc=l|lv", "onclick" => "", "label" => "Music")
 					  );
 	}
 

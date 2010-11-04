@@ -56,23 +56,37 @@ function widgetComingEpisodesHeader() {
 
 ComingEpisodesSCRIPT;
 }
-if(!empty($_GET["display"])) {
-	include_once "../config.php";
 
-	//$html = file_get_contents("http://www.google.com");
-
-	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($ch, CURLOPT_HTTPGET, 1);
-	curl_setopt($ch, CURLOPT_URL, $sickbeardcomingepisodes);
-
-	$html = curl_exec($ch);
-	
-	curl_close($ch);
-
+function stripBody($body) {
 	//$body = preg_replace("/.*<body[^>]*>|<\/body>.*/si", "", $html);  //Need a faster way to do this.
-	$body = $html;
-
+	$pos = strpos($body, "<body");
+	if ($pos > 0) {
+		$body = substr($body, $pos);
+		$pos = strpos($body, ">");
+		if ($pos > 0) {
+			$body = substr($body, $pos + 1);
+			$pos = strpos($body, "</body>");
+			if ($pos > 0) {
+				$body = substr($body, 0, $pos - 1);
+			}
+		}
+	}
+	return $body;
+}
+function stripInnerWrapper($body) {
+	$pos = strpos($body, "<div id=\"listingWrapper\">");
+	if ($pos > 0) {
+		$body = substr($body, $pos);
+		$pos = strpos($body, "<script");
+		if ($pos > 0) {
+			$body = substr($body, 0, $pos - 1);
+		}
+	}
+	return $body;
+}
+function changeLinks($body) {
+	global $sickbeardcomingepisodes;
+	
 	$urldata = parse_url($sickbeardcomingepisodes);
 	$pos = strrpos($sickbeardcomingepisodes, "/");
 	if($pos < strlen($sickbeardcomingepisodes)) {
@@ -97,7 +111,42 @@ if(!empty($_GET["display"])) {
 		}
 		$body = str_replace($link, $newlink, $body);
 	}
+	
+	return $body;
+}
+function comingSoonUrl() {
+	global $sickbeardcomingepisodes;
 
+	if(!(strpos($sickbeardcomingepisodes, "http") === 0)){
+		$url = "http://".$_SERVER['PHP_AUTH_USER'].":".$_SERVER['PHP_AUTH_PW']."@".$_SERVER['SERVER_NAME'].((strpos($sickbeardcomingepisodes, "/") === 0)?"":"/").$sickbeardcomingepisodes;
+	} else {
+		$url = $sickbeardcomingepisodes;
+	}
+	
+	return $url;
+}
+function getComingSoon() {
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_HTTPGET, 1);
+	curl_setopt($ch, CURLOPT_URL, comingSoonUrl());
+
+	$html = curl_exec($ch);
+	curl_close($ch);
+	
+	return $html;
+}
+
+function displayComingSoon () {
+	$html = getComingSoon();
+	$body = stripBody($html);
+	$body = stripInnerWrapper($body);
+	$body = changeLinks($body);
 	echo $body;
+}
+
+if(!empty($_GET["style"]) && ($_GET["style"] == "s")) {
+	include_once "../config.php";
+	displayComingSoon();
 }
 ?>
