@@ -98,7 +98,7 @@ if (!empty($_GET['ajax']) && ($_GET['ajax'] == "w")) {
 				//progress bar
 				$results = jsoncall('{"jsonrpc": "2.0", "method": "VideoPlayer.GetPercentage", "id": 1}');
 				$percentage = $results['result'];
-				echo "\t\t\t<div class='progressbar'><div class='progress' style='width:".$percentage."%';</div></div>";
+				echo "\t\t\t<div class='progressbar'><div class='progress' style='width:".$percentage."%'></div></div>";
 
 			} elseif (($results['result']['audio']) == 1) {
 				//get playlist items
@@ -129,7 +129,7 @@ if (!empty($_GET['ajax']) && ($_GET['ajax'] == "w")) {
 				//progress bar
 				$results = jsoncall('{"jsonrpc": "2.0", "method": "AudioPlayer.GetPercentage", "id": 1}');
 				$percentage = $results['result'];
-				echo "        <div class='progressbar'><div class='progress' style='width:".$percentage."%';</div></div>";
+				echo "        <div class='progressbar'><div class='progress' style='width:".$percentage."%'></div></div>";
 			} else {
 				echo "Nothing Playing";
 			} 

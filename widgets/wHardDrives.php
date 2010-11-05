@@ -18,7 +18,7 @@ function widgetHardDrives() {
 			echo "\t\t<td>".$drivelabel."</td>\n";
 			echo "\t\t<td>".to_readable_size(disk_total_space($drivepath))."</td>\n";
 			echo "\t\t<td>".to_readable_size(disk_free_space($drivepath))."</td>\n";
-			echo "\t\t<td><div class='harddrive'><div class='usage' style='width:".(disk_used_percentage($drivepath))."%';</div></div></td>\n";
+			echo "\t\t<td><div class='progressbar'><div class='progress' style='width:".(disk_used_percentage($drivepath))."%'></div></div></td>\n";
 			echo "\t</tr>\n";
 		}
 		echo "</table>\n";
