@@ -58,11 +58,12 @@ a:visited {
 	height: 16px; 
 	margin: 0 0 2px; 
 	background: #333; 
+	width: 100px;
 }
-.progressbar .progress { 
+.progress { 
 	/*position: relative; */
 	background: #FF9522; 
-	height: 10px; 
+	height: 100%; 
 	text-align:right; 
 	display:block;
 }
@@ -116,18 +117,8 @@ a.controlbutton img {
 	text-align: center;
 	width: 250px;
 }
-#harddrives div.progressbar { 
-	width: 100px; 
-	height: 16px; 
-}
-#harddrives div.progressbar div.progress { 
-	height: 16px; 
-}
 #nowplaying div.progressbar { 
 	width: 250px; 
-	height: 10px; 
-}
-#nowplaying div.progressbar div.progress { 
 	height: 10px; 
 }
 /* wNOWPLAYING */
