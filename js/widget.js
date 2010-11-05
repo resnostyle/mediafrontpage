@@ -62,15 +62,15 @@ var widgets = {
                 }).toggle(function () {
                     $(this).css({backgroundPosition: '-66px 0', width: '42px'})
                         .parents(settings.widgetSelector)
-                            .find('.edit-box').show().find('input').focus();
+                            .find('.widget-config').show().find('input').focus();
                     return false;
                 },function () {
                     $(this).css({backgroundPosition: '', width: '24px'})
                         .parents(settings.widgetSelector)
-                            .find('.edit-box').hide();
+                            .find('.widget-config').hide();
                     return false;
                 }).appendTo($(settings.handleSelector,this));
-                $('<div class="edit-box" style="display:none;"/>')
+                $('<div class="widget-config" style="display:none;"/>')
                     .append('<ul><li class="item"><label>Title:</label><input value="' + $('h3',this).text() + '"/></li>')
                     .append('</ul>')
                     .insertAfter($(settings.handleSelector,this));
@@ -89,7 +89,7 @@ var widgets = {
             }
         });
         
-        $('.edit-box').each(function () {
+        $('.widget-config').each(function () {
             $('input',this).keyup(function () {
                 $(this).parents(settings.widgetSelector).find('h3').text( $(this).val().length>20 ? $(this).val().substr(0,20)+'...' : $(this).val() );
                 widgets.savePreferences();
