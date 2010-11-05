@@ -1,29 +1,36 @@
-/* Main section */
-
-#main #section1 { 
-    width: 25%;
-}
-
-#main #section2 { 
-    width: 50%;
-}
-
-#main #section3 { 
-    width: 25%;
-}
+/* Widget Placeholders and Style */
 
 #main .section {
     float: left;
     min-height: 400px;
     height: auto !important; 
 }
-
+#main #section1 { 
+    width: 25%;
+}
+#main #section2 { 
+    width: 50%;
+}
+#main #section3 { 
+    width: 25%;
+}
+#main .widget-placeholder { 
+    border: 2px dashed #999;
+}
+#main #section1 .widget-placeholder { 
+    margin: 10px 10px 0 10px; 
+}
+#main #section2 .widget-placeholder { 
+    margin: 10px 10px 0 10px; 
+}
+#main #section3 .widget-placeholder { 
+    margin: 10px 10px 0 10px; 
+}
 #main .section .widget {
     border:1px solid black;
     -moz-border-radius:6px 6px 6px 6px;
     border-radius:6px 6px 6px 6px;
     margin:10px 5px;
-
 }
 #main .widget .widget-head {
     -moz-border-radius:6px 6px 0px 0px;
@@ -43,6 +50,47 @@
    padding: 0 5px;
    display:inline;
 }
+#main .widget .widget-head a.remove  {
+    float: right;
+    display: inline;
+    background: url(../media/buttons.gif) no-repeat -24px 0;
+    width: 14px;
+    height: 14px;
+    margin: 8px 0;
+    text-indent: -9999em;
+    outline: none;
+}
+#main .widget .widget-head a.edit  {
+    float: right;
+    display: inline;
+    background: url(../media/buttons.gif) no-repeat 0 0;
+    width: 24px;
+    height: 14px;
+    margin: 8px 0;
+    text-indent: -9999em;
+    outline: none;
+}
+#main .widget .widget-head a.collapse  {
+    float: left;
+    display: inline;
+    background: url(../media/buttons.gif) no-repeat -52px 0;
+    width: 14px;
+    height: 14px;
+    text-indent: -9999em;
+    margin: 8px 0 8px 4px;
+    outline: none;
+}
+.collapsed .widget-head a.collapse {
+    background-position:-38px 0;
+}
+.collapsed .widget-content {
+    display:none !important;
+}
+#main .widget .widget-config {
+    background:#2C2D32;
+    padding: 1px 5px 10px;
+    overflow: hidden;
+}
 #main .widget .widget-content {
     background:#2C2D32;
     -moz-border-radius:0px 0px 6px 6px;
@@ -53,4 +101,5 @@
 #main .widget .widget-content .alt {
     background:#303134;
 }
+
 /* End Main section */
