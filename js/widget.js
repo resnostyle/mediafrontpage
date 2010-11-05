@@ -60,7 +60,7 @@ var widgets = {
                     // STOP event bubbling 
                     e.stopPropagation();    
                 }).toggle(function () {
-                    $(this).css({backgroundPosition: '-66px 0', width: '55px'})
+                    $(this).css({backgroundPosition: '-66px 0', width: '42px'})
                         .parents(settings.widgetSelector)
                             .find('.edit-box').show().find('input').focus();
                     return false;
