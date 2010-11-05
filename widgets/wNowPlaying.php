@@ -81,7 +81,7 @@ if (!empty($_GET['ajax']) && ($_GET['ajax'] == "w")) {
 					echo "\t\t<div id='thumbblock'>\n";
 					echo "\t\t\t<a href=\"".$xbmcimgpath.$thumb."\" class=\"highslide\" onclick=\"return hs.expand(this)\">\n";
 					echo "\t\t\t\t<img src=\"".$xbmcimgpath.$thumb."\" title='Click to enlarge' alt=\"".htmlentities($items[$current]['plot'], ENT_QUOTES)."\" />";
-					echo "\t\t\t<a>\n";
+					echo "\t\t\t</a>\n";
 					echo "\t\t</div>\n";
 				}
 				echo "\t\t\t<p>".$show."</p>\n";
