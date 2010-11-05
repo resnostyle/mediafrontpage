@@ -6,9 +6,6 @@ $wIndex["wComingEpisodes"] = $wdgtComingEpisodes;
 function widgetComingEpisodes() {
 	global $sickbeardcomingepisodes;
 	
-	//echo "<div class=\"widget-head\">\n";
-	//echo "\t<h3>Coming Episodes</h3>\n"; 
-	//echo "</div><!-- .widget-head -->\n ";
 	echo "<div class=\"widget-content\">\n ";
 	echo "\t<div id=\"comingepisodeswrapper\"></div>\n";
 	echo "</div><!-- .widget-content -->\n";
@@ -46,9 +43,22 @@ function widgetComingEpisodesHeader() {
 				var iFrameBody = document.getElementById("comingepisodeswrapper");
 				iFrameBody.innerHTML = serverResponse;
 
-				//adjustHeight();
+				addAltClass();
 			}
-
+			function addAltClass() {
+				var allHTMLTags = document.getElementsByTagName("*");
+				var alt;
+				alt = false;
+			
+				for (i=0; i < allHTMLTags.length; i++) {
+					if (allHTMLTags[i].className == 'listing') {
+						if(alt) {
+							allHTMLTags[i].className = 'listing alt';
+						}
+						alt = !alt;
+					}
+				}
+				}
 			function adjustHeight() {
 				var windowSizeAdjustment = 100;
 				var windowHeight = (window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : document.body.clientHeight) - windowSizeAdjustment;
