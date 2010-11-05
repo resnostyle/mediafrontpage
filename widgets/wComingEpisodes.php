@@ -115,7 +115,6 @@ function changeLinks($body) {
 	$regex  = '/(<[(img)|(a)]\s*(.*?)\s*[(src)|(href)]=(?P<link>[\'"]+?\s*\S+\s*[\'"])+?\s*(.*?)\s*>)/i';
 
 	preg_match_all($regex, $body, $matches);
-	
 	foreach($matches['link'] as $link) {
 		$pos = strpos($link, "/");
 		if($pos && strpos($link, "//")===false) {
@@ -125,6 +124,7 @@ function changeLinks($body) {
 				$newlink = substr($link , 0, 1).$uri_full.substr($link , 1);
 			}
 		}
+		//$body = str_replace($link, "\"".sickbeardposter(str_replace("\"", "", $newlink))."\"", $body);
 		$body = str_replace($link, $newlink, $body);
 	}
 	
@@ -141,6 +141,7 @@ function comingSoonUrl() {
 	
 	return $url;
 }
+
 function getComingSoon() {
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -154,10 +155,22 @@ function getComingSoon() {
 }
 
 function displayComingSoon () {
+	global $sickbeardurl;
+
 	$html = getComingSoon();
 	$body = stripBody($html);
 	$body = stripInnerWrapper($body);
-	$body = changeLinks($body);
+	//$body = changeLinks($body);
+	
+	if(!empty($_GET["style"]) && (($_GET["style"] == "s") || ($_GET["style"] == "m"))) {
+		$body = str_replace("src=\"/sickbeard/showPoster/", "src=\"../sickbeardposter.php", $body);
+	}
+	$body = str_replace("src=\"/sickbeard/", "src=\"".$sickbeardurl, $body);
+	$body = str_replace("href=\"/sickbeard/", "href=\"".$sickbeardurl, $body);
+	$body = str_replace("src=\"home/", "src=\"".$sickbeardurl."/home/", $body);
+	$body = str_replace("href=\"home/", "href=\"".$sickbeardurl."/home/", $body);
+	$body = str_replace("src=\"images/", "src=\"".$sickbeardurl."/images/", $body);
+	$body = str_replace("href=\"images/", "href=\"".$sickbeardurl."/images/", $body);
 	echo $body;
 }
 

@@ -51,7 +51,7 @@ a:hover {
 a:visited {
 	color:#FF9522;
 }
-div.progressbar { 
+.progressbar { 
 	/*position: relative; */
 	display: block;                 
 	float: left;    
@@ -59,7 +59,7 @@ div.progressbar {
 	margin: 0 0 2px; 
 	background: #333; 
 }
-div.progressbar div.progress { 
+.progressbar .progress { 
 	/*position: relative; */
 	background: #FF9522; 
 	height: 10px; 

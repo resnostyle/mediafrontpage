@@ -5,6 +5,7 @@ $xbmcimgpath = '/vfs/'; //leave as default if unsure
 
 // enter path to sickbeards's coming episodes page
 $sickbeardcomingepisodes = '/sickbeard/comingEpisodes/';
+$sickbeardurl = "http://rshupe:K1effer@rshupe.homeip.net/sickbeard/";
 
 // enter SABnzbd+ URL and API key
 $saburl = 'http://localhost:8080/sabnzbd/';  // The full URL you use to access SABnzbd.

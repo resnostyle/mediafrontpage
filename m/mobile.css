@@ -32,3 +32,18 @@ body {
 	padding:0;
 	list-style-type:none;
 }
+
+.progressbar { 
+	display: block;                 
+	float: left;    
+	height: 16px; 
+	margin: 0 0 2px; 
+	background: #333; 
+}
+.progressbar .progress { 
+	/*position: relative; */
+	background: #FF9522; 
+	height: 10px; 
+	text-align:right; 
+	display:block;
+}
