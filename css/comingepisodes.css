@@ -21,7 +21,7 @@ div#header, span.MainMenu, span.SubMenu {
 }
 
 #listingWrapper {
-	padding: 1px 10px 10px 10px;
+	padding: 1px 0px 10px 0px;
 	overflow: auto;
 	height:auto!important;
 	font-size: 0.8em;
@@ -32,15 +32,13 @@ div#header, span.MainMenu, span.SubMenu {
 	visibility: visible;
 	border-bottom: 0px;
 	text-align: left;
-	margin:0 0 -8 20px;
+	margin:0 0 -8 15px;
 }
 
 .listing {
 	padding: 10px 20px 10px 10px;
 	border: none;
 	margin-top: 10px;
-	margin-right: 10px;
-	margin-left: 10px;
 	overflow: hidden;
 	background-color: inherit;
 }

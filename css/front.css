@@ -34,6 +34,9 @@ table {
 	font-size:1.2em;
 	text-align:center;
 }
+label {
+	margin-right:5px;
+}
 ul, li { 
 	margin: 0;
 	padding:0;
