@@ -43,4 +43,8 @@ $drive["Sata 2"] = "/media/sata2/";
 $drive["Sata 3"] = "/media/sata3/";
 $drive["Sata 4"] = "/media/sata4/";
 
+$customStyleSheet = "";
+//Example of how to use this
+//$customStyleSheet = "css/lighttheme.css";
+
 ?>
