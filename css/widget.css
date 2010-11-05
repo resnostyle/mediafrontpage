@@ -44,13 +44,13 @@
    display:inline;
 }
 #main .widget .widget-content {
-    background:#222528;
+    background:#2C2D32;
     -moz-border-radius:0px 0px 6px 6px;
     border-radius:0px 0px 6px 6px;
     padding: 1px 5px 10px;
     overflow: hidden;
 }
-#main .widget .widget-content li.alt {
-    background:#292929;
+#main .widget .widget-content .alt {
+    background:#303134;
 }
 /* End Main section */

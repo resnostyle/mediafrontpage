@@ -45,9 +45,6 @@ div#header, span.MainMenu, span.SubMenu {
 	background-color: inherit;
 }
 
-DIV#listingWrapper DIV.alt {
-	background-color: #292929;
-}
 .listingThumb {
 	width: 80px;
 	height: 118px;
