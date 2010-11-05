@@ -51,12 +51,16 @@ div#header, span.MainMenu, span.SubMenu {
 
 .listing {
   padding: 10px 20px 10px 10px;
-  border: 1px solid #ccc;
+  border: none;
   margin-top: 10px;
   margin-right: 10px;
   margin-left: 10px;
   overflow: hidden;
   background-color: inherit;
+}
+
+DIV#listingWrapper DIV.alt {
+  background-color: #292929;
 }
 
 .listing_current{
