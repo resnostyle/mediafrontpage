@@ -197,15 +197,3 @@ div.library-info img {
 	width: 125px;
 	margin: 0px 5px 0 0;
 }
-
-/* wRECENTTV */
-
-#wRecentTV {
-	white-space:nowrap;
-}
-
-div.widget-control  {
-	display:block;
-	clear: both;
-	float: right;
-}
