@@ -146,7 +146,6 @@ a.controlbutton img {
 	max-height: 100px;
 	max-width: 100px;
 }
-
 /* wSABNZBD */
 
 #sabnzbdblock  {
@@ -158,13 +157,18 @@ a.controlbutton img {
 	margin: 20px 0 0;
 }
 #sabnzbd div.progressbar { 
-	width: 250px; 
-	height: 10px; 
+	width:100%; 
+	height:15px;
+	margin-bottom:10px; 
 }
 #sabnzbd div.progressbar div.progress { 
-	height: 10px; 
+	height:15px; 
 }
-
+#sabnzbd div.progressbar div.sabnzbd-item-label {
+	width:100%;
+	text-align:left;
+	margin:-16px 5px;'
+}
 /* wRECENTMOVIES */
 
 #recentmovies  {
