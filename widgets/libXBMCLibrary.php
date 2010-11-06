@@ -183,10 +183,29 @@ function executeVideo($style = "w", $action, $breadcrumb, $params = array()) {
 				echo "<pre>$request</pre>";
 			}
 			break;
-		case "af": // Audio Files
+		case "so": // Songs
 			echo "<ul class=\"widget-list\"><li>Under Construction</li></ul>";
-			$anchor = buildBackAnchor($style, "l|lm", $params);
-			echo "<div class=\"widget-control\">".$anchor."</div>\n";
+			$request = '{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": { "fields": [ "artist" ] }, "id": 1}';
+			$results = jsoncall($request);
+			if (!empty($results['result'])) {
+				$songs = $results['result']['songs'];
+				displayMusicListSong($songs, $style, $action, $breadcrumb, $params);
+			} else {
+				echo $COMM_ERROR;
+				echo "<pre>$request</pre>";
+			}
+			break;
+		case "ms": // Music Source
+			echo "<ul class=\"widget-list\"><li>Under Construction</li></ul>";
+			$request = '{"jsonrpc": "2.0", "method": "Files.GetSources", "params" : { "media" : "music" }, "id": 1}';
+			$results = jsoncall($request);
+			if (!empty($results['result'])) {
+				$sources = $results['result']['shares'];
+				displayMusicListSource($sources, $style, $action, $breadcrumb, $params);
+			} else {
+				echo $COMM_ERROR;
+				echo "<pre>$request</pre>";
+			}
 			break;
 	}
 }
@@ -276,13 +295,15 @@ function displayLibraryMusicMenu($style, $params) {
 		$data = array (
 						  "menu-ar" => array( "href" => "#", "onclick" => " onclick=\"".$params['onclickcmd']."('".$params['wrapper']."', '".$params['harness']."', 'ar', 'l|lm', '');\"", "label" => "Artists")
 						, "menu-al" => array( "href" => "#", "onclick" => " onclick=\"".$params['onclickcmd']."('".$params['wrapper']."', '".$params['harness']."', 'al', 'l|lm', '');\"", "label" => "Albums")
-						, "menu-af" => array( "href" => "#", "onclick" => " onclick=\"".$params['onclickcmd']."('".$params['wrapper']."', '".$params['harness']."', 'af', 'l|lm', '');\"", "label" => "Files")
+						, "menu-so" => array( "href" => "#", "onclick" => " onclick=\"".$params['onclickcmd']."('".$params['wrapper']."', '".$params['harness']."', 'so', 'l|lm', '');\"", "label" => "Songs")
+						, "menu-ms" => array( "href" => "#", "onclick" => " onclick=\"".$params['onclickcmd']."('".$params['wrapper']."', '".$params['harness']."', 'ms', 'l|lm', '');\"", "label" => "Files")
 					);
 	} else {
 		$data = array (
 						  "menu-ar" => array( "href" => "?style=".$style."&a=ar&bc=l|lm", "onclick" => "", "label" => "Artists")
 						, "menu-al" => array( "href" => "?style=".$style."&a=al&bc=l|lm", "onclick" => "", "label" => "Albums")
-						, "menu-af" => array( "href" => "?style=".$style."&a=af&bc=l|lm", "onclick" => "", "label" => "Files")
+						, "menu-so" => array( "href" => "?style=".$style."&a=so&bc=l|lm", "onclick" => "", "label" => "Songs")
+						, "menu-ms" => array( "href" => "?style=".$style."&a=ms&bc=l|lm", "onclick" => "", "label" => "Files")
 					  );
 	}
 
@@ -572,6 +593,46 @@ function displayMusicListAlbum($albums, $style, $action, $breadcrumb, $params) {
 		$id = "music-".$albumInfo["albumid"];
 		$class = "music-album";
 		$query = "&albumid=".$albumInfo["albumid"];
+		$anchor = buildAnchor($label, $style, $id, $class, "d", $newbreadcrumb, $params, $query);
+		echo "<li".(($alt) ? " class=\"alt\"" : "").">".$anchor."</li>\n";
+		$alt = !$alt;
+	}
+	echo "</ul>";
+
+	$anchor = buildBackAnchor($style, $breadcrumb, $params);
+	echo "<div class=\"widget-control\">".$anchor."</div>\n";
+}
+
+function displayMusicListSong($songs, $style, $action, $breadcrumb, $params) {
+	$newbreadcrumb = getNewBreadcrumb($action, $breadcrumb);
+
+	echo "<ul class=\"widget-list\">";
+	$alt = false;
+	foreach ($songs as $songInfo) {
+		$label = $songInfo['artist']." - ".$songInfo['label'];
+		$id = "music-".$songInfo["songid"];
+		$class = "music-song";
+		$query = "&songid=".$songInfo["songid"];
+		$anchor = buildAnchor($label, $style, $id, $class, "d", $newbreadcrumb, $params, $query);
+		echo "<li".(($alt) ? " class=\"alt\"" : "").">".$anchor."</li>\n";
+		$alt = !$alt;
+	}
+	echo "</ul>";
+
+	$anchor = buildBackAnchor($style, $breadcrumb, $params);
+	echo "<div class=\"widget-control\">".$anchor."</div>\n";
+}
+
+function displayMusicListSource($sources, $style, $action, $breadcrumb, $params) {
+	$newbreadcrumb = getNewBreadcrumb($action, $breadcrumb);
+
+	echo "<ul class=\"widget-list\">";
+	$alt = false;
+	foreach ($sources as $source) {
+		$label = $source['label'];
+		$id = "music-".$source["sourceid"];
+		$class = "music-source";
+		$query = "&sourceid=".$source["sourceid"];
 		$anchor = buildAnchor($label, $style, $id, $class, "d", $newbreadcrumb, $params, $query);
 		echo "<li".(($alt) ? " class=\"alt\"" : "").">".$anchor."</li>\n";
 		$alt = !$alt;
