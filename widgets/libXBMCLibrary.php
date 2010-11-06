@@ -173,8 +173,15 @@ function executeVideo($style = "w", $action, $breadcrumb, $params = array()) {
 			break;
 		case "al": // Albums
 			echo "<ul class=\"widget-list\"><li>Under Construction</li></ul>";
-			$anchor = buildBackAnchor($style, "l|lm", $params);
-			echo "<div class=\"widget-control\">".$anchor."</div>\n";
+			$request = '{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params" : { "fields": [ "artist", "year" ] },"id": 1}';
+			$results = jsoncall($request);
+			if (!empty($results['result'])) {
+				$albums = $results['result']['albums'];
+				displayMusicListAlbum($albums, $style, $action, $breadcrumb, $params);
+			} else {
+				echo $COMM_ERROR;
+				echo "<pre>$request</pre>";
+			}
 			break;
 		case "af": // Audio Files
 			echo "<ul class=\"widget-list\"><li>Under Construction</li></ul>";
@@ -540,11 +547,31 @@ function displayMusicListArtist($artists, $style, $action, $breadcrumb, $params)
 
 	echo "<ul class=\"widget-list\">";
 	$alt = false;
-	foreach ($artists as $musicInfo) {
-		$label = $musicInfo['label'];
-		$id = "music-".$musicInfo["artistid"];
+	foreach ($artists as $artistInfo) {
+		$label = $artistInfo['label'];
+		$id = "music-".$artistInfo["artistid"];
 		$class = "music-artist";
-		$query = "&artistid=".$musicInfo["artistid"];
+		$query = "&artistid=".$artistInfo["artistid"];
+		$anchor = buildAnchor($label, $style, $id, $class, "d", $newbreadcrumb, $params, $query);
+		echo "<li".(($alt) ? " class=\"alt\"" : "").">".$anchor."</li>\n";
+		$alt = !$alt;
+	}
+	echo "</ul>";
+
+	$anchor = buildBackAnchor($style, $breadcrumb, $params);
+	echo "<div class=\"widget-control\">".$anchor."</div>\n";
+}
+
+function displayMusicListAlbum($albums, $style, $action, $breadcrumb, $params) {
+	$newbreadcrumb = getNewBreadcrumb($action, $breadcrumb);
+
+	echo "<ul class=\"widget-list\">";
+	$alt = false;
+	foreach ($albums as $albumInfo) {
+		$label = $albumInfo['artist']." - ".$albumInfo['label']." &nbsp;(".$albumInfo['year'].")";
+		$id = "music-".$albumInfo["albumid"];
+		$class = "music-album";
+		$query = "&albumid=".$albumInfo["albumid"];
 		$anchor = buildAnchor($label, $style, $id, $class, "d", $newbreadcrumb, $params, $query);
 		echo "<li".(($alt) ? " class=\"alt\"" : "").">".$anchor."</li>\n";
 		$alt = !$alt;
