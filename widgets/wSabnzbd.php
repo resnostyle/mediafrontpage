@@ -40,7 +40,7 @@ function sabStatus() {
 		$remaining = (int)$slot["mbleft"];
 		if($total > 0 && is_numeric($remaining)) {
 			$percentage = (int)((($total - $remaining) / $total)*100);
-			echo "\t<div class='progressbar'><div class='progress' style='width:".$percentage."%'></div></div>\n";
+			echo "\t<div class='progressbar'><div class='progress' style='width:".$percentage."%'></div></div><br/>\n";
 		}
 	}
 	echo "</div><!-- sabnzbd -->\n";
