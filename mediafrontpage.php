@@ -74,36 +74,32 @@ if (empty ($arrLayout)) {
 		<div id="main">
 		
 <?php
-		$arrResult = jsoncall('{"jsonrpc": "2.0", "method": "JSONRPC.Version", "id": 1}');
-		if(!is_array($arrResult)) {
-			echo $COMM_ERROR;
-		} else {
-			foreach ($arrLayout as $sectionId => $widgets) {
-				echo "\n\t<ul id=\"".$sectionId."\" class=\"section ui-sortable\">\n";
-				foreach ($widgets as $wId => $wAttribute) {
-					echo "\t\t<li id=\"".$wId."\" class=\"widget";
-                    if (strlen($wAttribute["color"]) > 0) {
-						echo " ".$wAttribute["color"];
-					}
-                    if (strlen($wAttribute["display"]) > 0) {
-						echo " ".$wAttribute["display"];
-					}
-					echo "\">";
-					echo "\t\t\t<div class=\"widget-head\">";
-					echo "\t\t\t\t<h3>".$wAttribute['title']."</h3>\n";
-					echo "\t\t\t</div><!-- .widget-head -->\n";
-					echo "\t\t\t<div class=\"widget-content\">\n";
-					if(empty($wAttribute['params'])) {
-						renderWidget($wIndex[$wId]);
-					} else {
-						renderWidget($wIndex[$wId], $wAttribute['params']);
-					}
-					echo "\t\t\t</div><!-- .widget-content -->\n";
-					echo "\t\t</li><!-- #".$wId." .widget -->\n";
+		foreach ($arrLayout as $sectionId => $widgets) {
+			echo "\n\t<ul id=\"".$sectionId."\" class=\"section ui-sortable\">\n";
+			foreach ($widgets as $wId => $wAttribute) {
+				echo "\t\t<li id=\"".$wId."\" class=\"widget";
+                   if (strlen($wAttribute["color"]) > 0) {
+					echo " ".$wAttribute["color"];
 				}
-				echo "\t</ul><!-- #".$sectionId." .section -->\n";
+                   if (strlen($wAttribute["display"]) > 0) {
+					echo " ".$wAttribute["display"];
+				}
+				echo "\">";
+				echo "\t\t\t<div class=\"widget-head\">";
+				echo "\t\t\t\t<h3>".$wAttribute['title']."</h3>\n";
+				echo "\t\t\t</div><!-- .widget-head -->\n";
+				echo "\t\t\t<div class=\"widget-content\">\n";
+				if(empty($wAttribute['params'])) {
+					renderWidget($wIndex[$wId]);
+				} else {
+					renderWidget($wIndex[$wId], $wAttribute['params']);
+				}
+				echo "\t\t\t</div><!-- .widget-content -->\n";
+				echo "\t\t</li><!-- #".$wId." .widget -->\n";
 			}
+			echo "\t</ul><!-- #".$sectionId." .section -->\n";
 		}
+		
 ?>
 		</div><!-- #main -->
     	<script type="text/javascript" src="js/jquery.js"></script>
