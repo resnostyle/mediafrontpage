@@ -31,9 +31,11 @@ function sabStatus() {
 	$sabqueue = sabQuery("qstatus");
 	//echo "<br/><pre>".print_r($sabqueue)."</pre>";
 
-	echo "\t<p>".$sabqueue["state"]."</p>\n";
-	echo "\t<p>".$sabqueue["speed"]."</p>\n";
-	echo "\t<p>".$sabqueue["timeleft"]."</p>\n";
+	echo "\t<p>".$sabqueue["state"];
+	if ($sabqueue["state"] == "DOWNLOADING") {
+		echo " AT ".$sabqueue["speed"]."</p>\n";
+		echo "\t<p>TIMELEFT - ".$sabqueue["timeleft"]."</p>\n";
+	}
 	foreach($sabqueue["jobs"] as $slot) {
 		echo "\t<p>".$slot["filename"]."</p>\n";
 		$total = (int)$slot["mb"];
