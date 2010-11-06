@@ -190,15 +190,20 @@ function renderMenu($data) {
 }
 
 function displayLibraryMenu($style, $params) {
-	if ($style == "w") {
-		$data = array (
+	global $COMM_ERROR;
+
+	$arrResult = jsoncall('{"jsonrpc": "2.0", "method": "JSONRPC.Version", "id": 1}');
+	if(!is_array($arrResult)) {
+		echo $COMM_ERROR;
+	} else if ($style == "w") {
+			$data = array (
 						  "menu-lp" => array( "href" => "#", "onclick" => " onclick=\"".$params['onclickcmd']."('".$params['wrapper']."', '".$params['harness']."', 'lp', 'l', '');\"", "label" => "Photos")
 						, "menu-lv" => array( "href" => "#", "onclick" => " onclick=\"".$params['onclickcmd']."('".$params['wrapper']."', '".$params['harness']."', 'lv', 'l', '');\"", "label" => "Videos")
 						, "menu-lm" => array( "href" => "#", "onclick" => " onclick=\"".$params['onclickcmd']."('".$params['wrapper']."', '".$params['harness']."', 'lm', 'l', '');\"", "label" => "Music")
 					  );
 	} else {
-		$data = array (
-							  "menu-lp" => array( "href" => "?style=".$style."&a=lp&bc=l", "onclick" => "", "label" => "Photos")
+			$data = array (
+						  "menu-lp" => array( "href" => "?style=".$style."&a=lp&bc=l", "onclick" => "", "label" => "Photos")
 						, "menu-lv" => array( "href" => "?style=".$style."&a=lv&bc=l", "onclick" => "", "label" => "Videos")
 						, "menu-lm" => array( "href" => "?style=".$style."&a=lm&bc=l", "onclick" => "", "label" => "Music")
 					  );
