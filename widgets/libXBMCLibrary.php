@@ -25,31 +25,39 @@ function executeVideo($style = "w", $action, $breadcrumb, $params = array()) {
 			displayLibraryMusicMenu($style, $params);
 			break;
 		case "p":  // Play
-			if (($previousaction == "re") || ($previousaction == "e")) {
-				if ($previousaction == "re") {
-					$request = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetRecentlyAddedEpisodes", "params" : { "fields": [ '.$videodetailfields.' ] }, "id" : 1 }';
-				} else {
-					$showid = $params['showid'];
-					$season = $params['season'];
-					$request = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params" : { "tvshowid" : '.$showid.', "season" : '.$season.', "fields": [ '.$videodetailfields.' ] }, "id" : 1 }';
-				}
-				$results = jsoncall($request);
-				$videos = $results['result']['episodes'];
-				$typeId = "episodeid";
-			} elseif (($previousaction == "rm") || ($previousaction == "m")) {
-				$request = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": { "sortorder" : "ascending", "fields" : [ '.$videodetailfields.' ] }, "id": 1}';
-				$results = jsoncall($request);
-				$videos = $results['result']['movies'];
-				$typeId = "movieid";
+			switch ($previousaction) {
+				case "re":
+				case "e": 
+				case "rm":
+				case "m":
+					if (($previousaction == "re") || ($previousaction == "e")) {
+						if ($previousaction == "re") {
+							$request = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetRecentlyAddedEpisodes", "params" : { "fields": [ '.$videodetailfields.' ] }, "id" : 1 }';
+						} else {
+							$showid = $params['showid'];
+							$season = $params['season'];
+							$request = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params" : { "tvshowid" : '.$showid.', "season" : '.$season.', "fields": [ '.$videodetailfields.' ] }, "id" : 1 }';
+						}
+						$results = jsoncall($request);
+						$videos = $results['result']['episodes'];
+						$typeId = "episodeid";
+					} elseif (($previousaction == "rm") || ($previousaction == "m")) {
+						$request = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": { "sortorder" : "ascending", "fields" : [ '.$videodetailfields.' ] }, "id": 1}';
+						$results = jsoncall($request);
+						$videos = $results['result']['movies'];
+						$typeId = "movieid";
+					}
+					if (!empty($videos)) {
+						$videoId = $params['videoid'];
+						playVideoFromList($videos, $typeId, $videoId); 
+					} 
+					break;
+				case "so":
+					echo "<pre>Not Yet Implemented</pre>";
+					break;
+			
+			break;  // Don't break and flow into display.
 			}
-			if (!empty($videos)) {
-				$videoId = $params['videoid'];
-				playVideoFromList($videos, $typeId, $videoId); 
-			} else {
-				echo $COMM_ERROR;
-				echo "<pre>$request</pre>";
-			}
-			//break;  // Don't break and flow into display.
 		case "d":  // Display
 			switch ($previousaction) {
 				case "e": //Episodes
@@ -649,7 +657,7 @@ function displayMusicListSong($songs, $style, $action, $breadcrumb, $params) {
 		$id = "music-".$songInfo["songid"];
 		$class = "music-song";
 		$query = "&artistid=".$params["artistid"]."&albumid=".$params["albumid"]."&songid=".$songInfo["songid"];
-		$anchor = buildAnchor($label, $style, $id, $class, "d", $newbreadcrumb, $params, $query);
+		$anchor = buildAnchor($label, $style, $id, $class, "p", $newbreadcrumb, $params, $query);
 		echo "<li".(($alt) ? " class=\"alt\"" : "").">".$anchor."</li>\n";
 		$alt = !$alt;
 	}
