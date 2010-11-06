@@ -96,8 +96,10 @@
     -moz-border-radius:0px 0px 6px 6px;
     border-radius:0px 0px 6px 6px;
     padding: 1px 5px 10px;
+}
+#main .widget .widget-content .widget-list {
     overflow:auto;
-    max-height:600px;
+    max-height:590px;
 }
 #main .widget .widget-content .alt {
     background:#303134;
