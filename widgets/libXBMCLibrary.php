@@ -247,6 +247,12 @@ function getParameters($request) {
 	if(!empty($request['videoid'])) {
 		$params['videoid'] = $request['videoid'];
 	}
+	if(!empty($request['artistid'])) {
+		$params['artistid'] = $request['artistid'];
+	}
+	if(!empty($request['albumid'])) {
+		$params['albumid'] = $request['albumid'];
+	}
 
 	return $params;
 }
