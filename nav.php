@@ -9,7 +9,7 @@
   echo"  <body>";
   echo"    <div id=header>";
   echo"      <div id=home>";
-  echo"        <a href='mediafrontpage' target='main'></a>";
+  echo"        <a href='./mediafrontpage' target='main'></a>";
   echo"      </div>";
   echo"      <div id=nav-menu>";
   echo"        <ul>";
