@@ -51,28 +51,46 @@ function executeVideo($style = "w", $action, $breadcrumb, $params = array()) {
 			}
 			//break;  // Don't break and flow into display.
 		case "d":  // Display
-			if (($previousaction == "re") || ($previousaction == "e")) {
-				if ($previousaction == "re") {
-					$request = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetRecentlyAddedEpisodes", "params" : { "fields": [ '.$videodetailfields.' ] }, "id" : 1 }';
-				} else {
+			switch ($previousaction) {
+				case "e": //Episodes
 					$showid = $params['showid'];
 					$season = $params['season'];
 					$request = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params" : { "tvshowid" : '.$showid.', "season" : '.$season.', "fields": [ '.$videodetailfields.' ] }, "id" : 1 }';
-				}
-				$results = jsoncall($request);
-				$videos = $results['result']['episodes'];
-				$params['typeid'] = "episodeid";
-			} elseif (($previousaction == "rm") || ($previousaction == "m")) {
-				$request = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": { "sortorder" : "ascending", "fields" : [ '.$videodetailfields.' ] }, "id": 1}';
-				$results = jsoncall($request);
-				$videos = $results['result']['movies'];
-				$params['typeid'] = "movieid";
-			}
-			if (!empty($videos)) {
-				displayVideoFromList($videos, $style, $action, $breadcrumb, $params);
-			} else {
-				echo $COMM_ERROR;
-				echo "<pre>$request</pre>";
+					$results = jsoncall($request);
+					$videos = $results['result']['episodes'];
+					$params['typeid'] = "episodeid";
+					if (!empty($videos)) {
+						displayVideoFromList($videos, $style, $action, $breadcrumb, $params);
+					} else {
+						echo $COMM_ERROR;
+						echo "<pre>$request</pre>";
+					}
+					break;
+				case "re": // Recent Episodes
+					$request = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetRecentlyAddedEpisodes", "params" : { "fields": [ '.$videodetailfields.' ] }, "id" : 1 }';
+					$results = jsoncall($request);
+					$videos = $results['result']['episodes'];
+					$params['typeid'] = "episodeid";
+					if (!empty($videos)) {
+						displayVideoFromList($videos, $style, $action, $breadcrumb, $params);
+					} else {
+						echo $COMM_ERROR;
+						echo "<pre>$request</pre>";
+					}
+					break;
+				case "m":  // Movies
+				case "rm": // Recent Movies
+					$request = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": { "sortorder" : "ascending", "fields" : [ '.$videodetailfields.' ] }, "id": 1}';
+					$results = jsoncall($request);
+					$videos = $results['result']['movies'];
+					$params['typeid'] = "movieid";
+					if (!empty($videos)) {
+						displayVideoFromList($videos, $style, $action, $breadcrumb, $params);
+					} else {
+						echo $COMM_ERROR;
+						echo "<pre>$request</pre>";
+					}
+					break;
 			}
 			break;
 		case "t":  // TV Shows
@@ -173,7 +191,12 @@ function executeVideo($style = "w", $action, $breadcrumb, $params = array()) {
 			break;
 		case "al": // Albums
 			echo "<ul class=\"widget-list\"><li>Under Construction</li></ul>";
-			$request = '{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params" : { "fields": [ "artist", "year" ] },"id": 1}';
+			$artistid = $params['artistid'];
+			if (!empty($artistid)) {
+				$request = '{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params": { "artistid": '.$artistid.' , "fields": [ "artist", "year" ] },"id": 1}';
+			} else {
+				$request = '{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params": { "fields": [ "artist", "year" ] },"id": 1}';
+			}
 			$results = jsoncall($request);
 			if (!empty($results['result'])) {
 				$albums = $results['result']['albums'];
@@ -185,6 +208,7 @@ function executeVideo($style = "w", $action, $breadcrumb, $params = array()) {
 			break;
 		case "so": // Songs
 			echo "<ul class=\"widget-list\"><li>Under Construction</li></ul>";
+			
 			$request = '{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": { "fields": [ "artist" ] }, "id": 1}';
 			$results = jsoncall($request);
 			if (!empty($results['result'])) {
@@ -573,7 +597,7 @@ function displayMusicListArtist($artists, $style, $action, $breadcrumb, $params)
 		$id = "music-".$artistInfo["artistid"];
 		$class = "music-artist";
 		$query = "&artistid=".$artistInfo["artistid"];
-		$anchor = buildAnchor($label, $style, $id, $class, "d", $newbreadcrumb, $params, $query);
+		$anchor = buildAnchor($label, $style, $id, $class, "al", $newbreadcrumb, $params, $query);
 		echo "<li".(($alt) ? " class=\"alt\"" : "").">".$anchor."</li>\n";
 		$alt = !$alt;
 	}
