@@ -104,3 +104,7 @@ div#header, span.MainMenu, span.SubMenu {
 	margin-bottom: 0;
 }
 
+#main #wComingEpisodes.widget .widget-content {
+    max-height:none;
+    overflow:hidden;
+}
