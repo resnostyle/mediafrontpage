@@ -105,5 +105,6 @@
     background:#303134;
 }
 #main .widget .widget-content .widget-control {
+    margin-top:10px;
     text-align:right;
 }
