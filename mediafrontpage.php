@@ -22,8 +22,6 @@ if (empty ($arrLayout)) {
 		<title>Media Front Page</title>
 		<script type="text/javascript" language="javascript" src="js/ajax.js"></script>
 		<script type="text/javascript" src="http://jqueryjs.googlecode.com/files/jquery-1.2.6.min.js"></script>
-		<link href="css/front.css" rel="stylesheet" type="text/css" />	
-		<link href="css/widget.css" rel="stylesheet" type="text/css" />	
 		<script type="text/javascript" src="js/highslide/highslide.js"></script>
 		<link rel="stylesheet" type="text/css" href="js/highslide/highslide.css" />
 		<script type="text/javascript">
@@ -55,6 +53,8 @@ if (empty ($arrLayout)) {
 				border: 0;
 			}
 		</style>		
+		<link href="css/widget.css" rel="stylesheet" type="text/css" />	
+		<link href="css/front.css" rel="stylesheet" type="text/css" />	
 		<!-- START: Dynamic Header Inserts From Widgets -->
 <?php
 		foreach( $wIndex as $wId => $widget ) {
