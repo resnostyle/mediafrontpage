@@ -6,15 +6,16 @@ $wIndex["wComingEpisodes"] = $wdgtComingEpisodes;
 function widgetComingEpisodes() {
 	global $sickbeardcomingepisodes;
 	
-	//echo "<div class=\"widget-content\">\n ";
 	echo "\t<div id=\"comingepisodeswrapper\"></div>\n";
-	//echo "</div><!-- .widget-content -->\n";
 
 	if(strpos($sickbeardcomingepisodes, "http://")===false) {
 		$iFrameSource = $sickbeardcomingepisodes;
 	} else {
-		//$iFrameSource= 'widgets/wComingEpisodes.php?display=yes';
-		$iFrameSource= 'widgets/wComingEpisodes.php?style=w';
+		if(strpos($sickbeardcomingepisodes, "/sickbeard/")===false) {
+			$iFrameSource= 'widgets/wComingEpisodes.php?display=yes';
+		} else {
+			$iFrameSource= 'widgets/wComingEpisodes.php?style=w';
+		}
 	}
 	echo "      <iframe onload='onIFrameLoad(this);' src ='".$iFrameSource."' name='middle' scrolling='no' frameborder='0' border='0' framespacing='0'>";
 	echo "        <p>Your browser does not support iframes.</p>";

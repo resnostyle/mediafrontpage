@@ -4,7 +4,7 @@ $xbmcjsonservice = "http://USER:PASSWORD@localhost:8080/jsonrpc"; //remove 'USER
 $xbmcimgpath = '/vfs/'; //leave as default if unsure
 
 // enter path to sickbeards's coming episodes page
-$sickbeardcomingepisodes = '/sickbeard/comingEpisodes/';
+$sickbeardcomingepisodes = 'http://user:password@COMPUTER:PORT/sickbeard/comingEpisodes/';
 $sickbeardurl = "http://user:password@COMPUTER:PORT/sickbeard/";
 
 // enter SABnzbd+ URL and API key
