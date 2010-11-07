@@ -130,9 +130,10 @@ a.controlbutton img {
 	display:block;
 	clear:both;
 }
-#nowplaying  {
+#nowplayingwrapper  {
 	display:block;
 	margin: 20px 0 0;
+	height:120px;
 }
 #thumbblock {
 	height: 100px;
@@ -140,11 +141,16 @@ a.controlbutton img {
 	padding:0 10px 10px 0px;
 	float: left;
 }
-#nowplaying img {
+#wNowPlaying img {
 	float: left;
 	padding: 0 5px 5px 0;
 	max-height: 100px;
 	max-width: 100px;
+}
+#wNowPlaying .playlist-item {
+	display: block;
+	height:100px;
+	margin:15px 0px;
 }
 /* wSABNZBD */
 

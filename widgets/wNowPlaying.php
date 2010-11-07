@@ -6,8 +6,13 @@ $wIndex["wNowPlaying"] = $wdgtNowPlaying;
 
 function widgetNowPlayingControls() {
 	echo <<< NOWPLAYINGCONTROLS
-        <a class='controlbutton' onclick='cmdNowPlaying("PlayPause");' href='#'><img src='media/btnPlayPause.png' alt='Play/Pause'/></a>
+	<div id='nowplayingcontrols'>
+        	<a class='controlbutton' onclick='cmdNowPlaying("PlayPause");' href='#'><img src='media/btnPlayPause.png' alt='Play/Pause'/></a>
 		<a class='controlbutton' onclick='cmdNowPlaying("Stop");' href='#'><img src='media/btnStop.png' alt='Stop'/></a>
+		<a class='controlbutton' onclick='cmdNowPlaying("ShowPlaylist");' href='#'>Show Playlist</a>
+	</div>
+	<div id='nowplayinglist'>
+	</div>
 NOWPLAYINGCONTROLS;
 }
 function widgetNowPlayingHeader() {
@@ -15,9 +20,19 @@ function widgetNowPlayingHeader() {
 		<script type="text/javascript" language="javascript">
 		<!--
 			function cmdNowPlaying(cmd) {
-				var cmdPlayingRequest = new ajaxRequest();
-				cmdPlayingRequest.open("GET", "widgets/wNowPlaying.php?ajax=c&command="+cmd, true);
-				cmdPlayingRequest.send(null);
+				var cmdXbmcPlayingRequest = new ajaxRequest();
+				cmdXbmcPlayingRequest.open("GET", "widgets/wNowPlaying.php?ajax=c&command="+cmd, true);
+					cmdXbmcPlayingRequest.onreadystatechange = function() {
+						if (cmdXbmcPlayingRequest.readyState==4) {
+							if (cmdXbmcPlayingRequest.status==200 || window.location.href.indexOf("http")==-1) {
+								document.getElementById("nowplayinglist").innerHTML=cmdXbmcPlayingRequest.responseText;
+							} else {
+								alert("An error has occured making the request");
+							}
+						}
+					}
+
+				cmdXbmcPlayingRequest.send(null);
 			}
 		-->
 		</script>
@@ -147,48 +162,92 @@ if (!empty($_GET['ajax']) && ($_GET['ajax'] == "c")) {
 
 	if (!empty($_GET['command'])) {
 		$command = $_GET["command"];
-		/*
-			// Commands
-			PlayPause,            Pauses or unpause playback
-			Stop,                 Stops playback
-			SkipPrevious,         Skips to previous item on the playlist
-			SkipNext,             Skips to next item on the playlist
-			BigSkipBackward,      
-			BigSkipForward,       
-			SmallSkipBackward,    
-			SmallSkipForward,     
-			Rewind,               Rewind current playback
-			Forward,              Forward current playback
-		*/
+		if ($command == "ShowPlaylist") {
+
+			$results = jsoncall('{"jsonrpc": "2.0", "method": "Player.GetActivePlayers", "id": 1}');
 
 
-		//get active players
-		$request = '{"jsonrpc": "2.0", "method": "Player.GetActivePlayers", "id": 1}';
-		$results = jsoncall($request);
+			if (($results['result']['video']) == 1) {
+					echo "\t\t<p>Not Yet Implemented</p>\n";
 
-		//Video Player
-		if (($results['result']['video']) == 1) {
-			//get playlist items
-			$player = "VideoPlayer";
-		//Music Player
-		} elseif (($results['result']['audio']) == 1) {
-			//get playlist items
-			$player = "AudioPlayer";
+			} elseif (($results['result']['audio']) == 1) {
+
+				$results = jsoncall('{"jsonrpc": "2.0", "method": "AudioPlaylist.GetItems", "params": { "fields": ["title", "album", "artist", "duration"] }, "id": 1}');
+
+
+				if (array_key_exists('items', $results['result'])) {
+					$items = $results['result']['items'];
+ 					$current = $results['result']['current'];
+
+					$songcount = count($results);
+					$i = 0;
+
+					foreach ($items as $queueItem) {
+
+						if ($i > $current) {
+
+	
+							$thumb = $queueItem['thumbnail'];
+							$artist = $queueItem['artist'];
+							$title = $queueItem['title'];
+							$album = $queueItem['album'];
+							if(strlen($thumb) > 0) {
+								echo "<div id='playlist-item-".$i."' class='playlist-item'>";
+								echo "        <img src=".$xbmcimgpath.$thumb."></img>";
+							}
+							echo "        <p>".$artist."</p>";
+							echo "        <p>".$title."</p>";
+							echo "        <p>".$album."</p></div>";
+						}
+					$i++;
+
+					}
+
+				}
+			}
 		} else {
-			// Nothing Playing
-		}
-
-		$request = '{"jsonrpc": "2.0", "method": "'.$player.'.'.$command.'", "id": 1}';
-		$result = jsoncall($request);
-
-		// debugging
-		if($_GET["debug"] == "y") {
-			echo "<br/>Call: <pre>";
-			echo print_r($request,1);
-			echo "</pre><br/>";
-			echo "<br/>Result: <pre>";
-			echo print_r($result,1);
-			echo "</pre><br/>";
+			/*		XBMC Player Commands
+				PlayPause,            Pauses or unpause playback
+				Stop,                 Stops playback
+				SkipPrevious,         Skips to previous item on the playlist
+				SkipNext,             Skips to next item on the playlist
+				BigSkipBackward,      
+				BigSkipForward,       
+				SmallSkipBackward,    
+				SmallSkipForward,     
+				Rewind,               Rewind current playback
+				Forward,              Forward current playback
+			*/
+	
+	
+			//get active players
+			$request = '{"jsonrpc": "2.0", "method": "Player.GetActivePlayers", "id": 1}';
+			$results = jsoncall($request);
+	
+			//Video Player
+			if (($results['result']['video']) == 1) {
+				//get playlist items
+				$player = "VideoPlayer";
+			//Music Player
+			} elseif (($results['result']['audio']) == 1) {
+				//get playlist items
+				$player = "AudioPlayer";
+			} else {
+				// Nothing Playing
+			}
+	
+			$request = '{"jsonrpc": "2.0", "method": "'.$player.'.'.$command.'", "id": 1}';
+			$result = jsoncall($request);
+	
+			// debugging
+			if($_GET["debug"] == "y") {
+				echo "<br/>Call: <pre>";
+				echo print_r($request,1);
+				echo "</pre><br/>";
+				echo "<br/>Result: <pre>";
+				echo print_r($result,1);
+				echo "</pre><br/>";
+			}
 		}
 	} else {
 		echo "<br/>\n<p><strong>Invalid Request<strong></p>\n<p>Call: <pre>\n";
