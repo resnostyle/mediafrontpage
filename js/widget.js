@@ -18,7 +18,6 @@ var widgets = {
     },
 
     init : function () {
-        this.attachStylesheet('css/widget.js.css');
         this.sortWidgets();
         this.addWidgetControls();
         this.makeSortable();
