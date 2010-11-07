@@ -2,9 +2,12 @@
 $wdgtHardDrives = array("name" => "Hard Drives", "type" => "inline", "function" => "widgetHardDrives();");
 $wIndex["wHardDrives"] = $wdgtHardDrives;
 
+
 function widgetHardDrives() {
 	global $drive;
-
+	
+	$warningthreshold = 90;
+	
 	if(!empty($drive)) {
 		echo "<table border=\"0\" id=\"harddrives\">\n";
 		echo "\t<tr>\n";
@@ -18,7 +21,7 @@ function widgetHardDrives() {
 			echo "\t\t<td>".$drivelabel."</td>\n";
 			echo "\t\t<td>".to_readable_size(disk_total_space($drivepath))."</td>\n";
 			echo "\t\t<td>".to_readable_size(disk_free_space($drivepath))."</td>\n";
-			echo "\t\t<td><div class='progressbar'><div class='progress' style='width:".(disk_used_percentage($drivepath))."%'></div></div></td>\n";
+			echo "\t\t<td><div class=\"progressbar\"><div class=\"progress".((disk_used_percentage($drivepath) > $warningthreshold) ? " warning" : "")."\" style=\"width:".(disk_used_percentage($drivepath))."%\"></div><div class=\"progresslabel\">".sprintf("%u", disk_used_percentage($drivepath))."%</div></div></td>\n";
 			echo "\t</tr>\n";
 		}
 		echo "</table>\n";
