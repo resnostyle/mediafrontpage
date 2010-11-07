@@ -52,8 +52,13 @@ function executeVideo($style = "w", $action, $breadcrumb, $params = array()) {
 						playVideoFromList($videos, $typeId, $videoId); 
 					} 
 					break;
-				case "so":
-					echo "<pre>Not Yet Implemented</pre>";
+				case "so": // Songs
+					$songid = $params['songid'];
+					if (!empty($songid)) {
+						PlaySongFromList($songid);
+					} else {
+						echo "<pre>No Song Specified</pre>";
+					}
 					break;
 			
 			break;  // Don't break and flow into display.
@@ -267,6 +272,9 @@ function getParameters($request) {
 	if(!empty($request['albumid'])) {
 		$params['albumid'] = $request['albumid'];
 	}
+	if(!empty($request['songid'])) {
+		$params['songid'] = $request['songid'];
+	}
 
 	return $params;
 }
@@ -379,8 +387,24 @@ function playVideoFromList($videoList, $idType = "episodeid", $videoId = -1) {
 			$videoLocation = $videoInfo['file'];
 			$request = '{"jsonrpc" : "2.0", "method": "XBMC.Play", "params" : { "file" : "' . $videoLocation . '"}, "id": 1}';
 			jsoncall($request);
-			break;
 		}
+	}
+}
+
+function playSongFromList($songid) {
+	$request = '{"jsonrpc" : "2.0", "method": "Player.GetActivePlayers", "id": 1}';
+	$results = jsoncall($request);
+	if (!empty($results)) {
+		if ($results['result']['audio'] == 1) {
+			$request = '{"jsonrpc" : "2.0", "method": "AudioPlaylist.Add", "params": { "songid" : '.$songid.' }, "id": 1}';
+			$results = jsoncall($request);
+		} else {
+			$request = '{"jsonrpc" : "2.0", "method": "XBMC.Play", "params": { "songid" : '.$songid.' }, "id": 1}';
+			$results = jsoncall($request);
+		}
+	} else {
+		echo $COMM_ERROR;
+		echo "<pre>$request</pre>";
 	}
 }
 
