@@ -130,7 +130,7 @@ a.controlbutton img {
 }
 #wHardDrives table {
 	text-align: center;
-	width: 250px;
+	width: 100%;
 }
 #wHardDrives div.progressbar { 
 	width: 90px;
