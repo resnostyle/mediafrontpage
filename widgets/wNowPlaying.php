@@ -6,12 +6,12 @@ $wIndex["wNowPlaying"] = $wdgtNowPlaying;
 
 function widgetNowPlayingControls() {
 	echo <<< NOWPLAYINGCONTROLS
-	<div id='nowplayingcontrols'>
+	<div id='nowplaying-controls' class="controls">
         	<a class='controlbutton' onclick='cmdNowPlaying("PlayPause");' href='#'><img src='media/btnPlayPause.png' alt='Play/Pause'/></a>
 		<a class='controlbutton' onclick='cmdNowPlaying("Stop");' href='#'><img src='media/btnStop.png' alt='Stop'/></a>
 		<a class='controlbutton' onclick='cmdNowPlaying("ShowPlaylist");' href='#'>Show Playlist</a>
 	</div>
-	<div id='nowplayinglist'>
+	<div id='nowplaying-list'>
 	</div>
 NOWPLAYINGCONTROLS;
 }
@@ -25,7 +25,7 @@ function widgetNowPlayingHeader() {
 					cmdXbmcPlayingRequest.onreadystatechange = function() {
 						if (cmdXbmcPlayingRequest.readyState==4) {
 							if (cmdXbmcPlayingRequest.status==200 || window.location.href.indexOf("http")==-1) {
-								document.getElementById("nowplayinglist").innerHTML=cmdXbmcPlayingRequest.responseText;
+								document.getElementById("nowplaying-list").innerHTML=cmdXbmcPlayingRequest.responseText;
 							} else {
 								alert("An error has occured making the request");
 							}
@@ -46,12 +46,6 @@ if (!empty($_GET['ajax']) && ($_GET['ajax'] == "w")) {
 	require_once "../functions.php";
 
 	?>
-	<html>
-		<head>
-			<title>Media Front Page - Now Playing</title>
-			<link rel='stylesheet' type='text/css' href='css/front.css'>
-		</head>
-		<body>
 			<div id='nowplaying'>
 			<?php
 			//json rpc call procedure
@@ -140,11 +134,12 @@ if (!empty($_GET['ajax']) && ($_GET['ajax'] == "w")) {
 				if($results['result']['paused']) {
 					echo "        <p>Paused</p>";
 				}
+				echo "</div>";				
 
 				//progress bar
 				$results = jsoncall('{"jsonrpc": "2.0", "method": "AudioPlayer.GetPercentage", "id": 1}');
 				$percentage = $results['result'];
-				echo "        <div class='progressbar'><div class='progress' style='width:".$percentage."%'></div></div>";
+				echo "<div class='progressbar'><div class='progress' style='width:".$percentage."%'></div></div>";
 			} else {
 				echo "Nothing Playing";
 			} 
