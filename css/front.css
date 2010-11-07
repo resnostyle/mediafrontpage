@@ -130,9 +130,10 @@ a.controlbutton img {
 	display:block;
 	clear:both;
 }
-#nowplaying  {
+#nowplayingwrapper  {
 	display:block;
 	margin: 20px 0 0;
+	height:120px;
 }
 #thumbblock {
 	height: 100px;
