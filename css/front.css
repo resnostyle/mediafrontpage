@@ -167,7 +167,9 @@ a.controlbutton img {
 	height:100px;
 	margin-top:15px;
 }
-
+#wNowPlaying #thumbblock img {
+	border: 1px solid #000;
+}
 /* wSABNZBD */
 
 #sabnzbdblock  {
