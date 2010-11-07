@@ -16,6 +16,9 @@ body {
 .progressbar { 
 	background-color: #666666 !important; 
 }
+.progresslabel { 
+	color: #000 !important; 
+}
 
 .widget-head a.remove  {
     background-image: url(../media/buttonslight.gif) !important;
