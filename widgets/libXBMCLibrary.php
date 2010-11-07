@@ -228,7 +228,9 @@ function executeVideo($style = "w", $action, $breadcrumb, $params = array()) {
 				$request = '{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": { "artistid": '.$artistid.', "albumid": '.$albumid.' , "fields": [ "artist", "year" ] },"id": 1}';
 			} elseif (!empty($albumid)) {
 				$request = '{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": { "albumid": '.$albumid.', "fields": [ "artist", "year" ] },"id": 1}';
-			}
+			} else {
+				$request = '{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": { "fields": [ "artist", "year" ] },"id": 1}';
+			} 
 			$results = jsoncall($request);
 			if (!empty($results['result'])) {
 				$songs = $results['result']['songs'];
