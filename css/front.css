@@ -147,38 +147,28 @@ a.controlbutton img {
 	text-align: center;
 }
 */
-#nowplaying div.progressbar { 
-	width: 250px; 
-	height: 10px; 
-}
-/* wNOWPLAYING */
 
-#nowplayingblock  {
-	display:block;
-	clear:both;
-}
-#nowplayingwrapper  {
-	display:block;
-	margin: 20px 0 0;
-	height:120px;
-}
-#thumbblock {
-	height: 100px;
-	width: 100px;
-	padding:0 10px 10px 0px;
-	float: left;
-}
+/* wNOWPLAYING */
 #wNowPlaying img {
 	float: left;
 	padding: 0 5px 5px 0;
 	max-height: 100px;
 	max-width: 100px;
 }
+#wNowPlaying div.progressbar { 
+	width: 100%; 
+	height: 10px; 
+	clear:both;
+}
+#wNowPlaying div.controls { 
+	margin-top:5px;
+}
 #wNowPlaying .playlist-item {
 	display: block;
 	height:100px;
-	margin:15px 0px;
+	margin-top:15px;
 }
+
 /* wSABNZBD */
 
 #sabnzbdblock  {
