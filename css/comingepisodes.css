@@ -50,7 +50,9 @@ div#header, span.MainMenu, span.SubMenu {
 	border: 1px solid #000;
 	background-image: url(/sickbeard/images/poster.png);
 }
-
+a.highslide img.listingThumb {
+	border: 1px solid #000;
+}
 .listing > div {
 	margin-left: 100px;
 }

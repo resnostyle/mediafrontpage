@@ -44,24 +44,42 @@ function widgetComingEpisodesHeader() {
 				var iFrameBody = document.getElementById("comingepisodeswrapper");
 				iFrameBody.innerHTML = serverResponse;
 				addAltClass();
-				
+				addHighSlide();
 				//adjustHeight();
 			}
 
-				function addAltClass() {
-					var allHTMLTags = document.getElementsByTagName("*");
-					var alt;
-					alt = false;
+			function addAltClass() {
+				var allHTMLTags = document.getElementsByTagName("*");
+				var alt;
+				alt = false;
 
-					for (i=0; i < allHTMLTags.length; i++) {
-						if (allHTMLTags[i].className == 'listing') {
-							if(alt) {
-								allHTMLTags[i].className = 'listing alt';
-							}
-						alt = !alt;
+				for (i=0; i < allHTMLTags.length; i++) {
+					if (allHTMLTags[i].className == 'listing') {
+						if(alt) {
+							allHTMLTags[i].className = 'listing alt';
 						}
+						alt = !alt;
 					}
 				}
+			}
+
+			function addHighSlide() {
+				var allHTMLTags = document.getElementsByTagName("img");
+
+				for (i=0; i < allHTMLTags.length; i++) {
+					if (allHTMLTags[i].className == 'listingThumb') {
+						//Set parent node <a> tag to have correct
+						allHTMLTags[i].parentNode.setAttribute('href',allHTMLTags[i].src);
+						allHTMLTags[i].parentNode.className = 'highslide';
+						allHTMLTags[i].parentNode.setAttribute('onclick','return hs.expand(this)');
+						allHTMLTags[i].parentNode.onclick = function() { return hs.expand(allHTMLTags[i]) }; 
+						
+						//Wrap with span and reset.
+						var newHTML = '<span class="sbposter-img">'+allHTMLTags[i].parentNode.outerHTML+'<a><div class="highslide-caption"><br></div></a></span>';
+						allHTMLTags[i].parentNode.outerHTML = newHTML;
+					}
+				}
+			}
 
 			function adjustHeight() {
 				var windowSizeAdjustment = 100;
