@@ -193,7 +193,7 @@ function executeVideo($style = "w", $action, $breadcrumb, $params = array()) {
 			break;
 		case "ar":  // Artists
 			echo "<ul class=\"widget-list\"><li>Under Construction</li></ul>";
-			$request = '{"jsonrpc": "2.0", "method": "AudioLibrary.GetArtists", "id": 1}';
+			$request = '{"jsonrpc": "2.0", "method": "AudioLibrary.GetArtists", "params": { "sortorder" : "ascending" }, "id": 1}';
 			$results = jsoncall($request);
 			if (!empty($results['result'])) {
 				$artists = $results['result']['artists'];
@@ -205,11 +205,12 @@ function executeVideo($style = "w", $action, $breadcrumb, $params = array()) {
 			break;
 		case "al": // Albums
 			echo "<ul class=\"widget-list\"><li>Under Construction</li></ul>";
-			$artistid = $params['artistid'];
-			if (!empty($artistid)) {
-				$request = '{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params": { "artistid": '.$artistid.' , "fields": [ "artist", "year" ] },"id": 1}';
+			if (!empty($params['artistid'])) {
+				$artistid = $params['artistid'];
+				$request = '{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params": { "artistid": '.$artistid.' , "sortorder" : "ascending", "fields": [ "artist", "year" ] },"id": 1}';
 			} else {
-				$request = '{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params": { "fields": [ "artist", "year" ] },"id": 1}';
+				$artistid = "";
+				$request = '{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params": { "sortorder" : "ascending", "fields": [ "artist", "year" ] },"id": 1}';
 			}
 			$results = jsoncall($request);
 			if (!empty($results['result'])) {
@@ -222,13 +223,17 @@ function executeVideo($style = "w", $action, $breadcrumb, $params = array()) {
 			break;
 		case "so": // Songs
 			echo "<ul class=\"widget-list\"><li>Under Construction</li></ul>";
-			$artistid = $params['artistid'];
-			$albumid = $params['albumid'];
-			if (!empty($artistid) && !empty($albumid)) {
+			if (!empty($params['artistid']) && !empty($params['albumid'])) {
+				$artistid = $params['artistid'];
+				$albumid = $params['albumid'];
 				$request = '{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": { "artistid": '.$artistid.', "albumid": '.$albumid.' , "fields": [ "artist", "year" ] },"id": 1}';
-			} elseif (!empty($albumid)) {
+			} elseif (!empty($params['albumid'])) {
+				$artistid = "";
+				$albumid = $params['albumid'];
 				$request = '{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": { "albumid": '.$albumid.', "fields": [ "artist", "year" ] },"id": 1}';
 			} else {
+				$artistid = (!empty($params['artistid']) ? $params['artistid'] : "");
+				$albumid = "";
 				$request = '{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": { "fields": [ "artist", "year" ] },"id": 1}';
 			} 
 			$results = jsoncall($request);
@@ -646,6 +651,7 @@ function displayMusicListArtist($artists, $style, $action, $breadcrumb, $params)
 
 	echo "<ul class=\"widget-list\">";
 	$alt = false;
+	asort($artists);
 	foreach ($artists as $artistInfo) {
 		$label = $artistInfo['label'];
 		$id = "music-".$artistInfo["artistid"];
@@ -670,7 +676,8 @@ function displayMusicListAlbum($albums, $style, $action, $breadcrumb, $params) {
 		$label = $albumInfo['artist']." - ".$albumInfo['label']." &nbsp;(".$albumInfo['year'].")";
 		$id = "music-".$albumInfo["albumid"];
 		$class = "music-album";
-		$query = "&artistid=".$params["artistid"]."&albumid=".$albumInfo["albumid"];
+		$query = (!empty($params["artistid"]) ? "&artistid=".$params["artistid"] : "");
+		$query .="&albumid=".$albumInfo["albumid"];
 		$anchor = buildAnchor($label, $style, $id, $class, "so", $newbreadcrumb, $params, $query);
 		echo "<li".(($alt) ? " class=\"alt\"" : "").">".$anchor."</li>\n";
 		$alt = !$alt;
@@ -690,14 +697,16 @@ function displayMusicListSong($songs, $style, $action, $breadcrumb, $params) {
 		$label = $songInfo['artist']." - ".$songInfo['label'];
 		$id = "music-".$songInfo["songid"];
 		$class = "music-song";
-		$query = "&artistid=".$params["artistid"]."&albumid=".$params["albumid"]."&songid=".$songInfo["songid"];
+		$query = (!empty($params["artistid"]) ? "&artistid=".$params["artistid"] : "");
+		$query .= (!empty($params["albumid"]) ? "&albumid=".$params["albumid"] : "");
+		$query .= (!empty($songInfo["songid"]) ? "&songid=".$songInfo["songid"] : "");
 		$anchor = buildAnchor($label, $style, $id, $class, "p", $newbreadcrumb, $params, $query);
 		echo "<li".(($alt) ? " class=\"alt\"" : "").">".$anchor."</li>\n";
 		$alt = !$alt;
 	}
 	echo "</ul>";
 
-	$anchor = buildBackAnchor($style, $breadcrumb, $params, "&artistid=".$params["artistid"]);
+	$anchor = buildBackAnchor($style, $breadcrumb, $params, (!empty($params["artistid"]) ? "&artistid=".$params["artistid"] : ""));
 	echo "<div class=\"widget-control\">".$anchor."</div>\n";
 }
 
@@ -736,7 +745,8 @@ function buildAnchor($label, $style, $id, $class, $action, $breadcrumb, $params,
 		$onclick =  " onclick=\"".$params['onclickcmd']."('".$params['wrapper']."', '".$params['harness']."', '".$action."', '".$breadcrumb."', '".$query."');\"";
 		$href = "#";
 	} else {
-		$href = $params['href']."?style=".$style."&a=".$action."&bc=".$breadcrumb.$query;
+		$onclick = "";
+		$href = $params['href'].((strpos($params['href'],"?")===false) ? "?" : "&")."style=".$style."&a=".$action."&bc=".$breadcrumb.$query;
 	}
 	if (strlen($id) > 0) {
 		$id = " id=\"".$id."\"";
