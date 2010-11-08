@@ -80,7 +80,7 @@
     margin: 8px 0 8px 4px;
     outline: none;
 }
-.collapsed .widget-head a.collapse {
+#main .collapsed .widget-head a.collapse {
     background-position:-38px 0;
 }
 .collapsed .widget-content {
