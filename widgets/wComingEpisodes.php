@@ -225,7 +225,7 @@ function displayComingSoon () {
 	if(strrpos($sickbeardurl, "/") < strlen($sickbeardurl)) {
 		$sickbeardurl .= "/";
 	}
-echo "<pre>".$sickbeardurl."</pre>";	
+
 	$html = getComingSoon();
 	$body = stripBody($html);
 	$body = stripInnerWrapper($body);
