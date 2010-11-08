@@ -41,7 +41,7 @@ NOWPLAYINGHEADER;
 }
 ?>
 <?php
-function displayNowPlaying() {
+function displayNowPlaying($static = false) {
 	global $xbmcimgpath;
 	
 	echo "<div id=\"nowplaying\">\n";
@@ -86,9 +86,13 @@ function displayNowPlaying() {
 
 		if(strlen($thumb) > 0) {
 			echo "\t<div id=\"thumbblock\" class=\"thumbblockvideo\">\n";
-			echo "\t\t<a href=\"".$xbmcimgpath.$thumb."\" class=\"highslide\" onclick=\"return hs.expand(this)\">\n";
-			echo "\t\t\t<img src=\"".$xbmcimgpath.$thumb."\" title='Click to enlarge' alt=\"".htmlentities($items[$current]['plot'], ENT_QUOTES)."\" />";
-			echo "\t\t</a>\n";
+			if($static) {
+				echo "\t\t<img src=\"".$xbmcimgpath.$thumb."\" alt=\"".htmlentities($items[$current]['plot'], ENT_QUOTES)."\" />";
+			} else {
+				echo "\t\t<a href=\"".$xbmcimgpath.$thumb."\" class=\"highslide\" onclick=\"return hs.expand(this)\">\n";
+				echo "\t\t\t<img src=\"".$xbmcimgpath.$thumb."\" title=\"Click to enlarge\" alt=\"".htmlentities($items[$current]['plot'], ENT_QUOTES)."\" />";
+				echo "\t\t</a>\n";
+			}
 			echo "\t</div>\n";
 		}
 		echo "\t\t<p>".$show."</p>\n";
@@ -119,9 +123,13 @@ function displayNowPlaying() {
 		$album = $items[$current]['album'];
 		if(strlen($thumb) > 0) {
 			echo "\t<div id=\"thumbblock\" class=\"thumbblockaudio\">\n";
-			echo "\t\t<a href=\"".$xbmcimgpath.$thumb."\" class=\"highslide\" onclick=\"return hs.expand(this)\">\n";
-			echo "\t\t\t<img src=\"".$xbmcimgpath.$thumb."\" title=\"Click to enlarge\" alt=\"".htmlentities($items[$current]['plot'], ENT_QUOTES)."\" />";
-			echo "\t\t</a>\n";
+			if($static) {
+				echo "\t\t<img src=\"".$xbmcimgpath.$thumb."\" alt=\"".htmlentities($items[$current]['plot'], ENT_QUOTES)."\" />";
+			} else {
+				echo "\t\t<a href=\"".$xbmcimgpath.$thumb."\" class=\"highslide\" onclick=\"return hs.expand(this)\">\n";
+				echo "\t\t\t<img src=\"".$xbmcimgpath.$thumb."\" title=\"Click to enlarge\" alt=\"".htmlentities($items[$current]['plot'], ENT_QUOTES)."\" />";
+				echo "\t\t</a>\n";
+			}
 			echo "\t</div>\n";
 		}
 		echo "\t<p>".$artist."</p>\n";
