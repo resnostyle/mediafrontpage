@@ -73,7 +73,7 @@ function widgetControl($baseurl = "widgets/wControl.php", $forcemenu = false) {
 			$displayMenu = $forcemenu;
 		}
 	} else {
-		$displayMenu = (($_GET["style"] == "m") || $forcemenu);
+		$displayMenu = ((!empty($_GET["style"]) && ($_GET["style"] == "m")) || $forcemenu);
 	}
 	if($displayMenu) {
 		widgetMenu($baseurl);

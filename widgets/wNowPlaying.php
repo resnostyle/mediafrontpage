@@ -55,42 +55,53 @@ function displayNowPlaying($static = false) {
 		$results = jsoncall('{"jsonrpc": "2.0", "method": "VideoPlaylist.GetItems", "params": { "fields": ["title", "season", "episode", "plot", "duration", "showtitle"] }, "id": 1}');
 
 		$items = $results['result']['items'];
-		$current = $results['result']['current'];
-		if(strlen($current) == 0) {
-			$current=0;
-		}
+		$current = (!empty($results['result']['current'])) ? $results['result']['current'] : 0;
 		
 		$thumb = $items[$current]['thumbnail'];
 		if(strlen($thumb) == 0) {
 			$thumb = $items[$current]['fanart'];
 		}
-		$show  = $items[$current]['showtitle'];
-		$title = $items[$current]['title'];
-		if(strlen($title) == 0) {
+		if(!empty($items[$current]['title'])) {
+			$title = $items[$current]['title'];
+		} else {
 			$title = $items[$current]['label'];
 		}
-		$season = $items[$current]['season'];
-		$episode = $items[$current]['episode'];
+		if(!empty($items[$current]['showtitle'])) {
+			$show  = $items[$current]['showtitle'];
+		} else {
+			$show = $title;
+			$title = "";
+		}
+		if(!empty($items[$current]['season'])) {
+			$season = $items[$current]['season'];
+		} else {
+			$season = "";
+		}
+		if(!empty($items[$current]['episode'])) {
+			$episode = $items[$current]['episode'];
+		} else {
+			$episode = "";
+		}
 		if((strlen($season) > 0) && (strlen($episode) > 0)) {
 			$title = $season."x".str_pad($episode, 2, '0', STR_PAD_LEFT)." ".$title;
 		}
 		
 		if(strlen($show) == 0) {
-			$show = $title;
-			$title = "";
-		}
-		if(strlen($show) == 0) {
 			$info = pathinfo($items[$current]['file']);
 			$show = $info['filename'];
 		}
-
+		if(!empty($items[$current]['plot'])) {
+			$plot = $items[$current]['plot'];
+		} else {
+			$plot = "";
+		}
 		if(strlen($thumb) > 0) {
 			echo "\t<div id=\"thumbblock\" class=\"thumbblockvideo\">\n";
 			if($static) {
-				echo "\t\t<img src=\"".$xbmcimgpath.$thumb."\" alt=\"".htmlentities($items[$current]['plot'], ENT_QUOTES)."\" />";
+				echo "\t\t<img src=\"".$xbmcimgpath.$thumb."\" alt=\"".htmlentities($plot, ENT_QUOTES)."\" />";
 			} else {
 				echo "\t\t<a href=\"".$xbmcimgpath.$thumb."\" class=\"highslide\" onclick=\"return hs.expand(this)\">\n";
-				echo "\t\t\t<img src=\"".$xbmcimgpath.$thumb."\" title=\"Click to enlarge\" alt=\"".htmlentities($items[$current]['plot'], ENT_QUOTES)."\" />";
+				echo "\t\t\t<img src=\"".$xbmcimgpath.$thumb."\" title=\"Click to enlarge\" alt=\"".htmlentities($plot, ENT_QUOTES)."\" />";
 				echo "\t\t</a>\n";
 			}
 			echo "\t</div>\n";
@@ -102,7 +113,7 @@ function displayNowPlaying($static = false) {
 		$time = $results['result']['time'];
 		$total = $results['result']['total'];
 		echo "\t\t<p>".formattimes($time, $total)."</p>\n";
-		if($results['result']['paused']) {
+		if(!empty($results['result']['paused']) && ($results['result']['paused'])) {
 			echo "\t\t<p>Paused</p>\n";
 		}
 
@@ -124,10 +135,10 @@ function displayNowPlaying($static = false) {
 		if(strlen($thumb) > 0) {
 			echo "\t<div id=\"thumbblock\" class=\"thumbblockaudio\">\n";
 			if($static) {
-				echo "\t\t<img src=\"".$xbmcimgpath.$thumb."\" alt=\"".htmlentities($items[$current]['plot'], ENT_QUOTES)."\" />";
+				echo "\t\t<img src=\"".$xbmcimgpath.$thumb."\" alt=\"".htmlentities($artist." - ".$album." - ".$title, ENT_QUOTES)."\" />";
 			} else {
 				echo "\t\t<a href=\"".$xbmcimgpath.$thumb."\" class=\"highslide\" onclick=\"return hs.expand(this)\">\n";
-				echo "\t\t\t<img src=\"".$xbmcimgpath.$thumb."\" title=\"Click to enlarge\" alt=\"".htmlentities($items[$current]['plot'], ENT_QUOTES)."\" />";
+				echo "\t\t\t<img src=\"".$xbmcimgpath.$thumb."\" title=\"Click to enlarge\" alt=\"".htmlentities($artist." - ".$album." - ".$title, ENT_QUOTES)."\" />";
 				echo "\t\t</a>\n";
 			}
 			echo "\t</div>\n";
@@ -226,7 +237,7 @@ function processCommand($command) {
 		$result = jsoncall($request);
 
 		// debugging
-		if($_GET["debug"] == "y") {
+		if(!empty($_GET["debug"]) && ($_GET["debug"] == "y")) {
 			echo "<br/>Call: <pre>";
 			echo print_r($request,1);
 			echo "</pre><br/>";

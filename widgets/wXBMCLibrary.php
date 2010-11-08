@@ -44,7 +44,7 @@ if (!empty($_GET['style']) && (($_GET['style'] == "w") || ($_GET['style'] == "s"
 	require_once "libXBMCLibrary.php";
 
 	$action = $_GET['a'];
-	$breadcrumb = $_GET['bc'];
+	$breadcrumb = (!empty($_GET['bc'])) ? $_GET['bc'] : "";
 
 	$params = getParameters($_GET);
 

@@ -78,10 +78,10 @@ if (empty ($arrLayout)) {
 			echo "\n\t<ul id=\"".$sectionId."\" class=\"section ui-sortable\">\n";
 			foreach ($widgets as $wId => $wAttribute) {
 				echo "\t\t<li id=\"".$wId."\" class=\"widget";
-                   if (strlen($wAttribute["color"]) > 0) {
+				if (!empty($wAttribute["color"])) {
 					echo " ".$wAttribute["color"];
 				}
-                   if (strlen($wAttribute["display"]) > 0) {
+				if (!empty($wAttribute["display"])) {
 					echo " ".$wAttribute["display"];
 				}
 				echo "\">";
