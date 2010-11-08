@@ -222,25 +222,30 @@ function getComingSoon() {
 function displayComingSoon () {
 	global $sickbeardurl;
 
+	if(strrpos($sickbeardurl, "/") < strlen($sickbeardurl)) {
+		$sickbeardurl .= "/";
+	}
+echo "<pre>".$sickbeardurl."</pre>";	
 	$html = getComingSoon();
 	$body = stripBody($html);
 	$body = stripInnerWrapper($body);
 	//$body = changeLinks($body);
 	
 	if(!empty($_GET["style"]) && (($_GET["style"] == "s") || ($_GET["style"] == "m"))) {
-		$body = str_replace("src=\"".$sickbeardurl."/showPoster/", "src=\"../sickbeardposter.php", $body);
+		$body = str_replace("src=\"".$sickbeardurl."showPoster/", "src=\"../sickbeardposter.php", $body);
+		$body = str_replace("src=\"/sickbeard/showPoster/", "src=\"../sickbeardposter.php", $body);
 		$body = str_replace("src=\"/showPoster/", "src=\"../sickbeardposter.php", $body);
 	}
 	$body = str_replace("src=\"/sickbeard/", "src=\"".$sickbeardurl, $body);
 	$body = str_replace("href=\"/sickbeard/", "href=\"".$sickbeardurl, $body);
-	$body = str_replace("src=\"/home/", "src=\"".$sickbeardurl."/home/", $body);
-	$body = str_replace("href=\"/home/", "href=\"".$sickbeardurl."/home/", $body);
-	$body = str_replace("src=\"home/", "src=\"".$sickbeardurl."/home/", $body);
-	$body = str_replace("href=\"home/", "href=\"".$sickbeardurl."/home/", $body);
-	$body = str_replace("src=\"/images/", "src=\"".$sickbeardurl."/images/", $body);
-	$body = str_replace("href=\"/images/", "href=\"".$sickbeardurl."/images/", $body);
-	$body = str_replace("src=\"images/", "src=\"".$sickbeardurl."/images/", $body);
-	$body = str_replace("href=\"images/", "href=\"".$sickbeardurl."/images/", $body);
+	$body = str_replace("src=\"/home/", "src=\"".$sickbeardurl."home/", $body);
+	$body = str_replace("href=\"/home/", "href=\"".$sickbeardurl."home/", $body);
+	$body = str_replace("src=\"home/", "src=\"".$sickbeardurl."home/", $body);
+	$body = str_replace("href=\"home/", "href=\"".$sickbeardurl."home/", $body);
+	$body = str_replace("src=\"/images/", "src=\"".$sickbeardurl."images/", $body);
+	$body = str_replace("href=\"/images/", "href=\"".$sickbeardurl."images/", $body);
+	$body = str_replace("src=\"images/", "src=\"".$sickbeardurl."images/", $body);
+	$body = str_replace("href=\"images/", "href=\"".$sickbeardurl."images/", $body);
 	echo $body;
 }
 
