@@ -167,6 +167,7 @@ function displayNowPlaying($static = false) {
 	echo "</div>\n";
 }
 function processCommand($command) {
+	global $xbmcimgpath;
 	if ($command == "ShowPlaylist") {
 
 		$results = jsoncall('{"jsonrpc": "2.0", "method": "Player.GetActivePlayers", "id": 1}');
