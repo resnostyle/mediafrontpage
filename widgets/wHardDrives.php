@@ -10,6 +10,10 @@ function widgetHardDrives() {
 	
 	if(!empty($drive)) {
 		echo "<table border=\"0\" id=\"harddrives\">\n";
+		echo "\t<col id=\"col-disk\" />\n";
+		echo "\t<col id=\"col-capacity\" />\n";
+		echo "\t<col id=\"col-remaining\" />\n";
+		echo "\t<col id=\"col-progress\" />\n";
 		echo "\t<tr>\n";
 		echo "\t\t<th>Disk</th>\n";
 		echo "\t\t<th>Capacity</th>\n";

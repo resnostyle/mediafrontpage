@@ -133,8 +133,12 @@ a.controlbutton img {
 	text-align: center;
 	width: 100%;
 }
+#col-disk{width:20%;}
+#col-capacity{width:20%;}
+#col-remaining{width:20%;}
+#col-progress {width:40%;}
 #wHardDrives div.progressbar { 
-	width: 90px;
+	width: 100%;
 }
 #wHardDrives .progresslabel {
 	text-align: center;
