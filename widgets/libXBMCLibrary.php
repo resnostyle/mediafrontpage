@@ -1,6 +1,4 @@
 <?php
-//require_once "../config.php";
-//require_once "../functions.php";
 
 function executeVideo($style = "w", $action, $breadcrumb, $params = array()) {
 	global $COMM_ERROR;
@@ -30,17 +28,17 @@ function executeVideo($style = "w", $action, $breadcrumb, $params = array()) {
 				case "m":
 					if (($previousaction == "re") || ($previousaction == "e")) {
 						if ($previousaction == "re") {
-							$request = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetRecentlyAddedEpisodes", "params" : { "fields": [ '.$videodetailfields.' ] }, "id" : 1 }';
+							$request = jsonstring("VideoLibrary.GetRecentlyAddedEpisodes");
 						} else {
 							$showid = $params['showid'];
 							$season = $params['season'];
-							$request = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params" : { "tvshowid" : '.$showid.', "season" : '.$season.', "fields": [ '.$videodetailfields.' ] }, "id" : 1 }';
+							$request = jsonstring("VideoLibrary.GetEpisodes", array('tvshowid' => $params['showid'], 'season' => $params['season']));
 						}
 						$results = jsoncall($request);
 						$videos = $results['result']['episodes'];
 						$typeId = "episodeid";
 					} elseif (($previousaction == "rm") || ($previousaction == "m")) {
-						$request = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": { "sortorder" : "ascending", "fields" : [ '.$videodetailfields.' ] }, "id": 1}';
+						$request = jsonstring("VideoLibrary.GetMovies");
 						$results = jsoncall($request);
 						$videos = $results['result']['movies'];
 						$typeId = "movieid";
@@ -66,8 +64,7 @@ function executeVideo($style = "w", $action, $breadcrumb, $params = array()) {
 				case "e": //Episodes
 					$showid = $params['showid'];
 					$season = $params['season'];
-					$request = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params" : { "tvshowid" : '.$showid.', "season" : '.$season.', "fields": [ '.$videodetailfields.' ] }, "id" : 1 }';
-					$results = jsoncall($request);
+					$results = jsonmethodcall("VideoLibrary.GetEpisodes", array('tvshowid' => $params['showid'], 'season' => $params['season']));
 					$videos = $results['result']['episodes'];
 					$params['typeid'] = "episodeid";
 					if (!empty($videos)) {
@@ -78,8 +75,7 @@ function executeVideo($style = "w", $action, $breadcrumb, $params = array()) {
 					}
 					break;
 				case "re": // Recent Episodes
-					$request = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetRecentlyAddedEpisodes", "params" : { "fields": [ '.$videodetailfields.' ] }, "id" : 1 }';
-					$results = jsoncall($request);
+					$results = jsonmethodcall("VideoLibrary.GetRecentlyAddedEpisodes");
 					$videos = $results['result']['episodes'];
 					$params['typeid'] = "episodeid";
 					if (!empty($videos)) {
@@ -91,8 +87,7 @@ function executeVideo($style = "w", $action, $breadcrumb, $params = array()) {
 					break;
 				case "m":  // Movies
 				case "rm": // Recent Movies
-					$request = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": { "sortorder" : "ascending", "fields" : [ '.$videodetailfields.' ] }, "id": 1}';
-					$results = jsoncall($request);
+					$results = jsonmethodcall("VideoLibrary.GetMovies");
 					$videos = $results['result']['movies'];
 
 					$params['typeid'] = "movieid";
@@ -106,8 +101,7 @@ function executeVideo($style = "w", $action, $breadcrumb, $params = array()) {
 			}
 			break;
 		case "t":  // TV Shows
-			$request = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "id" : 1 }';
-			$results = jsoncall($request);
+			$results = jsonmethodcall("VideoLibrary.GetTVShows");
 			if (!empty($results['result'])) {
 				$videos = $results['result']['tvshows'];
 				displayVideoListTVShows($videos, $style, $action, $breadcrumb, $params);
@@ -118,27 +112,25 @@ function executeVideo($style = "w", $action, $breadcrumb, $params = array()) {
 			break;
 		case "s":  // Seasons
 			$showid = $params['showid'];
-			$request = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetSeasons", "params" : { "tvshowid" : '.$showid.', "fields": [ "genre", "title", "showtitle", "duration", "season", "episode", "year", "playcount", "rating", "studio", "mpaa" ] }, "id" : 1 }';
-			$results = jsoncall($request);
+			$results = jsonmethodcall("VideoLibrary.GetSeasons", array('tvshowid' => $showid));
 			if (!empty($results['result'])) {
 				$videos = (!empty($results['result']['seasons'])) ? $results['result']['seasons'] : array();
 				displayVideoListSeasons($videos, $style, $action, $breadcrumb, $params);
 			} else {
 				echo $COMM_ERROR;
-				echo "<pre>$request</pre>";
+				echo "<pre>".jsonstring("VideoLibrary.GetSeasons", array('tvshowid' => $showid))."</pre>";
 			}
 			break;
 		case "e":  // Episodes
 			$showid = $params['showid'];
 			$season = $params['season'];
-			$request = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params" : { "tvshowid" : '.$showid.', "season" : '.$season.', "fields": [ '.$videodetailfields.' ] }, "id" : 1 }';
-			$results = jsoncall($request);
+			$results = jsonmethodcall("VideoLibrary.GetEpisodes", array('tvshowid' => $showid, 'season' => $season));
 			if (!empty($results['result'])) {
 				$videos = $results['result']['episodes'];
 				displayVideoListEpisodes($videos, $style, $action, $breadcrumb, $params);
 			} else {
 				echo $COMM_ERROR;
-				echo "<pre>$request</pre>";
+				echo "<pre>".jsonstring("VideoLibrary.GetEpisodes", array('tvshowid' => $showid, 'season' => $season))."</pre>";
 			}
 			break;
 		case "re": // Recent Episodes
@@ -147,25 +139,23 @@ function executeVideo($style = "w", $action, $breadcrumb, $params = array()) {
 			} else {
 				$count = 15;
 			}
-			$request = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetRecentlyAddedEpisodes", "params" : { "start" : 0 , "end" : '.$count.' , "fields": [ '.$videodetailfields.' ] }, "id" : 1 }';
-			$results = jsoncall($request);
+			$results = jsonmethodcall("VideoLibrary.GetRecentlyAddedEpisodes", $count);
 			if (!empty($results['result'])) {
 				$videos = $results['result']['episodes'];
 				displayVideoListEpisodes($videos, $style, $action, $breadcrumb, $params);
 			} else {
 				echo $COMM_ERROR;
-				echo "<pre>$request</pre>";
+				echo "<pre>".jsonstring("VideoLibrary.GetRecentlyAddedEpisodes", $count)."</pre>";
 			}
 			break;
 		case "m":  // Movies
-			$request = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": { "sortorder" : "ascending", "fields" : [ '.$videodetailfields.' ] }, "id": 1}';
-			$results = jsoncall($request);
+			$results = jsonmethodcall("VideoLibrary.GetMovies");
 			if (!empty($results['result'])) {
 				$videos = $results['result']['movies'];
 				displayVideoListMovie($videos, $style, $action, $breadcrumb, $params);
 			} else {
 				echo $COMM_ERROR;
-				echo "<pre>$request</pre>";
+				echo "<pre>".jsonstring("VideoLibrary.GetMovies")."</pre>";
 			}
 			break;
 		case "rm": // Recent Movies
@@ -174,14 +164,13 @@ function executeVideo($style = "w", $action, $breadcrumb, $params = array()) {
 			} else {
 				$count = 15;
 			}
-			$request = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetRecentlyAddedMovies", "params": { "start" : 0 , "end" : '.$count.' , "fields" : [ '.$videodetailfields.' ] }, "id" : 1 }';
-			$results = jsoncall($request);
+			$results = jsonmethodcall("VideoLibrary.GetRecentlyAddedMovies", $count);
 			if (!empty($results['result'])) {
 				$videos = $results['result']['movies'];
 				displayVideoListMovie($videos, $style, $action, $breadcrumb, $params);
 			} else {
 				echo $COMM_ERROR;
-				echo "<pre>$request</pre>";
+				echo "<pre>".jsonstring("VideoLibrary.GetRecentlyAddedMovies")."</pre>";
 			}
 			break;
 		case "mv": // Music Videos
@@ -191,24 +180,23 @@ function executeVideo($style = "w", $action, $breadcrumb, $params = array()) {
 			break;
 		case "ar":  // Artists
 			echo "<ul class=\"widget-list\"><li>Under Construction</li></ul>";
-			$request = '{"jsonrpc": "2.0", "method": "AudioLibrary.GetArtists", "params": { "sortmethod": "artist", "sortorder" : "ascending" , "fields": [ "artist", "year" ]}, "id": 1}';
-			$results = jsoncall($request);
+			$results = jsonmethodcall("AudioLibrary.GetArtists");
 			if (!empty($results['result'])) {
 				$artists = $results['result']['artists'];
 				displayMusicListArtist($artists, $style, $action, $breadcrumb, $params);
 			} else {
 				echo $COMM_ERROR;
-				echo "<pre>$request</pre>";
+				echo "<pre>".jsonstring("AudioLibrary.GetArtists")."</pre>";
 			}
 			break;
 		case "al": // Albums
 			echo "<ul class=\"widget-list\"><li>Under Construction</li></ul>";
 			if (!empty($params['artistid'])) {
 				$artistid = $params['artistid'];
-				$request = '{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params": { "artistid": '.$artistid.', "sortmethod": "year", "sortmethod": "artist", "sortorder" : "ascending", "fields": [ "artist", "year" ] },"id": 1}';
+				$request = jsonstring("AudioLibrary.GetAlbums", '"artistid": '.$artistid.',');
 			} else {
 				$artistid = "";
-				$request = '{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params": { "sortmethod": "artist", "sortorder" : "ascending", "fields": [ "artist", "year" ] },"id": 1}';
+				$request = jsonstring("AudioLibrary.GetAlbums");
 			}
 			$results = jsoncall($request);
 			if (!empty($results['result'])) {
@@ -224,15 +212,15 @@ function executeVideo($style = "w", $action, $breadcrumb, $params = array()) {
 			if (!empty($params['artistid']) && !empty($params['albumid'])) {
 				$artistid = $params['artistid'];
 				$albumid = $params['albumid'];
-				$request = '{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": { "artistid": '.$artistid.', "albumid": '.$albumid.' , "fields": [ "artist", "year" ] },"id": 1}';
+				$request = jsonstring("AudioLibrary.GetSongs", array("artistid" => '"artistid": '.$artistid.',', "albumid" => '"albumid": '.$albumid.','));
 			} elseif (!empty($params['albumid'])) {
 				$artistid = "";
 				$albumid = $params['albumid'];
-				$request = '{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": { "albumid": '.$albumid.', "fields": [ "artist", "year" ] },"id": 1}';
+				$request = jsonstring("AudioLibrary.GetSongs", array("artistid" => '"artistid": '.$artistid.',', "albumid" => ''));
 			} else {
 				$artistid = (!empty($params['artistid']) ? $params['artistid'] : "");
 				$albumid = "";
-				$request = '{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": { "fields": [ "artist", "year" ] },"id": 1}';
+				$request = jsonstring("AudioLibrary.GetSongs", array("artistid" => '', "albumid" => ''));
 			} 
 			$results = jsoncall($request);
 			if (!empty($results['result'])) {
@@ -245,14 +233,13 @@ function executeVideo($style = "w", $action, $breadcrumb, $params = array()) {
 			break;
 		case "ms": // Music Source
 			echo "<ul class=\"widget-list\"><li>Under Construction</li></ul>";
-			$request = '{"jsonrpc": "2.0", "method": "Files.GetSources", "params" : { "media" : "music" }, "id": 1}';
-			$results = jsoncall($request);
+			$results = jsonmethodcall("Files.GetSources", "music");
 			if (!empty($results['result'])) {
 				$sources = $results['result']['shares'];
 				displayMusicListSource($sources, $style, $action, $breadcrumb, $params);
 			} else {
 				echo $COMM_ERROR;
-				echo "<pre>$request</pre>";
+				echo "<pre>".jsonstring("Files.GetSources", "music")."</pre>";
 			}
 			break;
 	}
@@ -297,7 +284,7 @@ function renderMenu($data) {
 function displayLibraryMenu($style, $params) {
 	global $COMM_ERROR;
 
-	$arrResult = jsoncall('{"jsonrpc": "2.0", "method": "JSONRPC.Version", "id": 1}');
+	$arrResult = jsonmethodcall("JSONRPC.Version");
 	if(!is_array($arrResult)) {
 		echo $COMM_ERROR;
 	} else if ($style == "w") {
@@ -372,8 +359,7 @@ function displayLibraryMusicMenu($style, $params) {
 function getTVShowId($showtitle) {
 	$return = -1;
 
-	$request = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "id" : 1 }';
-	$results = jsoncall($request);
+	$results = jsonmethodcall("VideoLibrary.GetTVShows");
 	$videos = $results['result']['tvshows'];
 
 	foreach ($videoList as $videoInfo) {
@@ -389,23 +375,18 @@ function getTVShowId($showtitle) {
 function playVideoFromList($videoList, $idType = "episodeid", $videoId = -1) {
 	foreach ($videoList as $videoInfo) {
 		if(!empty($videoInfo[$idType]) && ($videoInfo[$idType] == $videoId) && !empty($videoInfo['file'])) {
-			$videoLocation = $videoInfo['file'];
-			$request = '{"jsonrpc" : "2.0", "method": "XBMC.Play", "params" : { "file" : "' . $videoLocation . '"}, "id": 1}';
-			jsoncall($request);
+			jsonmethodcall("XBMC.Play", '"file": "'.$videoInfo['file'].'"');
 		}
 	}
 }
 
 function playSongFromList($songid) {
-	$request = '{"jsonrpc" : "2.0", "method": "Player.GetActivePlayers", "id": 1}';
-	$results = jsoncall($request);
+	$results = jsonmethodcall("Player.GetActivePlayers");
 	if (!empty($results)) {
 		if ($results['result']['audio'] == 1) {
-			$request = '{"jsonrpc" : "2.0", "method": "AudioPlaylist.Add", "params": { "songid" : '.$songid.' }, "id": 1}';
-			$results = jsoncall($request);
+			$results = jsonmethodcall("AudioPlaylist.Add", $songid);
 		} else {
-			$request = '{"jsonrpc" : "2.0", "method": "XBMC.Play", "params": { "songid" : '.$songid.' }, "id": 1}';
-			$results = jsoncall($request);
+			$results = jsonmethodcall("XBMC.Play", '"songid": "'.$songid);
 		}
 	} else {
 		echo $COMM_ERROR;
@@ -714,13 +695,15 @@ function displayMusicListSource($sources, $style, $action, $breadcrumb, $params)
 	echo "<ul class=\"widget-list\">";
 	$alt = false;
 	foreach ($sources as $source) {
-		$label = $source['label'];
-		$id = "music-".$source["sourceid"];
-		$class = "music-source";
-		$query = "&sourceid=".$source["sourceid"];
-		$anchor = buildAnchor($label, $style, $id, $class, "d", $newbreadcrumb, $params, $query);
-		echo "<li".(($alt) ? " class=\"alt\"" : "").">".$anchor."</li>\n";
-		$alt = !$alt;
+		if(!empty($source["sourceid"])) {
+			$label = $source['label'];
+			$id = "music-".$source["sourceid"];
+			$class = "music-source";
+			$query = "&sourceid=".$source["sourceid"];
+			$anchor = buildAnchor($label, $style, $id, $class, "d", $newbreadcrumb, $params, $query);
+			echo "<li".(($alt) ? " class=\"alt\"" : "").">".$anchor."</li>\n";
+			$alt = !$alt;
+		}
 	}
 	echo "</ul>";
 

@@ -53,13 +53,11 @@ function widgetControl($baseurl = "widgets/wControl.php", $forcemenu = false) {
 		if(!empty($_GET["cmd"])) {
 			switch ($_GET["cmd"]) {
 				case "shutdown":  // Shutdown
-					$request = '{"jsonrpc": "2.0", "method": "System.Shutdown", "id" : 1 }';
-					$results = jsoncall($request);
+					$results = jsonmethodcall("System.Shutdown");
 					$displayMenu = ($_GET["style"] == "m");
 					break;
 				case "vidscan":  // Video Library ScanForContent
-					$request = '{"jsonrpc": "2.0", "method": "VideoLibrary.ScanForContent", "id" : 1 }';
-					$results = jsoncall($request);
+					$results = jsonmethodcall("VideoLibrary.ScanForContent");
 					$displayMenu = ($_GET["style"] == "m");
 					break;
 				default:

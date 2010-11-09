@@ -47,12 +47,12 @@ function displayNowPlaying($static = false) {
 	echo "<div id=\"nowplaying\">\n";
 
 	//json rpc call procedure
-	$results = jsoncall('{"jsonrpc": "2.0", "method": "Player.GetActivePlayers", "id": 1}');
+	$results = jsonmethodcall("Player.GetActivePlayers");
 
 	//video Player
 	if (($results['result']['video']) == 1) {
 		//get playlist items
-		$results = jsoncall('{"jsonrpc": "2.0", "method": "VideoPlaylist.GetItems", "params": { "fields": ["title", "season", "episode", "plot", "duration", "showtitle"] }, "id": 1}');
+		$results = jsonmethodcall("VideoPlaylist.GetItems");
 
 		$items = $results['result']['items'];
 		$current = (!empty($results['result']['current'])) ? $results['result']['current'] : 0;
@@ -109,7 +109,7 @@ function displayNowPlaying($static = false) {
 		echo "\t\t<p>".$show."</p>\n";
 		echo "\t\t<p>".$title."</p>\n";
 		//progress time
-		$results = jsoncall('{"jsonrpc": "2.0", "method": "VideoPlayer.GetTime", "id": 1}');
+		$results = jsonmethodcall("VideoPlayer.GetTime");
 		$time = $results['result']['time'];
 		$total = $results['result']['total'];
 		echo "\t\t<p>".formattimes($time, $total)."</p>\n";
@@ -118,13 +118,13 @@ function displayNowPlaying($static = false) {
 		}
 
 		//progress bar
-		$results = jsoncall('{"jsonrpc": "2.0", "method": "VideoPlayer.GetPercentage", "id": 1}');
+		$results = jsonmethodcall("VideoPlayer.GetPercentage");
 		$percentage = $results['result'];
 		echo "\t\t<div class='progressbar'><div class='progress' style='width:".$percentage."%'></div></div>";
 
 	} elseif (($results['result']['audio']) == 1) {
 		//get playlist items
-		$results = jsoncall('{"jsonrpc": "2.0", "method": "AudioPlaylist.GetItems", "params": { "fields": ["title", "album", "artist", "duration"] }, "id": 1}');
+		$results = jsonmethodcall("AudioPlaylist.GetItems");
 		$items = $results['result']['items'];
 		$current = $results['result']['current'];
 
@@ -148,7 +148,7 @@ function displayNowPlaying($static = false) {
 		echo "\t<p>".$album."</p>\n";
 
 		//progress time
-		$results = jsoncall('{"jsonrpc": "2.0", "method": "AudioPlayer.GetTime", "id": 1}');
+		$results = jsonmethodcall("AudioPlaylist.GetTime");
 		$time = $results['result']['time'];
 		$total = $results['result']['total'];
 		echo "\t<p>".formattimes($time, $total)."</p>\n";
@@ -158,7 +158,7 @@ function displayNowPlaying($static = false) {
 		echo "</div>\n";				
 
 		//progress bar
-		$results = jsoncall('{"jsonrpc": "2.0", "method": "AudioPlayer.GetPercentage", "id": 1}');
+		$results = jsonmethodcall("AudioPlaylist.GetPercentage");
 		$percentage = $results['result'];
 		echo "<div class=\"progressbar\"><div class=\"progress\" style=\"width:".$percentage."%\"></div></div>\n";
 	} else {
@@ -167,15 +167,13 @@ function displayNowPlaying($static = false) {
 	echo "</div>\n";
 }
 function processCommand($command) {
-	global $xbmcimgpath;
 	if ($command == "ShowPlaylist") {
 
-		$results = jsoncall('{"jsonrpc": "2.0", "method": "Player.GetActivePlayers", "id": 1}');
-
+		$results = jsonmethodcall("Player.GetActivePlayers");
 		if (($results['result']['video']) == 1) {
 			echo "\t<p>Not Yet Implemented</p>\n";
 		} elseif (($results['result']['audio']) == 1) {
-			$results = jsoncall('{"jsonrpc": "2.0", "method": "AudioPlaylist.GetItems", "params": { "fields": ["title", "album", "artist", "duration"] }, "id": 1}');
+			$results = jsonmethodcall("AudioPlaylist.GetItems");
 
 			if (array_key_exists('items', $results['result'])) {
 				$items = $results['result']['items'];
@@ -219,8 +217,7 @@ function processCommand($command) {
 		*/
 
 		//get active players
-		$request = '{"jsonrpc": "2.0", "method": "Player.GetActivePlayers", "id": 1}';
-		$results = jsoncall($request);
+		$results = jsonmethodcall("Player.GetActivePlayers");
 
 		//Video Player
 		if (($results['result']['video']) == 1) {
@@ -234,8 +231,7 @@ function processCommand($command) {
 			// Nothing Playing
 		}
 
-		$request = '{"jsonrpc": "2.0", "method": "'.$player.'.'.$command.'", "id": 1}';
-		$result = jsoncall($request);
+		$results = jsonmethodcall($player.'.'.$command);
 
 		// debugging
 		if(!empty($_GET["debug"]) && ($_GET["debug"] == "y")) {
