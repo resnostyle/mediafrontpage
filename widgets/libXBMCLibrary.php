@@ -2,8 +2,6 @@
 //require_once "../config.php";
 //require_once "../functions.php";
 
-$videodetailfields = '"genre", "director", "trailer", "tagline", "plot", "plotoutline", "title", "originaltitle", "lastplayed", "showtitle", "firstaired", "duration", "season", "episode", "runtime", "year", "playcount", "rating", "writer", "studio", "mpaa", "premiered", "album"';
-
 function executeVideo($style = "w", $action, $breadcrumb, $params = array()) {
 	global $COMM_ERROR;
 	global $videodetailfields;
@@ -193,7 +191,7 @@ function executeVideo($style = "w", $action, $breadcrumb, $params = array()) {
 			break;
 		case "ar":  // Artists
 			echo "<ul class=\"widget-list\"><li>Under Construction</li></ul>";
-			$request = '{"jsonrpc": "2.0", "method": "AudioLibrary.GetArtists", "params": { "sortorder" : "ascending" }, "id": 1}';
+			$request = '{"jsonrpc": "2.0", "method": "AudioLibrary.GetArtists", "params": { "sortmethod": "artist", "sortorder" : "ascending" , "fields": [ "artist", "year" ]}, "id": 1}';
 			$results = jsoncall($request);
 			if (!empty($results['result'])) {
 				$artists = $results['result']['artists'];
@@ -207,10 +205,10 @@ function executeVideo($style = "w", $action, $breadcrumb, $params = array()) {
 			echo "<ul class=\"widget-list\"><li>Under Construction</li></ul>";
 			if (!empty($params['artistid'])) {
 				$artistid = $params['artistid'];
-				$request = '{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params": { "artistid": '.$artistid.' , "sortorder" : "ascending", "fields": [ "artist", "year" ] },"id": 1}';
+				$request = '{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params": { "artistid": '.$artistid.', "sortmethod": "year", "sortmethod": "artist", "sortorder" : "ascending", "fields": [ "artist", "year" ] },"id": 1}';
 			} else {
 				$artistid = "";
-				$request = '{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params": { "sortorder" : "ascending", "fields": [ "artist", "year" ] },"id": 1}';
+				$request = '{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params": { "sortmethod": "artist", "sortorder" : "ascending", "fields": [ "artist", "year" ] },"id": 1}';
 			}
 			$results = jsoncall($request);
 			if (!empty($results['result'])) {
@@ -632,7 +630,7 @@ function displayVideoListMovie($videos, $style, $action, $breadcrumb, $params) {
 	echo "<ul class=\"widget-list\">";
 	$alt = false;
 	foreach ($videos as $videoInfo) {
-		$label = $videoInfo['label']." &nbsp;(".$videoInfo['year'].")";
+		$label = $videoInfo['label'].(!empty($videoInfo['year']) ? " &nbsp;(".$videoInfo['year'].")" : "");
 		$id = "movie-".$videoInfo["movieid"];
 		$class = "recent-movie";
 		$query = "&videoid=".$videoInfo["movieid"];

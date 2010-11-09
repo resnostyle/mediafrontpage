@@ -1,27 +1,6 @@
 <?php
 require_once "config.php";
-
-$COMM_ERROR = "\n<p><strong>XBMC's JSON API did not respond.</strong></p>\n<p>Check your configuration (config.php) and that the JSON service variable is configured correctly and that the <a href=\"".$xbmcjsonservice."\">Service</a> is running.</p>\n";
-
-function jsoncall($request, $service_uri = "") {
-	global $xbmcjsonservice;
-	
-	if($service_uri == "") {
-		$service_uri = $xbmcjsonservice;
-	}
-	//json rpc call procedure
-	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($ch, CURLOPT_POST, 1);
-	curl_setopt($ch, CURLOPT_URL, $service_uri);
-
-	curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
-	$arrResult = json_decode(curl_exec($ch), true);
-
-	curl_close($ch);
-	
-	return $arrResult;
-}
+require_once "xbmcjsonlib.php";
 
 function to_readable_size($size) {
 	switch (true) {
