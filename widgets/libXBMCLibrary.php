@@ -62,8 +62,8 @@ function executeVideo($style = "w", $action, $breadcrumb, $params = array()) {
 			switch ($previousaction) {
 				case "e": //Episodes
 					$showid = $params['showid'];
-					$season = $params['season'];
-					$results = jsonmethodcall("VideoLibrary.GetEpisodes", array('tvshowid' => $params['showid'], 'season' => $params['season']));
+					$season = (!empty($params['season']) ? $params['season'] : 0);
+					$results = jsonmethodcall("VideoLibrary.GetEpisodes", array('tvshowid' => $params['showid'], 'season' => $season));
 					$videos = $results['result']['episodes'];
 					$params['typeid'] = "episodeid";
 					if (!empty($videos)) {
@@ -122,7 +122,7 @@ function executeVideo($style = "w", $action, $breadcrumb, $params = array()) {
 			break;
 		case "e":  // Episodes
 			$showid = $params['showid'];
-			$season = $params['season'];
+			$season = (!empty($params['season'])) ? $params['season'] : 0;
 			$results = jsonmethodcall("VideoLibrary.GetEpisodes", array('tvshowid' => $showid, 'season' => $season));
 			if (!empty($results['result'])) {
 				$videos = $results['result']['episodes'];
@@ -433,14 +433,14 @@ function displayVideoEpisode($videoInfo, $style, $action, $breadcrumb, $params) 
 	}
 	$plot = (!empty($videoInfo['plot'])) ? $videoInfo['plot'] : "";
 	echo "<div class=\"highslide-caption\">"; 
-	echo $videoInfo['showtitle']." - ".$videoInfo['season']."x".str_pad($videoInfo['episode'], 2, '0', STR_PAD_LEFT)." - ".$videoInfo['label']."<br />\n";
+	echo $videoInfo['showtitle']." - ".(!empty($videoInfo["season"]) ? $videoInfo["season"] : "Specials ")."x".str_pad($videoInfo['episode'], 2, '0', STR_PAD_LEFT)." - ".$videoInfo['label']."<br />\n";
 	echo "\t\t".$plot."\n";
 	echo "\t\t</div>\n"; 
 
 	echo "\t</span>\n";
 	echo "\t<span class='library-desc'>\n";
 	echo "\t\t<p>";
-	echo "\t\t\t<strong>Season: ".$videoInfo['season']." Episode: ".$videoInfo['episode']."<br />".$videoInfo['label']."</strong>";
+	echo "\t\t\t<strong>".(!empty($videoInfo["season"]) ? ("Season: ".$videoInfo["season"]) : "")." Episode: ".$videoInfo['episode']."<br />".$videoInfo['label']."</strong>";
 	//echo "\t\t\t<strong>".$videoInfo['season']."x".str_pad($videoInfo['episode'], 2, '0', STR_PAD_LEFT)."<br />".$videoInfo['label']."</strong>";
 	echo "\t\t</p>\n";
 	echo "\t\t<p class=\"plot\">".$plot."</p>\n";
@@ -460,11 +460,11 @@ function displayVideoEpisode($videoInfo, $style, $action, $breadcrumb, $params) 
 	echo "\t</div>\n";
 
 	$showid = (!empty($params['showid'])) ? $params['showid'] : "";
-	$season = (!empty($params['season'])) ? $params['season'] : "";
+	$season = (!empty($params['season'])) ? $params['season'] : "0";
 	
 	$query = "&showid=".$showid."&season=".$season."&videoid=".$videoInfo["episodeid"];
 	$playanchor = buildAnchor("Play", $style, "", "", "p", $breadcrumb, $params, $query);
-	$backanchor = buildBackAnchor($style, $breadcrumb, $params, "&showid=".$showid."&season=".$videoInfo["season"]);
+	$backanchor = buildBackAnchor($style, $breadcrumb, $params, "&showid=".$showid."&season=".$season);
 	echo "\t<div class=\"widget-control\">".$playanchor." | ".$backanchor."</div>\n";
 	echo "</div>\n";
 }
@@ -549,15 +549,14 @@ function displayVideoListSeasons($videos, $style, $action, $breadcrumb, $params)
 	if (!empty($videos)) {
 		$alt = false;
 		foreach ($videos as $videoInfo) {
-			if(!empty($videoInfo["season"])) { // Need to do something for specials as Season is blank in that senerio
-				$label = $videoInfo['showtitle']." - ".$videoInfo['label'];
-				$id = "season-".$videoInfo["season"];
-				$class = "recent-tv";
-				$query = "&showid=".$params["showid"]."&season=".$videoInfo["season"];
-				$anchor = buildAnchor($label, $style, $id, $class, "e", $newbreadcrumb, $params, $query);
-				echo "<li".(($alt) ? " class=\"alt\"" : "").">".$anchor."</li>\n";
-				$alt = !$alt;
-			}
+			$season = (!empty($videoInfo["season"])) ? $videoInfo["season"] : 0;
+			$label = $videoInfo['showtitle']." - ".$videoInfo['label'];
+			$id = "season-".$season;
+			$class = "recent-tv";
+			$query = "&showid=".$params["showid"]."&season=".$season;
+			$anchor = buildAnchor($label, $style, $id, $class, "e", $newbreadcrumb, $params, $query);
+			echo "<li".(($alt) ? " class=\"alt\"" : "").">".$anchor."</li>\n";
+			$alt = !$alt;
 		}
 	} else {
 		echo "<li>[empty]</li>\n";
@@ -604,7 +603,7 @@ function displayVideoListEpisodes($videos, $style, $action, $breadcrumb, $params
 	}
 	echo "</ul>";
 
-	$anchor = buildBackAnchor($style, $breadcrumb, $params, "&showid=".$showid."&season=".$videoInfo["season"]);
+	$anchor = buildBackAnchor($style, $breadcrumb, $params, "&showid=".$showid."&season=".(!empty($videoInfo["season"]) ? $videoInfo["season"] : 0));
 	echo "<div class=\"widget-control\">".$anchor."</div>\n";
 }
 
