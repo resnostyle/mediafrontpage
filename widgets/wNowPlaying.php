@@ -148,7 +148,7 @@ function displayNowPlaying($static = false) {
 		echo "\t<p>".$album."</p>\n";
 
 		//progress time
-		$results = jsonmethodcall("AudioPlaylist.GetTime");
+		$results = jsonmethodcall("AudioPlayer.GetTime");
 		$time = $results['result']['time'];
 		$total = $results['result']['total'];
 		echo "\t<p>".formattimes($time, $total)."</p>\n";
@@ -158,7 +158,7 @@ function displayNowPlaying($static = false) {
 		echo "</div>\n";				
 
 		//progress bar
-		$results = jsonmethodcall("AudioPlaylist.GetPercentage");
+		$results = jsonmethodcall("AudioPlayer.GetPercentage");
 		$percentage = $results['result'];
 		echo "<div class=\"progressbar\"><div class=\"progress\" style=\"width:".$percentage."%\"></div></div>\n";
 	} else {
@@ -167,6 +167,8 @@ function displayNowPlaying($static = false) {
 	echo "</div>\n";
 }
 function processCommand($command) {
+	global $xbmcimgpath;
+	
 	if ($command == "ShowPlaylist") {
 
 		$results = jsonmethodcall("Player.GetActivePlayers");

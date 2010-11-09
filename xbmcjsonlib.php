@@ -2,6 +2,7 @@
 require_once "config.php";
 
 $COMM_ERROR = "\n<p><strong>XBMC's JSON API did not respond.</strong></p>\n<p>Check your configuration (config.php) and that the JSON service variable is configured correctly and that the <a href=\"".$xbmcjsonservice."\">Service</a> is running.</p>\n";
+$JSON_ERROR = "\n<p><strong>XBMC's <a href=\"".$xbmcjsonservice."\">JSON API service</a> returned an Error.</strong></p>\n";
 $videodetailfields = '"genre", "director", "trailer", "tagline", "plot", "plotoutline", "title", "originaltitle", "lastplayed", "showtitle", "firstaired", "duration", "season", "episode", "runtime", "year", "playcount", "rating", "writer", "studio", "mpaa", "premiered", "album"';
 
 $xbmcJsonMethods['JSONRPC.Version']                       = array('call' => '{"jsonrpc": "2.0", "method": "JSONRPC.Version", "id": 1}');
@@ -23,11 +24,11 @@ $xbmcJsonMethods['AudioPlayer.SmallSkipBackward']         = array('call' => '{"j
 $xbmcJsonMethods['AudioPlayer.SmallSkipForward']          = array('call' => '{"jsonrpc": "2.0", "method": "AudioPlayer.SmallSkipForward", "id": 1}');
 $xbmcJsonMethods['AudioPlayer.Rewind']                    = array('call' => '{"jsonrpc": "2.0", "method": "AudioPlayer.Rewind", "id": 1}');
 $xbmcJsonMethods['AudioPlayer.Forward']                   = array('call' => '{"jsonrpc": "2.0", "method": "AudioPlayer.Forward", "id": 1}');
+$xbmcJsonMethods['AudioPlayer.GetPercentage']             = array('call' => '{"jsonrpc": "2.0", "method": "AudioPlayer.GetPercentage", "id": 1}');
+$xbmcJsonMethods['AudioPlayer.GetTime']                   = array('call' => '{"jsonrpc": "2.0", "method": "AudioPlayer.GetTime", "id": 1}');
 
 $xbmcJsonMethods['AudioPlaylist.Add']                     = array('call' => '{"jsonrpc": "2.0", "method": "AudioPlaylist.Add", "params": { "songid" : %d }, "id": 1}', 'args' => 0);
 $xbmcJsonMethods['AudioPlaylist.GetItems']                = array('call' => '{"jsonrpc": "2.0", "method": "AudioPlaylist.GetItems", "params": { "fields": ["title", "album", "artist", "duration"] }, "id": 1}');
-$xbmcJsonMethods['AudioPlaylist.GetPercentage']           = array('call' => '{"jsonrpc": "2.0", "method": "AudioPlaylist.GetPercentage", "id": 1}');
-$xbmcJsonMethods['AudioPlaylist.GetTime']                 = array('call' => '{"jsonrpc": "2.0", "method": "AudioPlaylist.GetTime", "id": 1}');
 
 $xbmcJsonMethods['Files.GetSources']                      = array('call' => '{"jsonrpc": "2.0", "method": "Files.GetSources", "params" : { "media" : "%s" }, "id": 1}', 'args' => 'music');
 $xbmcJsonMethods['Files.Download']                        = array('call' => '{"jsonrpc": "2.0", "method": "Files.Download", "params": %s, "id": 1}', 'args' => '""');
@@ -94,6 +95,8 @@ function jsonmethodcall($method, $args = array(), $service_uri = "") {
 }
 function jsoncall($request, $service_uri = "") {
 	global $xbmcjsonservice;
+	global $DEBUG;
+	global $JSON_ERROR;
 	
 	if($service_uri == "") {
 		$service_uri = $xbmcjsonservice;
@@ -105,10 +108,16 @@ function jsoncall($request, $service_uri = "") {
 	curl_setopt($ch, CURLOPT_URL, $service_uri);
 
 	curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
-	$arrResult = json_decode(curl_exec($ch), true);
+	$response = curl_exec($ch);
+	$arrResult = json_decode($response, true);
 
 	curl_close($ch);
 	
+	if((!empty($arrResult['error'])) && (!empty($DEBUG) && $DEBUG)) {
+		echo $JSON_ERROR;
+		echo "<p><strong>Request:</strong><pre>$request</pre></p>\n";
+		echo "<p><strong>Response:</strong><pre>$response</pre></p>\n";
+	}
 	return $arrResult;
 }
 
