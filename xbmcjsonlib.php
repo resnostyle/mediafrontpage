@@ -98,6 +98,7 @@ function jsoncall($request, $service_uri = "") {
 	global $DEBUG;
 	global $JSON_ERROR;
 	global $COMM_ERROR;
+	global $FORCE_UTF8;
 	
 	if($service_uri == "") {
 		$service_uri = $xbmcjsonservice;
@@ -113,6 +114,10 @@ function jsoncall($request, $service_uri = "") {
 	$response = curl_exec($ch);
 	curl_close($ch);
 
+	if(!empty($FORCE_UTF8) && $FORCE_UTF8) {
+		$response = jsonFixEncoding($response);
+	}
+	
 	$arrResult = json_decode($response, true);
 	if((!empty($arrResult['error'])) && (!empty($DEBUG) && $DEBUG)) {
 		echo $JSON_ERROR;
@@ -154,6 +159,15 @@ function jsonerrorstring($err) {
 	//	throw new Exception('JSON Error: '.$error);        
 		return "JSON Error: ".$error;
     }
+}
+
+function jsonFixEncoding($s){ 
+    if(empty($s)) {
+		return $s; 
+	} else {
+		$s = preg_match_all("#[\x09\x0A\x0D\x20-\x7E]|[\xC2-\xDF][\x80-\xBF]|\xE0[\xA0-\xBF][\x80-\xBF]|[\xE1-\xEC\xEE\xEF][\x80-\xBF]{2}|\xED[\x80-\x9F][\x80-\xBF]#x", $s, $m );
+		return implode("",$m[0]); 
+	}
 }
 
 ?>
