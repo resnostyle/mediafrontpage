@@ -98,18 +98,7 @@ ComingEpisodesSCRIPT;
 if(!empty($_GET["display"])) {
 	include_once "../config.php";
 
-
-	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($ch, CURLOPT_HTTPGET, 1);
-	curl_setopt($ch, CURLOPT_URL, $sickbeardcomingepisodes);
-
-	$html = curl_exec($ch);
-	
-	curl_close($ch);
-
-	//$body = preg_replace("/.*<body[^>]*>|<\/body>.*/si", "", $html);  //Need a faster way to do this.
-	$body = $html;
+	$body = getComingSoon($sickbeardcomingepisodes);
 
 	$urldata = parse_url($sickbeardcomingepisodes);
 	$pos = strrpos($sickbeardcomingepisodes, "/");
@@ -195,23 +184,24 @@ function changeLinks($body) {
 	
 	return $body;
 }
-function comingSoonUrl() {
+function comingSoonUrl($url = "") {
 	global $sickbeardcomingepisodes;
 
-	if(!(strpos($sickbeardcomingepisodes, "http") === 0)){
-		$url = "http://".$_SERVER['PHP_AUTH_USER'].":".$_SERVER['PHP_AUTH_PW']."@".$_SERVER['SERVER_NAME'].((strpos($sickbeardcomingepisodes, "/") === 0)?"":"/").$sickbeardcomingepisodes;
-	} else {
-		$url = $sickbeardcomingepisodes;
+	if(empty($url)) {
+		if(!(strpos($sickbeardcomingepisodes, "http") === 0)){
+			$url = "http://".$_SERVER['PHP_AUTH_USER'].":".$_SERVER['PHP_AUTH_PW']."@".$_SERVER['SERVER_NAME'].((strpos($sickbeardcomingepisodes, "/") === 0)?"":"/").$sickbeardcomingepisodes;
+		} else {
+			$url = $sickbeardcomingepisodes;
+		}
 	}
-	
 	return $url;
 }
 
-function getComingSoon() {
+function getComingSoon($url = "") {
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($ch, CURLOPT_HTTPGET, 1);
-	curl_setopt($ch, CURLOPT_URL, comingSoonUrl());
+	curl_setopt($ch, CURLOPT_URL, comingSoonUrl($url));
 
 	$html = curl_exec($ch);
 	curl_close($ch);
