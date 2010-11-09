@@ -9,24 +9,42 @@ function error_array($code, $message) {
 $jsonRequest = urldecode(file_get_contents("php://input"));
 
 $arrRequest = json_decode($jsonRequest, true);
-if(!empty($arrRequest)) {
-	switch ($arrRequest["method"]) {
-		case "SaveLayout":
-			$arrResult = save_layout($arrRequest);
-			break;
-		case "GetWidgets":
-			$arrResult = get_widgets($arrRequest);
-			break;
-		case "XBMCPassthough":
-			$arrResult = xbmc_passthough($arrRequest);
-			break;
-		default:
-			$arrResult = error_array(-32601, "Method not found.");
+if(!empty($DEBUG) && $DEBUG && !empty($arrRequest['jsonrpc']) && ($arrRequest['jsonrpc'] == "2.0") && !empty($xbmcjsonserviceoverride)) {
+	// Use XBMC test harness
+	if(!empty($arrRequest['method']) && file_exists($arrRequest['method'])) {
+		$response = file_get_contents($arrRequest['method']);
+	} else {
+		//json rpc call procedure
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_URL, $xbmcjsonserviceoverride);
+
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonRequest);
+		$response = curl_exec($ch);
+		curl_close($ch);
 	}
+	echo $response;
 } else {
-	$arrResult = error_array(-32700, "Parse error.");
+	if(!empty($arrRequest)) {
+		switch ($arrRequest["method"]) {
+			case "SaveLayout":
+				$arrResult = save_layout($arrRequest);
+				break;
+			case "GetWidgets":
+				$arrResult = get_widgets($arrRequest);
+				break;
+			case "XBMCPassthough":
+				$arrResult = xbmc_passthough($arrRequest);
+				break;
+			default:
+				$arrResult = error_array(-32601, "Method not found.");
+		}
+	} else {
+		$arrResult = error_array(-32700, "Parse error.");
+	}
+	echo json_encode($arrResult);
 }
-echo json_encode($arrResult);
 
 function save_layout($arrRequest) {
 	if(!empty($arrRequest["params"]) && is_array($arrRequest["params"])) {

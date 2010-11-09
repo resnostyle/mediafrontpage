@@ -97,10 +97,12 @@ function jsoncall($request, $service_uri = "") {
 	global $xbmcjsonservice;
 	global $DEBUG;
 	global $JSON_ERROR;
+	global $COMM_ERROR;
 	
 	if($service_uri == "") {
 		$service_uri = $xbmcjsonservice;
 	}
+
 	//json rpc call procedure
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -109,16 +111,49 @@ function jsoncall($request, $service_uri = "") {
 
 	curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
 	$response = curl_exec($ch);
-	$arrResult = json_decode($response, true);
-
 	curl_close($ch);
-	
+
+	$arrResult = json_decode($response, true);
 	if((!empty($arrResult['error'])) && (!empty($DEBUG) && $DEBUG)) {
 		echo $JSON_ERROR;
+		echo "<p><strong>Last JSON Error: ".json_last_error()."</strong></p>\n";
+		echo "<p><strong>Request:</strong><pre>$request</pre></p>\n";
+		echo "<p><strong>Response:</strong><pre>$response</pre></p>\n";
+	}
+	if((empty($arrResult)) && (!empty($DEBUG) && $DEBUG)) {
+		echo $COMM_ERROR;
+		echo "<p><strong>".jsonerrorstring(json_last_error())."</strong></p>\n";
 		echo "<p><strong>Request:</strong><pre>$request</pre></p>\n";
 		echo "<p><strong>Response:</strong><pre>$response</pre></p>\n";
 	}
 	return $arrResult;
+}
+function jsonerrorstring($err) {
+	switch($err) {
+		case JSON_ERROR_DEPTH:
+			$error =  ' - Maximum stack depth exceeded';
+			break;
+		case JSON_ERROR_CTRL_CHAR:
+			$error = ' - Unexpected control character found';
+			break;
+		case JSON_ERROR_SYNTAX:
+			$error = ' - Syntax error, malformed JSON';
+			break;
+		case JSON_ERROR_STATE_MISMATCH:
+			$error = ' - Syntax error, Invalid or malformed JSON';
+			break;
+		//case JSON_ERROR_UTF8:
+		//	$error = ' - Malformed UTF-8 characters, possibly incorrectly encoded';
+		//	break;
+		case JSON_ERROR_NONE:
+			$error = '';                    
+		default:
+			$error = ' Error #'.$err;                    
+	}
+	if (!empty($error)) {
+	//	throw new Exception('JSON Error: '.$error);        
+		return "JSON Error: ".$error;
+    }
 }
 
 ?>
