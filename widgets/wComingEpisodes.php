@@ -239,8 +239,6 @@ function displayComingSoon () {
 	echo $body;
 }
 
-
-//Zarquon's newer coming episodes widget - (problems with http:// addresses)
 if(!empty($_GET["style"]) && (($_GET["style"] == "s") || ($_GET["style"] == "w"))) {
 	include_once "../config.php";
 	displayComingSoon();
