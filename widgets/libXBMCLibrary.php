@@ -49,9 +49,8 @@ function executeVideo($style = "w", $action, $breadcrumb, $params = array()) {
 					} 
 					break;
 				case "so": // Songs
-					$songid = $params['songid'];
-					if (!empty($songid)) {
-						PlaySongFromList($songid);
+					if (!empty($params['songid'])) {
+						PlaySongFromList($params['songid']);
 					} else {
 						echo "<pre>No Song Specified</pre>";
 					}
@@ -384,13 +383,17 @@ function playSongFromList($songid) {
 	$results = jsonmethodcall("Player.GetActivePlayers");
 	if (!empty($results)) {
 		if ($results['result']['audio'] == 1) {
-			$results = jsonmethodcall("AudioPlaylist.Add", $songid);
+			$request = jsonstring("AudioPlaylist.Add", $songid);
 		} else {
-			$results = jsonmethodcall("XBMC.Play", '"songid": "'.$songid);
+			$request = jsonstring("XBMC.Play", '"songid": '.$songid);
+		}
+		$results = jsoncall($request);
+		if (empty($results)) {
+			echo $COMM_ERROR;
+			echo "<pre>$request</pre>";
 		}
 	} else {
 		echo $COMM_ERROR;
-		echo "<pre>$request</pre>";
 	}
 }
 
