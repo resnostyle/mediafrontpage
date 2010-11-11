@@ -288,9 +288,9 @@ function displayLibraryMenu($style, $params) {
 		echo $COMM_ERROR;
 	} else if ($style == "w") {
 			$data = array (
-						  "menu-lp" => array( "href" => "#", "onclick" => " onclick=\"".$params['onclickcmd']."('".$params['wrapper']."', '".$params['harness']."', 'lp', 'l', '');\"", "label" => "Photos")
-						, "menu-lv" => array( "href" => "#", "onclick" => " onclick=\"".$params['onclickcmd']."('".$params['wrapper']."', '".$params['harness']."', 'lv', 'l', '');\"", "label" => "Videos")
-						, "menu-lm" => array( "href" => "#", "onclick" => " onclick=\"".$params['onclickcmd']."('".$params['wrapper']."', '".$params['harness']."', 'lm', 'l', '');\"", "label" => "Music")
+						  "menu-lp" => array( "href" => "#", "onclick" => " onclick=\"".$params['onclickcmd']."('".$params['wrapper']."', '".$params['harness']."', 'lp', 'l', '', false);\"", "label" => "Photos")
+						, "menu-lv" => array( "href" => "#", "onclick" => " onclick=\"".$params['onclickcmd']."('".$params['wrapper']."', '".$params['harness']."', 'lv', 'l', '', false);\"", "label" => "Videos")
+						, "menu-lm" => array( "href" => "#", "onclick" => " onclick=\"".$params['onclickcmd']."('".$params['wrapper']."', '".$params['harness']."', 'lm', 'l', '', false);\"", "label" => "Music")
 					  );
 	} else {
 			$data = array (
@@ -311,11 +311,11 @@ function displayLibraryPhotoMenu($style, $params) {
 function displayLibraryVideoMenu($style, $params) {
 	if ($style == "w") {
 		$data = array (
-						  "menu-t" => array( "href" => "#", "onclick" => " onclick=\"".$params['onclickcmd']."('".$params['wrapper']."', '".$params['harness']."', 't', 'l|lv', '');\"", "label" => "TV Shows")
-						, "menu-m" => array( "href" => "#", "onclick" => " onclick=\"".$params['onclickcmd']."('".$params['wrapper']."', '".$params['harness']."', 'm', 'l|lv', '');\"", "label" => "Movies")
-						, "menu-re" => array( "href" => "#", "onclick" => " onclick=\"".$params['onclickcmd']."('".$params['wrapper']."', '".$params['harness']."', 're', 'l|lv', '');\"", "label" => "Recent Episodes")
-						, "menu-rm" => array( "href" => "#", "onclick" => " onclick=\"".$params['onclickcmd']."('".$params['wrapper']."', '".$params['harness']."', 'rm', 'l|lv', '');\"", "label" => "Recent Movies")
-						, "menu-mv" => array( "href" => "#", "onclick" => " onclick=\"".$params['onclickcmd']."('".$params['wrapper']."', '".$params['harness']."', 'mv', 'l|lv', '');\"", "label" => "Music Videos")
+						  "menu-t" => array( "href" => "#", "onclick" => " onclick=\"".$params['onclickcmd']."('".$params['wrapper']."', '".$params['harness']."', 't', 'l|lv', '', false);\"", "label" => "TV Shows")
+						, "menu-m" => array( "href" => "#", "onclick" => " onclick=\"".$params['onclickcmd']."('".$params['wrapper']."', '".$params['harness']."', 'm', 'l|lv', '', false);\"", "label" => "Movies")
+						, "menu-re" => array( "href" => "#", "onclick" => " onclick=\"".$params['onclickcmd']."('".$params['wrapper']."', '".$params['harness']."', 're', 'l|lv', '', false);\"", "label" => "Recent Episodes")
+						, "menu-rm" => array( "href" => "#", "onclick" => " onclick=\"".$params['onclickcmd']."('".$params['wrapper']."', '".$params['harness']."', 'rm', 'l|lv', '', false);\"", "label" => "Recent Movies")
+						, "menu-mv" => array( "href" => "#", "onclick" => " onclick=\"".$params['onclickcmd']."('".$params['wrapper']."', '".$params['harness']."', 'mv', 'l|lv', '', false);\"", "label" => "Music Videos")
 					  );
 	} else {
 		$data = array (
@@ -725,7 +725,7 @@ function getNewBreadcrumb($action, $breadcrumb) {
 
 function buildAnchor($label, $style, $id, $class, $action, $breadcrumb, $params, $query = "") {
 	if ($style == "w") {
-		$onclick =  " onclick=\"".$params['onclickcmd']."('".$params['wrapper']."', '".$params['harness']."', '".$action."', '".$breadcrumb."', '".$query."');\"";
+		$onclick =  " onclick=\"".$params['onclickcmd']."('".$params['wrapper']."', '".$params['harness']."', '".$action."', '".$breadcrumb."', '".$query."', ".((!empty($params['refresh']) && $params['refresh']) ? "true" : "false").");\"";
 		$href = "#";
 	} else {
 		$onclick = "";
