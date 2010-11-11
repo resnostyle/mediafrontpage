@@ -25,7 +25,7 @@ function widgetLibraryHeader($params = array('count' => 15)) {
 							if (cmdXbmcLibraryRequest.status==200 || window.location.href.indexOf("http")==-1) {
 								document.getElementById(wrapper).innerHTML=cmdXbmcLibraryRequest.responseText;
 							} else {
-								alert("An error has occured making the request");
+								//alert("An error has occured making the request (XbmcLibrary)");
 							}
 						}
 					}
@@ -33,14 +33,12 @@ function widgetLibraryHeader($params = array('count' => 15)) {
 				cmdXbmcLibraryRequest.send(null);
 				if(refresh) {
 					var cmd = "cmdXbmcLibrary('" + wrapper + "', '" + harness + "', '" + action + "', '" + breadcrumb + "', '" + query + "', true)";
-//alert(cmd);
 					if(action=="rm" && recentmoviewrapper_interval=="") {
 						recentmoviewrapper_interval = setInterval(cmd, 60000);
 					}
 					if(action=="re" && recenttvwrapper_interval=="") {
 						recenttvwrapper_interval = setInterval(cmd, 60000);
 					}
-//alert(action);		
 					if(action=="d") {
 						if(breadcrumb == "rm") {
 							//alert("bc="+breadcrumb);
