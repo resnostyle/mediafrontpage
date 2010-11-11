@@ -41,10 +41,12 @@ function renderWidgetHeaders($widget, $params = "") {
 	switch ($widget["type"]) {
 		case "ajax":
 			echo "\t\t<script type=\"text/javascript\" language=\"javascript\">\n";
+			
+			$loader = (!empty($widget["loader"])) ? $widget["loader"] : "ajaxPageLoad('".$widget["call"]."', '".$widget["block"]."');"; 
 			if((int)$widget["interval"] > 0) {
-				echo "\t\t\tsetInterval(\"ajaxPageLoad('".$widget["call"]."', '".$widget["block"]."')\", ".$widget["interval"].");\n";
+				echo "\t\t\tvar ".$widget["block"]."_interval = setInterval(\"".$loader."\", ".$widget["interval"].");\n";
 			}
-			echo "\t\t\tajaxPageLoad('".$widget["call"]."', '".$widget["block"]."');\n";
+			echo "\t\t\t".$loader."\n";
 			echo "\t\t</script>\n";
 			break;
 		case "mixed":
