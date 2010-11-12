@@ -1,5 +1,5 @@
 <?php
-$wdgtSabnzbd = array("name" => "Sabnzbd", "type" => "ajax", "block" => "sabnzbdwrapper", "call" => "widgets/wSabnzbd.php?style=w", "interval" => 10000);
+$wdgtSabnzbd = array("name" => "Sabnzbd", "type" => "ajax", "block" => "sabnzbdwrapper", "call" => "widgets/wSabnzbd.php?style=w&c=15", "interval" => 10000);
 $wIndex["wSabnzbd"] = $wdgtSabnzbd;
 
 ?>
@@ -25,7 +25,7 @@ function sabQuery($command, $values = array()) {
 	return $results;
 }
 
-function sabStatus() {
+function sabStatus($count = 15) {
 	echo "<div id=\"sabnzbd\">\n";
 
 	$sabqueue = sabQuery("qstatus");
@@ -36,13 +36,19 @@ function sabStatus() {
 		echo " AT ".$sabqueue["speed"]."</p>\n";
 		echo "\t<p>TIMELEFT - ".$sabqueue["timeleft"]."</p>\n";
 	}
+	$i = 0;
 	foreach($sabqueue["jobs"] as $slot) {
-		$total = (int)$slot["mb"];
-		$remaining = (int)$slot["mbleft"];
-		if($total > 0 && is_numeric($remaining)) {
-			$percentage = (int)((($total - $remaining) / $total)*100);
-			echo "\t<div class=\"progressbar\"><div class=\"progress\" style=\"width:".$percentage."%\"></div><div class=\"progresslabel\">".$slot["filename"]."</div></div><br/>\n";
+		if($i < $count) {
+			$total = (int)$slot["mb"];
+			$remaining = (int)$slot["mbleft"];
+			if($total > 0 && is_numeric($remaining)) {
+				$percentage = (int)((($total - $remaining) / $total)*100);
+				echo "\t<div class=\"progressbar\"><div class=\"progress\" style=\"width:".$percentage."%\"></div><div class=\"progresslabel\">".$slot["filename"]."</div></div><br/>\n";
+			}
+		} else {
+			break;
 		}
+		$i += 1;
 	}
 	echo "</div><!-- sabnzbd -->\n";
 }
@@ -50,6 +56,7 @@ function sabStatus() {
 if (!empty($_GET['style']) && (($_GET['style'] == "w") || ($_GET['style'] == "s"))) {
 	require_once "../config.php";
 
+	$count = (!empty($_GET['c'])) ? $_GET['c'] : 15;
 	if ($_GET['style'] == "w") {
 ?>
 <html>
@@ -59,13 +66,13 @@ if (!empty($_GET['style']) && (($_GET['style'] == "w") || ($_GET['style'] == "s"
 	</head>
 	<body>
 <?php
-		sabStatus();
+		sabStatus($count);
 ?>
 	</body>
 </html>
 <?php
 	} else {
-		sabStatus();
+		sabStatus($count);
 	}
 }
 ?>
