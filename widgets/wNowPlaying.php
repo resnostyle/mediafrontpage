@@ -54,60 +54,62 @@ function displayNowPlaying($static = false) {
 		//get playlist items
 		$results = jsonmethodcall("VideoPlaylist.GetItems");
 
-		$items = $results['result']['items'];
-		$current = (!empty($results['result']['current'])) ? $results['result']['current'] : 0;
-		
-		$thumb = $items[$current]['thumbnail'];
-		if(strlen($thumb) == 0) {
-			$thumb = $items[$current]['fanart'];
-		}
-		if(!empty($items[$current]['title'])) {
-			$title = $items[$current]['title'];
-		} else {
-			$title = $items[$current]['label'];
-		}
-		if(!empty($items[$current]['showtitle'])) {
-			$show  = $items[$current]['showtitle'];
-		} else {
-			$show = $title;
-			$title = "";
-		}
-		if(!empty($items[$current]['season'])) {
-			$season = $items[$current]['season'];
-		} else {
-			$season = "";
-		}
-		if(!empty($items[$current]['episode'])) {
-			$episode = $items[$current]['episode'];
-		} else {
-			$episode = "";
-		}
-		if((strlen($season) > 0) && (strlen($episode) > 0)) {
-			$title = $season."x".str_pad($episode, 2, '0', STR_PAD_LEFT)." ".$title;
-		}
-		
-		if(strlen($show) == 0) {
-			$info = pathinfo($items[$current]['file']);
-			$show = $info['filename'];
-		}
-		if(!empty($items[$current]['plot'])) {
-			$plot = $items[$current]['plot'];
-		} else {
-			$plot = "";
-		}
-		if(strlen($thumb) > 0) {
-			echo "\t<div id=\"thumbblock\" class=\"thumbblockvideo\">\n";
-			if($static) {
-				echo "\t\t<img src=\"".$xbmcimgpath.$thumb."\" alt=\"".htmlentities($plot, ENT_QUOTES)."\" />";
-			} else {
-				echo "\t\t<a href=\"".$xbmcimgpath.$thumb."\" class=\"highslide\" onclick=\"return hs.expand(this)\">\n";
-				echo "\t\t\t<img src=\"".$xbmcimgpath.$thumb."\" title=\"Click to enlarge\" alt=\"".htmlentities($plot, ENT_QUOTES)."\" />";
-				echo "\t\t</a>\n";
+		if(!empty($results['result']['items'])) {
+			$items = $results['result']['items'];
+			$current = (!empty($results['result']['current'])) ? $results['result']['current'] : 0;
+			
+			$thumb = $items[$current]['thumbnail'];
+			if(strlen($thumb) == 0) {
+				$thumb = $items[$current]['fanart'];
 			}
-			echo "\t</div>\n";
+			if(!empty($items[$current]['title'])) {
+				$title = $items[$current]['title'];
+			} else {
+				$title = $items[$current]['label'];
+			}
+			if(!empty($items[$current]['showtitle'])) {
+				$show  = $items[$current]['showtitle'];
+			} else {
+				$show = $title;
+				$title = "";
+			}
+			if(!empty($items[$current]['season'])) {
+				$season = $items[$current]['season'];
+			} else {
+				$season = "";
+			}
+			if(!empty($items[$current]['episode'])) {
+				$episode = $items[$current]['episode'];
+			} else {
+				$episode = "";
+			}
+			if((strlen($season) > 0) && (strlen($episode) > 0)) {
+				$title = $season."x".str_pad($episode, 2, '0', STR_PAD_LEFT)." ".$title;
+			}
+			
+			if(strlen($show) == 0) {
+				$info = pathinfo($items[$current]['file']);
+				$show = $info['filename'];
+			}
+			if(!empty($items[$current]['plot'])) {
+				$plot = $items[$current]['plot'];
+			} else {
+				$plot = "";
+			}
+			if(strlen($thumb) > 0) {
+				echo "\t<div id=\"thumbblock\" class=\"thumbblockvideo\">\n";
+				if($static) {
+					echo "\t\t<img src=\"".$xbmcimgpath.$thumb."\" alt=\"".htmlentities($plot, ENT_QUOTES)."\" />";
+				} else {
+					echo "\t\t<a href=\"".$xbmcimgpath.$thumb."\" class=\"highslide\" onclick=\"return hs.expand(this)\">\n";
+					echo "\t\t\t<img src=\"".$xbmcimgpath.$thumb."\" title=\"Click to enlarge\" alt=\"".htmlentities($plot, ENT_QUOTES)."\" />";
+					echo "\t\t</a>\n";
+				}
+				echo "\t</div>\n";
+			}
+			echo "\t\t<p>".$show."</p>\n";
+			echo "\t\t<p>".$title."</p>\n";
 		}
-		echo "\t\t<p>".$show."</p>\n";
-		echo "\t\t<p>".$title."</p>\n";
 		//progress time
 		$results = jsonmethodcall("VideoPlayer.GetTime");
 		$time = $results['result']['time'];
