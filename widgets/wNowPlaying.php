@@ -58,14 +58,15 @@ function displayNowPlaying($static = false) {
 			$items = $results['result']['items'];
 			$current = (!empty($results['result']['current'])) ? $results['result']['current'] : 0;
 			
-			$thumb = $items[$current]['thumbnail'];
-			if(strlen($thumb) == 0) {
-				$thumb = $items[$current]['fanart'];
+			if (!empty($items[$current]['thumbnail'])) {
+				$thumb = $items[$current]['thumbnail'];
+			} else {
+				$thumb = (!empty($items[$current]['fanart']) ? $items[$current]['fanart'] : "");
 			}
 			if(!empty($items[$current]['title'])) {
 				$title = $items[$current]['title'];
 			} else {
-				$title = $items[$current]['label'];
+				$title = (!empty($items[$current]['label']) ? $items[$current]['label'] : "");
 			}
 			if(!empty($items[$current]['showtitle'])) {
 				$show  = $items[$current]['showtitle'];
@@ -73,16 +74,8 @@ function displayNowPlaying($static = false) {
 				$show = $title;
 				$title = "";
 			}
-			if(!empty($items[$current]['season'])) {
-				$season = $items[$current]['season'];
-			} else {
-				$season = "";
-			}
-			if(!empty($items[$current]['episode'])) {
-				$episode = $items[$current]['episode'];
-			} else {
-				$episode = "";
-			}
+			$season = (!empty($items[$current]['season']) ? $items[$current]['season'] : "");
+			$episode = (!empty($items[$current]['episode']) ? $items[$current]['episode'] : "");
 			if((strlen($season) > 0) && (strlen($episode) > 0)) {
 				$title = $season."x".str_pad($episode, 2, '0', STR_PAD_LEFT)." ".$title;
 			}
@@ -234,9 +227,10 @@ function processCommand($command) {
 		} else {
 			// Nothing Playing
 		}
-
-		$results = jsonmethodcall($player.'.'.$command);
-
+		if(!empty($player) && !empty($command)) {
+			$results = jsonmethodcall($player.'.'.$command);
+		}
+		
 		// debugging
 		if(!empty($_GET["debug"]) && ($_GET["debug"] == "y")) {
 			echo "<br/>Call: <pre>";
