@@ -59,7 +59,7 @@ function formattimes($input1, $input2) {
 	return $output1." - ".$output2;
 }
 
-function return_array_code($array, $indent = 1) {
+function return_array_code($array, $indent = 1, $quote = "\"") {
 	//Example call:
 	//$layout_code_string = '$arrLayout = '.return_array_code($arrLayout).";\n";
 
@@ -76,10 +76,10 @@ function return_array_code($array, $indent = 1) {
 		}
 		
 		if(is_array($value)) {
-			$value = return_array_code($value, $indent + 1);
-			$output .= '"'.$key.'" => '.$value;
+			$value = return_array_code($value, $indent + 1, $quote);
+			$output .= $quote.$key.$quote.' => '.$value;
 		} else {
-			$output .= '"'.$key.'" => "'.$value.'"';
+			$output .= $quote.$key.$quote.' => '.$quote.$value.$quote;
 		}
 	}
 	$output .= "\n".$indentstr.")";
