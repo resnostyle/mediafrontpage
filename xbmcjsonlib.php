@@ -19,7 +19,12 @@ $xbmcJsonMethods = array(
 			'call' => '{"jsonrpc": "2.0", "method": "JSONRPC.Ping", "id": 1}'
 		),
 		'AudioLibrary.GetArtists' => array(
-			'call' => '{"jsonrpc": "2.0", "method": "AudioLibrary.GetArtists", "params": { "sortmethod": "artist", "sortorder" : "ascending" , "fields": [ "artist", "year" ]}, "id": 1}'
+			'call' => '{"jsonrpc": "2.0", "method": "AudioLibrary.GetArtists", "params": { "sortmethod": "artist", "sortorder" : "ascending" , "fields": [ "artist", "year" ]}, "id": 1}',
+			'sql' => array(
+				'db' => 'MyMusic7.db',
+				'query' => 'select * from artist where (idArtist IN (select song.idArtist from song) or idArtist IN (select exartistsong.idArtist from exartistsong) or idArtist IN (select album.idArtist from album) or idArtist IN (select exartistalbum.idArtist from exartistalbum ))  and artist.strArtist != "" and artist.idArtist<>1',
+				'resultwrapper' => 'artists'
+			)
 		),
 		'AudioLibrary.GetAlbums' => array(
 			'call' => '{"jsonrpc": "2.0", "method": "AudioLibrary.GetAlbums", "params": { %s "sortmethod": "artist", "sortorder" : "ascending", "fields": [ "artist", "year" ] },"id": 1}',
@@ -98,7 +103,8 @@ $xbmcJsonMethods = array(
 			'call' => '{"jsonrpc": "2.0", "method": "VideoLibrary.GetRecentlyAddedMovies", "params" : { "start" : 0 , "end" : %d , "fields": [ "genre", "director", "trailer", "tagline", "plot", "plotoutline", "title", "originaltitle", "lastplayed", "showtitle", "firstaired", "duration", "season", "episode", "runtime", "year", "playcount", "rating", "writer", "studio", "mpaa", "premiered", "album" ] }, "id" : 1 }',
 			'sql' => array(
 				'db' => 'MyVideos34.db',
-				'query' => 'select * from movieview  order by idMovie desc limit %d'
+				'query' => 'select * from movieview order by idMovie desc limit %d',
+				'resultwrapper' => 'movies'
 			),
 			'args' => 50
 		),
@@ -107,6 +113,11 @@ $xbmcJsonMethods = array(
 		),
 		'VideoLibrary.GetRecentlyAddedEpisodes' => array(
 			'call' => '{"jsonrpc": "2.0", "method": "VideoLibrary.GetRecentlyAddedEpisodes", "params" : { "start" : 0 , "end" : %d , "fields": [ "genre", "director", "trailer", "tagline", "plot", "plotoutline", "title", "originaltitle", "lastplayed", "showtitle", "firstaired", "duration", "season", "episode", "runtime", "year", "playcount", "rating", "writer", "studio", "mpaa", "premiered", "album" ] }, "id" : 1 }',
+			'sql' => array(
+				'db' => 'MyVideos34.db',
+				'query' => 'select c13 as episode, idEpisode as episodeid, c05 as firstaired, c00 as label, mpaa, c01 as plot, premiered, strTitle as showtitle, strStudio as studio, c00 as title, * from episodeview order by idEpisode desc limit %d',
+				'resultwrapper' => 'episodes'
+			),
 			'args' => 50
 		),
 		'VideoLibrary.GetTVShows' => array(
@@ -306,7 +317,7 @@ function sqlquerystring($method, $args = array()) {
 		return false;
 	}
 }
-function sqlitetoarray($sql, $dbname) {
+function sqlitetoarray($sql, $dbname, $resultwrapper) {
 	global $xbmcdbpath;
 
 	if ($dbhandle = new PDO($xbmcdbpath.$dbname)) { 
@@ -324,7 +335,7 @@ function sqlitetoarray($sql, $dbname) {
 			$return = array('error' => array('code' => $errCode, 'message' => $errMsg), 'id' => 0, 'jsonrpc' => '2.0');
 		} else {
 			$results = $dbquery->fetchAll();
-			$return = array('id' => 1, 'jsonrpc' => '2.0', 'result' => array('start' => 0, 'end' => sizeof($results), 'movies' => $results ), 'total' => sizeof($results));
+			$return = array('id' => 1, 'jsonrpc' => '2.0', 'result' => array('start' => 0, 'end' => sizeof($results), $resultwrapper => $results ), 'total' => sizeof($results));
 		}
 	} else {
 		$dbhandle->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -354,11 +365,18 @@ if(!empty($_REQUEST['tester']) && $_REQUEST['tester']='y') {
 		$query = "";
 	}
 	if(!empty($_POST['dbname'])) {
-		$dbname = str_replace('\"', '"', $_POST['dbname']);
+		$dbname = $_POST['dbname'];
 	} else {
 		//$dbname = "MyVideos34.db";
 		$dbname = "";
 	}
+	if(!empty($_POST['resultwrapper'])) {
+		$resultwrapper = $_POST['resultwrapper'];
+	} else {
+		$resultwrapper = "movies";
+		//$resultwrapper = "";
+	}
+	
 ?>
 <html>
 	<head>
@@ -374,6 +392,8 @@ if(!empty($_REQUEST['tester']) && $_REQUEST['tester']='y') {
 				txtQuery.value = lstCalls.value;
 				var txtDB = document.getElementById("txtDB");
 				txtDB.value = lstCalls.options[lstCalls.selectedIndex].label;
+				var txtRW = document.getElementById("txtRW");
+				txtRW.value = lstCalls.options[lstCalls.selectedIndex].lang;
 			}
 		-->
 		</script>
@@ -416,12 +436,13 @@ if(!empty($_REQUEST['tester']) && $_REQUEST['tester']='y') {
 <?php
 					foreach($xbmcJsonMethods as $method => $arrmethod) {
 						if(!empty($arrmethod['sql'])) {
-							echo "<option value='".sqlquerystring($method)."' label='".$arrmethod['sql']['db']."'>".$method."</option>\n";
+							echo "<option value='".sqlquerystring($method)."' lang='".$arrmethod['sql']['resultwrapper']."' label='".$arrmethod['sql']['db']."'>".$method."</option>\n";
 						}
 					}
 ?>
 				</select>
-				<input id="txtDB" name="dbname" type="text" size="25" value='<?php echo $dbname; ?>' />
+				<input id="txtDB" name="dbname" type="text" size="15" value='<?php echo $dbname; ?>' />
+				<input id="txtRW" name="resultwrapper" type="text" size="10" value='<?php echo $resultwrapper; ?>' />
 				<input id="txtQuery" name="query" type="text" size="100" value='<?php echo $query; ?>' />
 			</form>
 		</div>
@@ -440,7 +461,7 @@ if(!empty($_REQUEST['tester']) && $_REQUEST['tester']='y') {
 			if(!empty($_POST['query']) && !empty($_POST['dbname'])) {
 				//$method = 'VideoLibrary.GetRecentlyAddedMovies';
 				//$result = sqlitetoarray(sqlquerystring($method , 25), $xbmcJsonMethods[$method]['sql']['db']);
-				$result = sqlitetoarray($query, $dbname);
+				$result = sqlitetoarray($query, $dbname, $resultwrapper);
 
 				echo "<br/>Call: <pre>";
 				echo print_r($query,1);   // debugging
