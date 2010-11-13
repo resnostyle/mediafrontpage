@@ -2,6 +2,7 @@
 // enter hostname and port of the xbmc json service here. By default 8080
 $xbmcjsonservice = "http://USER:PASSWORD@localhost:8080/jsonrpc"; //remove 'USER:PASSWORD@' if your xbmc install does not require a password.
 $xbmcimgpath = '/vfs/'; //leave as default if unsure
+$xbmcdbpath = 'sqlite:/home/xbmc/.xbmc/userdata/Database/';
 
 // enter path to sickbeards's coming episodes page
 $sickbeardcomingepisodes = 'http://user:password@COMPUTER:PORT/sickbeard/comingEpisodes/';
