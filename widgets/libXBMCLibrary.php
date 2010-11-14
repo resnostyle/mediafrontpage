@@ -696,15 +696,17 @@ function displayMusicListSource($sources, $style, $action, $breadcrumb, $params)
 
 	echo "<ul class=\"widget-list\">";
 	$alt = false;
+	$i = 0;
 	foreach ($sources as $source) {
-		if(!empty($source["sourceid"])) {
+		if(!empty($source["file"])) {
 			$label = $source['label'];
-			$id = "music-".$source["sourceid"];
+			$id = "source-".$i;
 			$class = "music-source";
-			$query = "&sourceid=".$source["sourceid"];
+			$query = "&directory=".$source["file"];
 			$anchor = buildAnchor($label, $style, $id, $class, "d", $newbreadcrumb, $params, $query);
 			echo "<li".(($alt) ? " class=\"alt\"" : "").">".$anchor."</li>\n";
 			$alt = !$alt;
+			$i++;
 		}
 	}
 	echo "</ul>";
