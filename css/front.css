@@ -34,6 +34,9 @@ table {
 	font-size:1.2em;
 	text-align:center;
 }
+td {
+	vertical-align:top;
+}
 label {
 	margin-right:5px;
 }
@@ -58,7 +61,7 @@ a:visited {
 	/*position: relative; */
 	display: block;                 
 	height: 16px; 
-	margin: 0 0 2px; 
+	margin: 0px 0px 10px 0px; 
 	background: #333; 
 	width: 100px;
 	margin-bottom:10px;
@@ -186,13 +189,25 @@ a.controlbutton img {
 }
 #sabnzbdblock h1 {
 	margin: 20px 0 0;
+	width:100%; 
+}
+#sabnzbd table {
+	font-size:1em;
+	text-align:left;
 }
 #sabnzbd div.progressbar { 
-	width:100%; 
-	margin-bottom:-10px; 
+	width:100%;
 }
 #sabnzbd div.progressbar div.progresslabel {
 	font-weight:bold;
+}
+#sabnzbd td.actions { 
+	height:16px;
+	margin: 0px 0px 10px 0px; 
+}
+#sabnzbd td.actions img { 
+	width:16px; 
+	height:16px;
 }
 /* wRECENTMOVIES */
 
