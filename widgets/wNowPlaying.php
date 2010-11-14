@@ -7,7 +7,7 @@ $wIndex["wNowPlaying"] = $wdgtNowPlaying;
 function widgetNowPlayingControls() {
 	echo <<< NOWPLAYINGCONTROLS
 	<div id='nowplaying-controls' class="controls">
-		<a class='controlbutton' onclick='cmdNowPlaying("SkipPrevious");' href='#'><img src='media/btnSkipBack.png' alt='Skip Back'/></a>
+		<a class='controlbutton' onclick='cmdNowPlaying("SkipPrevious");' href='#'><img src='media/btnSkipBackward.png' alt='Skip Back'/></a>
         	<a class='controlbutton' onclick='cmdNowPlaying("PlayPause");' href='#'><img src='media/btnPlayPause.png' alt='Play/Pause'/></a>
 		<a class='controlbutton' onclick='cmdNowPlaying("Stop");' href='#'><img src='media/btnStop.png' alt='Stop'/></a>
 		<a class='controlbutton' onclick='cmdNowPlaying("SkipNext");' href='#'><img src='media/btnSkipForward.png' alt='Skip Next'/></a>
