@@ -2,7 +2,29 @@
 // enter hostname and port of the xbmc json service here. By default 8080
 $xbmcjsonservice = "http://USER:PASSWORD@localhost:8080/jsonrpc"; //remove 'USER:PASSWORD@' if your xbmc install does not require a password.
 $xbmcimgpath = '/vfs/'; //leave as default if unsure
-$xbmcdbpath = 'sqlite:/home/xbmc/.xbmc/userdata/Database/';
+
+$xbmcdbconn = array(
+		'video' => array('dns' => 'sqlite:/home/xbmc/.xbmc/userdata/Database/MyVideos34.db', 'username' => '', 'password' => '', 'options' => array()),
+		'music' => array('dns' => 'sqlite:/home/xbmc/.xbmc/userdata/Database/MyMusic7.db', 'username' => '', 'password' => '', 'options' => array()),
+	);
+//Example of mysql connections
+/*
+$xbmcdbconn = array(
+		'video' => array(
+			'dns' => 'mysql:host=hostname;dbname=videos',
+			'username' => '',
+			'password' => '',
+			'options' => array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8")
+		),
+		'music' => array(
+			'dns' => 'mysql:host=hostname;dbname=music',
+			'username' => 'username',
+			'password' => 'password',
+			'options' => array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8")
+		),
+		
+	);
+*/
 
 // enter path to sickbeards's coming episodes page
 $sickbeardcomingepisodes = 'http://user:password@COMPUTER:PORT/sickbeard/comingEpisodes/';

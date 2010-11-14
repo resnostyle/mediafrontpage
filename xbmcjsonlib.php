@@ -300,35 +300,41 @@ function sqlquerystring($method, $args = array()) {
 	}
 }
 function sqlitetoarray($sql, $dbname, $resultwrapper) {
-	global $xbmcdbpath;
+	global $xbmcdbconn;
 
-	if ($dbhandle = new PDO($xbmcdbpath.$dbname)) { 
-		$dbquery = @$dbhandle->query($sql);
-		if ($dbquery === false) {
+	if(!empty($xbmcdbconn[$dbname]['dns'])) {
+		if ($dbhandle = new PDO($xbmcdbconn[$dbname]['dns'], $xbmcdbconn[$dbname]['username'], $xbmcdbconn[$dbname]['password'], $xbmcdbconn[$dbname]['options'])) { 
+			$dbquery = @$dbhandle->query($sql);
+			if ($dbquery === false) {
+				$dbhandle->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				$error = $dbhandle->errorInfo();
+				if($error[0] != "") {
+					$errCode = (-1 * $error[1]) - 41000;
+					$errMsg = 'Datbase Query Error:'.$error[2];
+				} else {
+					$errCode = -41000;
+					$errMsg = 'Datbase Query Error';
+				}
+				$return = array('error' => array('code' => $errCode, 'message' => $errMsg), 'id' => 0, 'jsonrpc' => '2.0');
+			} else {
+				$results = $dbquery->fetchAll();
+				$return = array('id' => 1, 'jsonrpc' => '2.0', 'result' => array('start' => 0, 'end' => sizeof($results), $resultwrapper => $results ), 'total' => sizeof($results));
+			}
+		} else {
 			$dbhandle->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			$error = $dbhandle->errorInfo();
 			if($error[0] != "") {
-				$errCode = (-1 * $error[1]) - 41000;
-				$errMsg = 'Datbase Query Error:'.$error[2];
+				$errCode = (-1 * $error[1]) - 40000;
+				$errMsg = 'Datbase Connection Error:'.$error[2].' ('.$xbmcdbpath.$dbname.')';
 			} else {
-				$errCode = -41000;
-				$errMsg = 'Datbase Query Error';
+				$errCode = -40000;
+				$errMsg = 'Datbase Connection Error: ('.$xbmcdbpath.$dbname.')';
 			}
 			$return = array('error' => array('code' => $errCode, 'message' => $errMsg), 'id' => 0, 'jsonrpc' => '2.0');
-		} else {
-			$results = $dbquery->fetchAll();
-			$return = array('id' => 1, 'jsonrpc' => '2.0', 'result' => array('start' => 0, 'end' => sizeof($results), $resultwrapper => $results ), 'total' => sizeof($results));
 		}
 	} else {
-		$dbhandle->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$error = $dbhandle->errorInfo();
-		if($error[0] != "") {
-			$errCode = (-1 * $error[1]) - 40000;
-			$errMsg = 'Datbase Connection Error:'.$error[2].' ('.$xbmcdbpath.$dbname.')';
-		} else {
-			$errCode = -40000;
-			$errMsg = 'Datbase Connection Error: ('.$xbmcdbpath.$dbname.')';
-		}
+		$errCode = -50000;
+		$errMsg = 'Configuration Error: Check your config.php file.';
 		$return = array('error' => array('code' => $errCode, 'message' => $errMsg), 'id' => 0, 'jsonrpc' => '2.0');
 	}
 	return $return;
