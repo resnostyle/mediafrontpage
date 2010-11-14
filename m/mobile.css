@@ -1,0 +1,317 @@
+/* css for MediaFrontPage mobile base */
+
+/* BASE */ 
+
+html,body { 
+	height: 100%; -webkit-font-smoothing: antialiased;
+}
+body {
+	font-family: 'Helvetica Neue','HelveticaNeue',Helvetica, Arial, sans-serif;
+	font-size:12px;
+	font-weight:normal;
+	line-height:18px;
+	color:#585858;
+	background-color:#000000;
+	background-image:url(images/body_bg.jpg);
+	background-repeat:repeat-y;
+	background-position:center;
+	margin:0;
+	padding:0;
+}
+
+p {margin:0; padding:0;}
+
+a img {border:none;}
+
+h1 {
+	font-size:40px;
+	line-height:36px;
+	font-weight:bold;
+	color:#151618;
+	text-shadow:#747478 0px 1px 1px;
+	text-align:center;
+	margin: 0px;
+	padding: 0px;
+}
+table {
+	font-size:1.2em;
+	text-align:center;
+}
+td {
+	vertical-align:top;
+}
+
+#main {
+	/* margin: 10px 0px 0px 0px;*/
+    border:1px solid white;
+    -moz-border-radius:6px 6px 6px 6px;
+    border-radius:6px 6px 6px 6px;
+    margin:10px 5px;
+    background: white;
+}
+#main ul {
+	margin: 0;
+	padding:0;
+	list-style-type:none;
+}
+
+.progressbar { 
+	display: block;                 
+	height: 16px; 
+	margin: 0 0 2px; 
+	background: #666; 
+	width: 100px;
+	overflow: hidden;
+}
+.progress { 
+	background: #FF9522; 
+	height: 100%; 
+	text-align: left;
+	display: block;
+
+}
+.progressbar .warning { 
+	background: #FF2222; 
+}
+
+.progresslabel {
+	width: 100%;
+	text-align: left;
+	height: 16px;
+	margin: -16px 5px;
+	overflow: hidden;
+}
+#sabnzbd table {
+	font-size:1em;
+	text-align:left;
+}
+#sabnzbd div.progressbar { 
+	width:100%; 
+	margin-bottom:-10px; 
+}
+#sabnzbd div.progressbar div.progresslabel {
+	font-weight:bold;
+}
+#sabnzbd td.actions { 
+	height:16px;
+	margin: 0px 0px 10px 0px; 
+}
+#sabnzbd td.actions img { 
+	width:16px; 
+	height:16px;
+}
+div.highslide-caption {
+	display: none;
+}
+
+.container {
+	width:320px;
+	padding-top:9px;
+	background-color:#2c2e32;
+	margin-top: 0px;
+	margin-right: auto;
+	margin-bottom: 10px;
+	margin-left: auto;
+}
+
+
+#header {
+    border:1px solid white;
+    -moz-border-radius:6px 6px 6px 6px;
+    border-radius:6px 6px 6px 6px;
+    margin:10px 5px;
+    background: white;
+}
+
+#header ul{
+	list-style-type:none;
+	margin:0px;
+	padding-top:3px;
+	padding-left:6px;
+	padding-right:6px;
+	display:block;
+}
+
+#header ul li{
+	margin:0px;
+}
+
+#header ul li ul {
+	margin:0px 0px 0px 16px;
+	padding:0px 0px 0px 6px;
+}
+
+#header ul li ul li {
+	list-style-image:url(images/small_arrow.png);
+	list-style-position:outside;
+}
+
+#header ul li a{
+	display:block;
+	margin-bottom:6px;
+	height:29px;
+	padding-left:12px;
+	color:#525151;
+	font-weight:bold;
+	text-shadow:#FFFFFF 0px 1px 1px;
+	text-decoration:none;
+	line-height:29px;
+}
+
+#header ul li a.last{
+	margin-bottom:3px;
+}
+
+#header ul li a{
+	background-image:url(images/item_menu_long.png);
+	background-repeat:no-repeat;
+	background-position:top right;
+}
+
+#header ul li ul li a{
+	background-image:url(images/item_menu_medium.png);
+	background-repeat:no-repeat;
+	background-position:top right;
+}
+
+/* SickBeard */
+.icons {
+	display: none;
+}
+p.next, p.noMargin {
+	display: none;
+}
+.listing {
+	display: inline;
+}
+.listing h1 a {
+	display: none;
+}
+#listingWrapper div {
+	float: left;
+}
+#listingWrapper img {
+	width: 65px;
+	height: 96px;
+	padding: 16px;
+}
+#listingWrapper h1 {
+	color: #696969;
+	font-size: 1em;
+	text-align: left;
+	line-height:16px;
+	font-weight: bold;
+	text-shadow: none;
+	margin: 0 0 0 6px;
+	padding: 0px;
+}
+#listingWrapper br {
+	clear: both;
+}
+
+div.library-title h2 {
+	border: none;
+	display:block;
+	float: none;
+}
+div.library-info {
+	display:block;
+	white-space: normal;
+}
+
+div.library-info p {
+	display:block;
+	margin: 5px 10px;
+}
+div.library-info span.library-img {
+	display: table-cell;
+	float: left;
+}
+div.library-info span.library-desc {
+	display: table-cell;
+}
+div.library-info img {
+	width: 100px;
+	margin: 0px 5px 0 0;
+}
+#outerWrapper {
+	width: 100%;
+	margin: -40px auto 0px auto;
+	font: 9pt arial;
+}
+
+#listingWrapper {
+	padding: 1px 0px 10px 0px;
+	overflow: auto;
+	height:auto!important;
+	font-size: 0.8em;
+}
+
+#listingWrapper h1 {
+	display:block;
+	visibility: visible;
+	border-bottom: 0px;
+	text-align: left;
+	margin:0 0 -8 15px;
+}
+
+
+
+
+/* sickbeard stuff to show more info */
+/*
+.listing {
+	padding: 10px 20px 10px 10px;
+	border: none;
+	margin-top: 10px;
+	overflow: hidden;
+	background-color: inherit;
+}
+*/
+.listingThumb {
+	width: 80px;
+	/*height: 118px;*/
+	float: left;
+	border: 1px solid #000;
+	background-image: url(/sickbeard/images/poster.png);
+}
+.listing h1 > .icons {
+	float: right;
+}
+
+.listing h1 > .icons a { 
+	font-size: 0.5em;
+	font-weight: normal;
+	color: #222528
+}
+
+.listing h1 > .icons a img {
+	width: 12px;
+	height: 12px;
+}
+
+.listing p {
+	/* font-size: 1.1em; */
+	padding: 0px 0px 0px 5px;
+}
+
+.listing p > .info {
+	font-weight: bold;
+}
+
+.listing p > .ended {
+	color: red;
+}
+
+.listing p > .unknown {
+	color: blue;
+}
+
+.listing p.next {
+	padding: 5px;
+}
+
+.listing p.noMargin {
+	margin-bottom: 0;
+}
+*/
