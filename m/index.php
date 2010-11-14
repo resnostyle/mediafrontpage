@@ -49,14 +49,28 @@ if(empty($params['href'])) {
 	<head>
 		<title>Media Front Page - Mobile</title>
 		<link href="mobile.css" rel="stylesheet" type="text/css" />	
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+<script type="text/javascript" charset="utf-8">
+	addEventListener('load', function() {
+		setTimeout(hideAddressBar, 0);
+	}, false);
+	function hideAddressBar() {
+		window.scrollTo(0, 1);
+	}
+</script>
 	</head>
 	<body>
+	
+<div class="container bg_black">
+	<h1>Media Center</h1>
 		<div id="header">
 			<ul>
 <?php
 			foreach($mobilelayout as $widgetlabel => $widgetindex) {
 				if($widgetindex == $widget) {
-					echo "\t\t\t\t<li class=\"selected\">".$widgetlabel."</li>\n";
+					echo "\t\t\t\t<li><a href=\"?w=".$widgetindex."\">".$widgetlabel."</a>\n";
+					//eval($mobilefunction[$widget]);
+					echo "</li>\n";
 				} else {
 					echo "\t\t\t\t<li><a href=\"?w=".$widgetindex."\">".$widgetlabel."</a></li>\n";
 				}
@@ -69,5 +83,6 @@ if(empty($params['href'])) {
 			eval($mobilefunction[$widget]);
 ?>
 		</div><!-- #main -->
+		</div>
 	</body>
 </html>

@@ -97,6 +97,18 @@ function executeVideo($style = "w", $action, $breadcrumb, $params = array()) {
 						echo "<pre>$request</pre>";
 					}
 					break;
+				case "d":
+				case "ms": // Music Sources
+					$directory = $params['directory'];
+					$results = jsonmethodcall("Files.GetDirectory", array('directory' => $directory));
+					$result = $results['result'];
+					if (!empty($result)) {
+						displayFilesFromList($result, $style, $action, $breadcrumb, $params);
+					} else {
+						echo $COMM_ERROR;
+						echo "<pre>$request</pre>";
+					}
+					break;
 			}
 			break;
 		case "t":  // TV Shows
@@ -266,6 +278,9 @@ function getParameters($request) {
 	if(!empty($request['songid'])) {
 		$params['songid'] = $request['songid'];
 	}
+	if(!empty($request['directory'])) {
+		$params['directory'] = $request['directory'];
+	}
 
 	return $params;
 }
@@ -335,18 +350,18 @@ function displayLibraryVideoMenu($style, $params) {
 function displayLibraryMusicMenu($style, $params) {
 	echo "<ul class=\"widget-list\"><li>Under Construction</li></ul>";
 	if ($style == "w") {
-		$data = array (
+		$data = array (			// Files currently unsecure, allow browsing full fs by clicking back - needs work 
 						  "menu-ar" => array( "href" => "#", "onclick" => " onclick=\"".$params['onclickcmd']."('".$params['wrapper']."', '".$params['harness']."', 'ar', 'l|lm', '');\"", "label" => "Artists")
 						, "menu-al" => array( "href" => "#", "onclick" => " onclick=\"".$params['onclickcmd']."('".$params['wrapper']."', '".$params['harness']."', 'al', 'l|lm', '');\"", "label" => "Albums")
 						, "menu-so" => array( "href" => "#", "onclick" => " onclick=\"".$params['onclickcmd']."('".$params['wrapper']."', '".$params['harness']."', 'so', 'l|lm', '');\"", "label" => "Songs")
-						, "menu-ms" => array( "href" => "#", "onclick" => " onclick=\"".$params['onclickcmd']."('".$params['wrapper']."', '".$params['harness']."', 'ms', 'l|lm', '');\"", "label" => "Files")
+						//, "menu-ms" => array( "href" => "#", "onclick" => " onclick=\"".$params['onclickcmd']."('".$params['wrapper']."', '".$params['harness']."', 'ms', 'l|lm', '');\"", "label" => "Files")
 					);
 	} else {
 		$data = array (
 						  "menu-ar" => array( "href" => "?style=".$style."&a=ar&bc=l|lm", "onclick" => "", "label" => "Artists")
 						, "menu-al" => array( "href" => "?style=".$style."&a=al&bc=l|lm", "onclick" => "", "label" => "Albums")
 						, "menu-so" => array( "href" => "?style=".$style."&a=so&bc=l|lm", "onclick" => "", "label" => "Songs")
-						, "menu-ms" => array( "href" => "?style=".$style."&a=ms&bc=l|lm", "onclick" => "", "label" => "Files")
+						//, "menu-ms" => array( "href" => "?style=".$style."&a=ms&bc=l|lm", "onclick" => "", "label" => "Files")
 					  );
 	}
 
@@ -696,15 +711,56 @@ function displayMusicListSource($sources, $style, $action, $breadcrumb, $params)
 
 	echo "<ul class=\"widget-list\">";
 	$alt = false;
+	$i = 0;
 	foreach ($sources as $source) {
-		if(!empty($source["sourceid"])) {
+		if(!empty($source["file"])) {
 			$label = $source['label'];
-			$id = "music-".$source["sourceid"];
+			$id = "source-".$i;
 			$class = "music-source";
-			$query = "&sourceid=".$source["sourceid"];
+			$query = "&directory=".$source["file"];
 			$anchor = buildAnchor($label, $style, $id, $class, "d", $newbreadcrumb, $params, $query);
 			echo "<li".(($alt) ? " class=\"alt\"" : "").">".$anchor."</li>\n";
 			$alt = !$alt;
+			$i++;
+		}
+	}
+	echo "</ul>";
+
+	$anchor = buildBackAnchor($style, $breadcrumb, $params);
+	echo "<div class=\"widget-control\">".$anchor."</div>\n";
+}
+
+function displayFilesFromList($results, $style, $action, $breadcrumb, $params) {
+	$newbreadcrumb = getNewBreadcrumb($action, $breadcrumb);
+
+	echo "<ul class=\"widget-list\">";
+	$alt = false;
+	$i = 0;
+	$directories = $results['directories'];
+	$files = $results['files'];
+	foreach ($directories as $directory) {
+		if(!empty($directory['file'])) {
+			$label = $directory['label'];
+			$id = "directory-".$i;
+			$class = "music-directory";
+			$query = "&directory=".$directory['file'];
+			$anchor = buildAnchor($label, $style, $id, $class, "d", $newbreadcrumb, $params, $query);
+			echo "<li".(($alt) ? " class=\"alt\"" : "").">".$anchor."</li>\n";
+			$alt = !$alt;
+			$i++;
+		}
+	}
+	$i = 0;
+	foreach ($files as $file) {
+		if(!empty($file['file'])) {
+			$label = $file['label'];
+			$id = "file-".$i;
+			$class = "music-file";
+			$query = "&file=".$file['file'];
+			$anchor = buildAnchor($label, $style, $id, $class, "d", $newbreadcrumb, $params, $query);
+			echo "<li".(($alt) ? " class=\"alt\"" : "").">".$anchor."</li>\n";
+			$alt = !$alt;
+			$i++;
 		}
 	}
 	echo "</ul>";
@@ -749,3 +805,4 @@ function buildBackAnchor($style, $breadcrumb, $params, $query = "") {
 	}
 }
 ?>
+

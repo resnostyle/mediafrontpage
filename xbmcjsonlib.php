@@ -108,6 +108,10 @@ $xbmcJsonMethods = array(
 			'call' => '{"jsonrpc": "2.0", "method": "Files.Download", "params": %s, "id": 1}',
 			'args' => '""'
 		),
+		'Files.GetDirectory' => array(
+			'call' => '{"jsonrpc" : "2.0", "method" : "Files.GetDirectory", "params":{ "directory": "%s" }, "id": 1}',
+			'args' => ''
+		),
 		'Player.GetActivePlayers' => array(
 			'call' => '{"jsonrpc": "2.0", "method": "Player.GetActivePlayers", "id": 1}'
 		),

@@ -9,7 +9,7 @@ function widgetComingEpisodes() {
 	echo "\t<div id=\"comingepisodeswrapper\"></div>\n";
 
 	if(strpos($sickbeardcomingepisodes, "http://")===false) {
-		$iFrameSource = $sickbeardcomingepisodes;
+			$iFrameSource= 'widgets/wComingEpisodes.php?style=s';
 	} else {
 		if(strpos($sickbeardcomingepisodes, "/sickbeard/")===false) {
 			$iFrameSource= 'widgets/wComingEpisodes.php?display=yes';
