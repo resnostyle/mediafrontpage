@@ -3,32 +3,44 @@
 /* BASE */ 
 
 html,body { 
-	height: 100%;
-	-webkit-font-smoothing: antialiased;
-	width: 320px;
-	/* overflow: auto; */
+	height: 100%; -webkit-font-smoothing: antialiased;
 }
 body {
 	font-family: 'Helvetica Neue','HelveticaNeue',Helvetica, Arial, sans-serif;
 	font-size:12px;
-	line-height:140%;
-	height: 100%;
-	margin: 5px 5px;
+font-weight:normal;
+line-height:18px;
+color:#585858;
+background-color:#000000;
+background-image:url(images/body_bg.jpg);
+background-repeat:repeat-y;
+background-position:center;
+margin:0;
+padding:0;
 }
-#header ul {
-	margin: 0;
-	padding:0;
-	list-style-type:none;
-	display: block;
+
+p {margin:0; padding:0;}
+
+a img {border:none;}
+
+h1 {
+	font-size:40px;
+	line-height:36px;
+	font-weight:bold;
+	color:#151618;
+	text-shadow:#747478 0px 1px 1px;
+	text-align:center;
+	margin: 0px;
+	padding: 0px;
 }
-#header li {
-	padding: 0px 5px 0px 5px;
-	float: left;
-}
+
 #main {
 	/* margin: 10px 0px 0px 0px;*/
-	padding: 10px 5px 5px 5px;
-	clear: both;
+    border:1px solid white;
+    -moz-border-radius:6px 6px 6px 6px;
+    border-radius:6px 6px 6px 6px;
+    margin:10px 5px;
+    background: white;
 }
 #main ul {
 	margin: 0;
@@ -72,6 +84,112 @@ body {
 div.highslide-caption {
 	display: none;
 }
+
+.container {
+	width:320px;
+	padding-top:9px;
+	background-color:#2c2e32;
+	margin-top: 0px;
+	margin-right: auto;
+	margin-bottom: 10px;
+	margin-left: auto;
+}
+
+
+#header {
+    border:1px solid white;
+    -moz-border-radius:6px 6px 6px 6px;
+    border-radius:6px 6px 6px 6px;
+    margin:10px 5px;
+    background: white;
+}
+
+#header ul{
+list-style-type:none;
+margin:0px;
+padding-top:3px;
+padding-left:6px;
+padding-right:6px;
+display:block;
+}
+
+#header ul li{
+margin:0px;
+}
+
+#header ul li ul {
+margin:0px 0px 0px 16px;
+padding:0px 0px 0px 6px;
+}
+
+#header ul li ul li {
+list-style-image:url(images/small_arrow.png);
+list-style-position:outside;
+}
+
+#header ul li a{
+display:block;
+margin-bottom:6px;
+height:29px;
+padding-left:12px;
+color:#525151;
+font-weight:bold;
+text-shadow:#FFFFFF 0px 1px 1px;
+text-decoration:none;
+line-height:29px;
+}
+
+#header ul li a.last{
+margin-bottom:3px;
+}
+
+#header ul li a{
+background-image:url(images/item_menu_long.png);
+background-repeat:no-repeat;
+background-position:top right;
+}
+
+#header ul li ul li a{
+background-image:url(images/item_menu_medium.png);
+background-repeat:no-repeat;
+background-position:top right;
+}
+
+/* SickBeard */
+.icons {
+	display: none;
+}
+p.next, p.noMargin {
+	display: none;
+}
+.listing {
+	display: inline;
+}
+.listing h1 a {
+	display: none;
+}
+#listingWrapper div {
+	float: left;
+}
+#listingWrapper img {
+	width: 65px;
+	height: 96px;
+	padding: 16px;
+}
+#listingWrapper h1 {
+	color: #696969;
+	font-size: 1em;
+	text-align: left;
+	line-height:16px;
+	font-weight: bold;
+	text-shadow: none;
+	margin: 0 0 0 6px;
+	padding: 0px;
+}
+#listingWrapper br {
+	clear: both;
+}
+
 div.library-title h2 {
 	border: none;
 	display:block;
@@ -118,6 +236,11 @@ div.library-info img {
 	margin:0 0 -8 15px;
 }
 
+
+
+
+/* sickbeard stuff to show more info */
+/*
 .listing {
 	padding: 10px 20px 10px 10px;
 	border: none;
@@ -172,4 +295,4 @@ div.library-info img {
 .listing p.noMargin {
 	margin-bottom: 0;
 }
-
+*/
