@@ -6,18 +6,69 @@ $JSON_ERROR = "\n<p><strong>XBMC's <a href=\"".$xbmcjsonservice."\">JSON API ser
 $videodetailfields = '"genre", "director", "trailer", "tagline", "plot", "plotoutline", "title", "originaltitle", "lastplayed", "showtitle", "firstaired", "duration", "season", "episode", "runtime", "year", "playcount", "rating", "writer", "studio", "mpaa", "premiered", "album"';
 
 $xbmcJsonMethods = array(
-		'JSONRPC.Version' => array(
-			'call' => '{"jsonrpc": "2.0", "method": "JSONRPC.Version", "id": 1}'
-		),
-		'JSONRPC.Introspect' => array(
-			'call' => '{"jsonrpc": "2.0", "method": "JSONRPC.Introspect", "id": 1}'
-		),
-		'JSONRPC.Permission' => array(
-			'call' => '{"jsonrpc": "2.0", "method": "JSONRPC.Permission", "id": 1}'
-		),
-		'JSONRPC.Ping' => array(
-			'call' => '{"jsonrpc": "2.0", "method": "JSONRPC.Ping", "id": 1}'
-		),
+		// Methods not requiring parameters
+		'JSONRPC.Version'               => array('call' => '{"jsonrpc": "2.0", "method": "JSONRPC.Version", "id": 1}'),
+		'JSONRPC.Introspect'            => array('call' => '{"jsonrpc": "2.0", "method": "JSONRPC.Introspect", "id": 1}'),
+		'JSONRPC.Permission'            => array('call' => '{"jsonrpc": "2.0", "method": "JSONRPC.Permission", "id": 1}'),
+		'JSONRPC.Ping'                  => array('call' => '{"jsonrpc": "2.0", "method": "JSONRPC.Ping", "id": 1}'),
+		
+		'AudioPlayer.State'             => array('call' => '{"jsonrpc": "2.0", "method": "AudioPlayer.State", "id": 1}'),
+		'AudioPlayer.PlayPause'         => array('call' => '{"jsonrpc": "2.0", "method": "AudioPlayer.PlayPause", "id": 1}'),
+		'AudioPlayer.Stop'              => array('call' => '{"jsonrpc": "2.0", "method": "AudioPlayer.Stop", "id": 1}'),
+		'AudioPlayer.SkipPrevious'      => array('call' => '{"jsonrpc": "2.0", "method": "AudioPlayer.SkipPrevious", "id": 1}'),
+		'AudioPlayer.SkipNext'          => array('call' => '{"jsonrpc": "2.0", "method": "AudioPlayer.SkipNext", "id": 1}'),
+		'AudioPlayer.BigSkipBackward'   => array('call' => '{"jsonrpc": "2.0", "method": "AudioPlayer.BigSkipBackward", "id": 1}'),
+		'AudioPlayer.BigSkipForward'    => array('call' => '{"jsonrpc": "2.0", "method": "AudioPlayer.BigSkipForward", "id": 1}'),
+		'AudioPlayer.SmallSkipBackward' => array('call' => '{"jsonrpc": "2.0", "method": "AudioPlayer.SmallSkipBackward", "id": 1}'),
+		'AudioPlayer.SmallSkipForward'  => array('call' => '{"jsonrpc": "2.0", "method": "AudioPlayer.SmallSkipForward", "id": 1}'),
+		'AudioPlayer.Rewind'            => array('call' => '{"jsonrpc": "2.0", "method": "AudioPlayer.Rewind", "id": 1}'),
+		'AudioPlayer.Forward'           => array('call' => '{"jsonrpc": "2.0", "method": "AudioPlayer.Forward", "id": 1}'),
+		'AudioPlayer.GetPercentage'     => array('call' => '{"jsonrpc": "2.0", "method": "AudioPlayer.GetPercentage", "id": 1}'),
+		'AudioPlayer.GetTime'           => array('call' => '{"jsonrpc": "2.0", "method": "AudioPlayer.GetTime", "id": 1}'),
+
+		'AudioPlaylist.SkipPrevious'    => array('call' => '{"jsonrpc": "2.0", "method": "AudioPlaylist.SkipPrevious", "id": 1}'),
+		'AudioPlaylist.SkipNext'        => array('call' => '{"jsonrpc": "2.0", "method": "AudioPlaylist.SkipNext", "id": 1}'),
+		'AudioPlaylist.Shuffle'         => array('call' => '{"jsonrpc": "2.0", "method": "AudioPlaylist.Shuffle", "id": 1}'),
+		'AudioPlaylist.UnShuffle'       => array('call' => '{"jsonrpc": "2.0", "method": "AudioPlaylist.UnShuffle", "id": 1}'),
+
+		'AudioLibrary.ScanForContent'   => array('call' => '{"jsonrpc": "2.0", "method": "AudioLibrary.ScanForContent", "id" : 1 }'),
+
+		'PicturePlayer.PlayPause'       => array('call' => '{"jsonrpc": "2.0", "method": "PicturePlayer.PlayPause", "id": 1}'),
+		'PicturePlayer.Stop'            => array('call' => '{"jsonrpc": "2.0", "method": "PicturePlayer.Stop", "id": 1}'),
+		'PicturePlayer.SkipPrevious'    => array('call' => '{"jsonrpc": "2.0", "method": "PicturePlayer.SkipPrevious", "id": 1}'),
+		'PicturePlayer.SkipNext'        => array('call' => '{"jsonrpc": "2.0", "method": "PicturePlayer.SkipNext", "id": 1}'),
+		'PicturePlayer.MoveLeft'        => array('call' => '{"jsonrpc": "2.0", "method": "PicturePlayer.MoveLeft", "id": 1}'),
+		'PicturePlayer.MoveRight'       => array('call' => '{"jsonrpc": "2.0", "method": "PicturePlayer.MoveRight", "id": 1}'),
+		'PicturePlayer.MoveDown'        => array('call' => '{"jsonrpc": "2.0", "method": "PicturePlayer.MoveDown", "id": 1}'),
+		'PicturePlayer.MoveUp'          => array('call' => '{"jsonrpc": "2.0", "method": "PicturePlayer.MoveUp", "id": 1}'),
+		'PicturePlayer.ZoomOut'         => array('call' => '{"jsonrpc": "2.0", "method": "PicturePlayer.ZoomOut", "id": 1}'),
+		'PicturePlayer.ZoomIn'          => array('call' => '{"jsonrpc": "2.0", "method": "PicturePlayer.ZoomIn", "id": 1}'),
+		
+		'VideoPlayer.State'             => array('call' => '{"jsonrpc": "2.0", "method": "VideoPlayer.State", "id": 1}'),
+		'VideoPlayer.PlayPause'         => array('call' => '{"jsonrpc": "2.0", "method": "VideoPlayer.PlayPause", "id": 1}'),
+		'VideoPlayer.Stop'              => array('call' => '{"jsonrpc": "2.0", "method": "VideoPlayer.Stop", "id": 1}'),
+		'VideoPlayer.SkipPrevious'      => array('call' => '{"jsonrpc": "2.0", "method": "VideoPlayer.SkipPrevious", "id": 1}'),
+		'VideoPlayer.SkipNext'          => array('call' => '{"jsonrpc": "2.0", "method": "VideoPlayer.SkipNext", "id": 1}'),
+		'VideoPlayer.BigSkipBackward'   => array('call' => '{"jsonrpc": "2.0", "method": "VideoPlayer.BigSkipBackward", "id": 1}'),
+		'VideoPlayer.BigSkipForward'    => array('call' => '{"jsonrpc": "2.0", "method": "VideoPlayer.BigSkipForward", "id": 1}'),
+		'VideoPlayer.SmallSkipBackward' => array('call' => '{"jsonrpc": "2.0", "method": "VideoPlayer.SmallSkipBackward", "id": 1}'),
+		'VideoPlayer.SmallSkipForward'  => array('call' => '{"jsonrpc": "2.0", "method": "VideoPlayer.SmallSkipForward", "id": 1}'),
+		'VideoPlayer.Rewind'            => array('call' => '{"jsonrpc": "2.0", "method": "VideoPlayer.Rewind", "id": 1}'),
+		'VideoPlayer.Forward'           => array('call' => '{"jsonrpc": "2.0", "method": "VideoPlayer.Forward", "id": 1}'),
+		'VideoPlayer.GetPercentage'     => array('call' => '{"jsonrpc": "2.0", "method": "VideoPlayer.GetPercentage", "id": 1}'),
+		'VideoPlayer.GetTime'           => array('call' => '{"jsonrpc": "2.0", "method": "VideoPlayer.GetTime", "id": 1}'),
+
+		'VideoLibrary.ScanForContent'   => array('call' => '{"jsonrpc": "2.0", "method": "VideoLibrary.ScanForContent", "id" : 1 }'),
+
+		'System.Shutdown'               => array('call' => '{"jsonrpc": "2.0", "method": "System.Shutdown", "id" : 1 }'),
+		'System.Suspend'                => array('call' => '{"jsonrpc": "2.0", "method": "System.Suspend", "id" : 1 }'),
+		'System.Hibernate'              => array('call' => '{"jsonrpc": "2.0", "method": "System.Hibernate", "id" : 1 }'),
+		'System.Reboot'                 => array('call' => '{"jsonrpc": "2.0", "method": "System.Reboot", "id" : 1 }'),
+
+		'XBMC.ToggleMute'               => array('call' => '{"jsonrpc": "2.0", "method": "XBMC.ToggleMute", "id" : 1 }'),
+		'XBMC.Quit'                     => array('call' => '{"jsonrpc": "2.0", "method": "XBMC.Quit", "id" : 1 }'),
+
+		// Methods requiring parameters
 		'AudioLibrary.GetArtists' => array(
 			'call' => '{"jsonrpc": "2.0", "method": "AudioLibrary.GetArtists", "params": { "sortmethod": "artist", "sortorder" : "ascending" , "fields": [ "artist", "year" ]}, "id": 1}',
 			'sql' => array(
@@ -41,42 +92,6 @@ $xbmcJsonMethods = array(
 				'artistid' => '',
 				'albumid' => ''
 			)
-		),
-		'AudioPlayer.PlayPause' => array(
-			'call' => '{"jsonrpc": "2.0", "method": "AudioPlayer.PlayPause", "id": 1}'
-		),
-		'AudioPlayer.Stop' => array(
-			'call' => '{"jsonrpc": "2.0", "method": "AudioPlayer.Stop", "id": 1}'
-		),
-		'AudioPlayer.SkipPrevious' => array(
-			'call' => '{"jsonrpc": "2.0", "method": "AudioPlayer.SkipPrevious", "id": 1}'
-		),
-		'AudioPlayer.SkipNext' => array(
-			'call' => '{"jsonrpc": "2.0", "method": "AudioPlayer.SkipNext", "id": 1}'
-		),
-		'AudioPlayer.BigSkipBackward' => array(
-			'call' => '{"jsonrpc": "2.0", "method": "AudioPlayer.BigSkipBackward", "id": 1}'
-		),
-		'AudioPlayer.BigSkipForward' => array(
-			'call' => '{"jsonrpc": "2.0", "method": "AudioPlayer.BigSkipForward", "id": 1}'
-		),
-		'AudioPlayer.SmallSkipBackward' => array(
-			'call' => '{"jsonrpc": "2.0", "method": "AudioPlayer.SmallSkipBackward", "id": 1}'
-		),
-		'AudioPlayer.SmallSkipForward' => array(
-			'call' => '{"jsonrpc": "2.0", "method": "AudioPlayer.SmallSkipForward", "id": 1}'
-		),
-		'AudioPlayer.Rewind' => array(
-			'call' => '{"jsonrpc": "2.0", "method": "AudioPlayer.Rewind", "id": 1}'
-		),
-		'AudioPlayer.Forward' => array(
-			'call' => '{"jsonrpc": "2.0", "method": "AudioPlayer.Forward", "id": 1}'
-		),
-		'AudioPlayer.GetPercentage' => array(
-			'call' => '{"jsonrpc": "2.0", "method": "AudioPlayer.GetPercentage", "id": 1}'
-		),
-		'AudioPlayer.GetTime' => array(
-			'call' => '{"jsonrpc": "2.0", "method": "AudioPlayer.GetTime", "id": 1}'
 		),
 		'AudioPlaylist.Add' => array(
 			'call' => '{"jsonrpc": "2.0", "method": "AudioPlaylist.Add", "params": { "songid" : %d }, "id": 1}',
@@ -136,54 +151,12 @@ $xbmcJsonMethods = array(
 				'tvshowid' => 1
 			)
 		),
-		'VideoLibrary.ScanForContent' => array(
-			'call' => '{"jsonrpc": "2.0", "method": "VideoLibrary.ScanForContent", "id" : 1 }'
-		),
-		'VideoPlayer.PlayPause' => array(
-			'call' => '{"jsonrpc": "2.0", "method": "VideoPlayer.PlayPause", "id": 1}'
-		),
-		'VideoPlayer.Stop' => array(
-			'call' => '{"jsonrpc": "2.0", "method": "VideoPlayer.Stop", "id": 1}'
-		),
-		'VideoPlayer.SkipPrevious' => array(
-			'call' => '{"jsonrpc": "2.0", "method": "VideoPlayer.SkipPrevious", "id": 1}'
-		),
-		'VideoPlayer.SkipNext' => array(
-			'call' => '{"jsonrpc": "2.0", "method": "VideoPlayer.SkipNext", "id": 1}'
-		),
-		'VideoPlayer.BigSkipBackward' => array(
-			'call' => '{"jsonrpc": "2.0", "method": "VideoPlayer.BigSkipBackward", "id": 1}'
-		),
-		'VideoPlayer.BigSkipForward' => array(
-			'call' => '{"jsonrpc": "2.0", "method": "VideoPlayer.BigSkipForward", "id": 1}'
-		),
-		'VideoPlayer.SmallSkipBackward' => array(
-			'call' => '{"jsonrpc": "2.0", "method": "VideoPlayer.SmallSkipBackward", "id": 1}'
-		),
-		'VideoPlayer.SmallSkipForward' => array(
-			'call' => '{"jsonrpc": "2.0", "method": "VideoPlayer.SmallSkipForward", "id": 1}'
-		),
-		'VideoPlayer.Rewind' => array(
-			'call' => '{"jsonrpc": "2.0", "method": "VideoPlayer.Rewind", "id": 1}'
-		),
-		'VideoPlayer.Forward' => array(
-			'call' => '{"jsonrpc": "2.0", "method": "VideoPlayer.Forward", "id": 1}'
-		),
-		'VideoPlayer.GetPercentage' => array(
-			'call' => '{"jsonrpc": "2.0", "method": "VideoPlayer.GetPercentage", "id": 1}'
-		),
-		'VideoPlayer.GetTime' => array(
-			'call' => '{"jsonrpc": "2.0", "method": "VideoPlayer.GetTime", "id": 1}'
-		),
 		'VideoPlaylist.GetItems' => array(
 			'call' => '{"jsonrpc": "2.0", "method": "VideoPlaylist.GetItems", "params": { "fields": ["title", "season", "episode", "plot", "duration", "showtitle"] }, "id": 1}'
 		),
 		'System.GetInfoLabels' => array(
 			'call' => '{"jsonrpc": "2.0", "method": "System.GetInfoLabels", "params": ["%s"], "id": 1}',
 			'args' => 'System.ProfileName'
-		),
-		'System.Shutdown' => array(
-			'call' => '{"jsonrpc": "2.0", "method": "System.Shutdown", "id" : 1 }'
 		),
 		'XBMC.Play' => array(
 			'call' => '{"jsonrpc": "2.0", "method": "XBMC.Play", "params": { %s }, "id": 1}',
@@ -367,14 +340,12 @@ if(!empty($_REQUEST['tester']) && $_REQUEST['tester']='y') {
 	if(!empty($_POST['dbname'])) {
 		$dbname = $_POST['dbname'];
 	} else {
-		//$dbname = "MyVideos34.db";
 		$dbname = "";
 	}
 	if(!empty($_POST['resultwrapper'])) {
 		$resultwrapper = $_POST['resultwrapper'];
 	} else {
-		$resultwrapper = "movies";
-		//$resultwrapper = "";
+		$resultwrapper = "";
 	}
 	
 ?>
