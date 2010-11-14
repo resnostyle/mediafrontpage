@@ -39,7 +39,7 @@ function resizedimage($imageurl, $cache = "") {
 			break;
 		default: 
 			$image = false;
-			echo "<pre>".print_r(size, 1)."</pre>";
+			echo "<pre>".print_r($size, 1)."</pre>";
 			return false;
 			break;
 	}
