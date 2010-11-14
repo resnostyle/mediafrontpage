@@ -72,7 +72,7 @@ $xbmcJsonMethods = array(
 		'AudioLibrary.GetArtists' => array(
 			'call' => '{"jsonrpc": "2.0", "method": "AudioLibrary.GetArtists", "params": { "sortmethod": "artist", "sortorder" : "ascending" , "fields": [ "artist", "year" ]}, "id": 1}',
 			'sql' => array(
-				'db' => 'MyMusic7.db',
+				'db' => 'music',
 				'query' => 'select * from artist where (idArtist IN (select song.idArtist from song) or idArtist IN (select exartistsong.idArtist from exartistsong) or idArtist IN (select album.idArtist from album) or idArtist IN (select exartistalbum.idArtist from exartistalbum ))  and artist.strArtist != "" and artist.idArtist<>1',
 				'resultwrapper' => 'artists'
 			)
@@ -117,7 +117,7 @@ $xbmcJsonMethods = array(
 		'VideoLibrary.GetRecentlyAddedMovies' => array(
 			'call' => '{"jsonrpc": "2.0", "method": "VideoLibrary.GetRecentlyAddedMovies", "params" : { "start" : 0 , "end" : %d , "fields": [ "genre", "director", "trailer", "tagline", "plot", "plotoutline", "title", "originaltitle", "lastplayed", "showtitle", "firstaired", "duration", "season", "episode", "runtime", "year", "playcount", "rating", "writer", "studio", "mpaa", "premiered", "album" ] }, "id" : 1 }',
 			'sql' => array(
-				'db' => 'MyVideos34.db',
+				'db' => 'video',
 				'query' => 'select * from movieview order by idMovie desc limit %d',
 				'resultwrapper' => 'movies'
 			),
@@ -129,7 +129,7 @@ $xbmcJsonMethods = array(
 		'VideoLibrary.GetRecentlyAddedEpisodes' => array(
 			'call' => '{"jsonrpc": "2.0", "method": "VideoLibrary.GetRecentlyAddedEpisodes", "params" : { "start" : 0 , "end" : %d , "fields": [ "genre", "director", "trailer", "tagline", "plot", "plotoutline", "title", "originaltitle", "lastplayed", "showtitle", "firstaired", "duration", "season", "episode", "runtime", "year", "playcount", "rating", "writer", "studio", "mpaa", "premiered", "album" ] }, "id" : 1 }',
 			'sql' => array(
-				'db' => 'MyVideos34.db',
+				'db' => 'video',
 				'query' => 'select c13 as episode, idEpisode as episodeid, c05 as firstaired, c00 as label, mpaa, c01 as plot, premiered, strTitle as showtitle, strStudio as studio, c00 as title, * from episodeview order by idEpisode desc limit %d',
 				'resultwrapper' => 'episodes'
 			),
@@ -147,6 +147,11 @@ $xbmcJsonMethods = array(
 		),
 		'VideoLibrary.GetSeasons' => array(
 			'call' => '{"jsonrpc": "2.0", "method": "VideoLibrary.GetSeasons", "params" : { "tvshowid" : %d, "fields": [ "genre", "title", "showtitle", "duration", "season", "episode", "year", "playcount", "rating", "studio", "mpaa" ] }, "id" : 1 }',
+			'sql' => array(
+				'db' => 'video',
+				'query' => 'select episode.c12,path.strPath,tvshow.c00,tvshow.c08,tvshow.c14,tvshow.c13,count(1),count(files.playCount) from episode join tvshowlinkepisode on tvshowlinkepisode.idEpisode=episode.idEpisode join tvshow on tvshow.idShow=tvshowlinkepisode.idShow join files on files.idFile=episode.idFile join tvshowlinkpath on tvshowlinkpath.idShow = tvshow.idShow join path on path.idPath = tvshowlinkpath.idPath where tvshow.idShow = %d group by episode.c12 LIMIT 0, 30',
+				'resultwrapper' => 'seasons'
+			),
 			'args' => array(
 				'tvshowid' => 1
 			)
