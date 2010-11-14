@@ -7,9 +7,9 @@ function widgetControlHeader() {
 		<script type="text/javascript" language="javascript">
 		<!--
 			function cmdControl(requesturl) {
-				var cmdPlayingRequest = new ajaxRequest();
-				cmdPlayingRequest.open("GET", requesturl, true);
-				cmdPlayingRequest.send(null);
+				var cmdControlRequest = new ajaxRequest();
+				cmdControlRequest.open("GET", requesturl, true);
+				cmdControlRequest.send(null);
 			}
 		-->
 		</script>
