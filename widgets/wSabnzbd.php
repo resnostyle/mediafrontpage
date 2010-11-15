@@ -127,7 +127,7 @@ function sabStatus($count = 15) {
 				}
 				if(!empty($_GET['style']) && ($_GET['style'] == "w")) {
 					$actions = "<img src=\"".$pathtoimages."media/btnPlayPause.png\" onclick=\"cmdSabnzbd('".$cmdPauseResume."');\" />";
-					$actions .= "<img src=\"".$pathtoimages."media/queueDelete.png\" onclick=\"cmdSabnzbd('".$cmdDelete."');\" />";
+					$actions .= "<img src=\"".$pathtoimages."media/btnQueueDelete.png\" onclick=\"cmdSabnzbd('".$cmdDelete."');\" />";
 				} else {
 					$actions = "<a href=\"".$cmdPauseResume."\" target=\"nothing\"><img src=\"".$pathtoimages."media/btnPlayPause.png\" /></a>";
 					$actions .= "<a href=\"".$cmdDelete."\" target=\"nothing\"><img src=\"".$pathtoimages."media/btnQueueDelete.png\" /></a>";
