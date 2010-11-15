@@ -39,4 +39,10 @@ $arrLayout = array(
 			)
 		)
 	);
+/*
+			"wExample" => array(
+				"title" => "Example Widget",
+				"display" => ""
+			),
+*/
 ?>
