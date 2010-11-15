@@ -196,6 +196,7 @@ function processCommand($command) {
 						echo "\t<p>".$title."</p>\n";
 						echo "\t<p>".$album."</p>\n";
 						echo "</div>\n";
+						echo "<div class=\"clear-float\"></div>\n";
 					}
 					$i++;
 				}
