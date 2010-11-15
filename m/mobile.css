@@ -87,7 +87,6 @@ td {
 }
 #sabnzbd div.progressbar { 
 	width:100%; 
-	margin-bottom:-10px; 
 }
 #sabnzbd div.progressbar div.progresslabel {
 	font-weight:bold;
