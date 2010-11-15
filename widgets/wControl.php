@@ -56,6 +56,23 @@ function widgetControl($baseurl = "widgets/wControl.php", $forcemenu = false) {
 					$results = jsonmethodcall("System.Shutdown");
 					$displayMenu = ($_GET["style"] == "m");
 					break;
+   				case "suspend":  // Shutdown
+					$results = jsonmethodcall("System.Suspend");
+					$displayMenu = ($_GET["style"] == "m");
+					break;                  
+   				case "hibernate":  // Shutdown
+					$results = jsonmethodcall("System.Hibernate");
+					$displayMenu = ($_GET["style"] == "m");
+					break;
+				case "reboot":    // Reboot
+					$results = jsonmethodcall("System.Reboot");
+					$displayMenu = ($_GET["style"] == "m");
+					break;
+   				case "exit":
+				case "quit":  // Shutdown
+					$results = jsonmethodcall("XBMC.Quit");
+					$displayMenu = ($_GET["style"] == "m");
+					break;                    
 				case "vidscan":  // Video Library ScanForContent
 					$results = jsonmethodcall("VideoLibrary.ScanForContent");
 					$displayMenu = ($_GET["style"] == "m");
