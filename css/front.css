@@ -194,6 +194,7 @@ a.controlbutton img {
 #sabnzbd table {
 	font-size:1em;
 	text-align:left;
+	border-spacing: 0px 0px;
 }
 #sabnzbd div.progressbar { 
 	width:100%;
