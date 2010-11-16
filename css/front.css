@@ -61,10 +61,10 @@ a:visited {
 	/*position: relative; */
 	display: block;                 
 	height: 16px; 
-	margin: 0px 0px 10px 0px; 
+	/*margin: 0px 0px 10px 0px;*/ 
 	background: #333; 
 	width: 100px;
-	margin-bottom:10px;
+	margin-bottom:5px;
 	overflow: hidden;
 }
 .progress { 
@@ -78,15 +78,16 @@ a:visited {
 .progressbar .warning { 
 	background: #FF2222; 
 }
-
 .progresslabel {
 	width: 100%;
 	text-align: left;
 	height: 16px;
-	margin: -16px 5px;
+	margin: -16px 0px;
 	overflow: hidden;
 }
-
+div.clear-float {
+	clear:both;
+}
 a.controlbutton img {
 	height: 20px;
 	width: 20px;
@@ -148,15 +149,6 @@ a.controlbutton img {
 	text-align: center;
 }
 
-/*
-#wHardDrives div.progressbar {
-	padding-right: 5px;
-}
-#wHardDrives div.progresslabel {
-	text-align: center;
-}
-*/
-
 /* wNOWPLAYING */
 #wNowPlaying img {
 	float: left;
@@ -181,16 +173,45 @@ a.controlbutton img {
 	border: 1px solid #000;
 }
 /* wSABNZBD */
-
-#sabnzbdblock  {
-	display:block;
-	clear:both;
-	margin: 20px 0 0;
+#wSabnzbd #sab-total.progressbar {
+	width:96%;
+	overflow:hidden;
+	margin-bottom:10px;
 }
-#sabnzbdblock h1 {
-	margin: 20px 0 0;
-	width:100%; 
+#wSabnzbd #sab-total .progresslabel {
+	padding: 0 4px;
+	overflow:hidden;
+	text-align:center;
 }
+#wSabnzbd #sab-queue {
+	display: inline-table;
+	width: 100%;
+}
+#wSabnzbd #sab-queue div.queueitem{
+	display: table-row;
+	width: 100%;
+}
+#wSabnzbd #sab-queue div.progressbar {
+	width: 100%;
+	height: 16px;
+	overflow:hidden;
+	vertical-align: top;
+}
+#wSabnzbd #sab-queue div.progresslabel {
+	padding: 0 4px;
+	overflow:hidden;
+}
+#wSabnzbd div.actions { 
+	display: table-cell;
+	width:36px;
+	vertical-align: top;
+}
+#wSabnzbd div.actions img { 
+	width:16px; 
+	height:16px;
+	margin-left:2px;
+}
+/*
 #sabnzbd table {
 	font-size:1em;
 	text-align:left;
@@ -210,6 +231,8 @@ a.controlbutton img {
 	width:16px; 
 	height:16px;
 }
+*/
+
 /* wRECENTMOVIES */
 
 #recentmovies  {
