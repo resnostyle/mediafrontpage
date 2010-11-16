@@ -36,6 +36,10 @@ $arrLayout = array(
 			"wRecentMovies" => array(
 				"title" => "Recent Movies",
 				"display" => ""
+			),
+			"wRSS" => array(
+				"title" => "RSS Feed",
+				"display" => ""
 			)
 		)
 	);
