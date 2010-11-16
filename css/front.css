@@ -182,22 +182,33 @@ a.controlbutton img {
 	overflow:hidden;
 	text-align:center;
 }
+#wSabnzbd #sab-queue {
+	display: inline-table;
+	width: 100%;
+}
+#wSabnzbd #sab-queue div.queueitem{
+	display: table-row;
+	width: 100%;
+}
 #wSabnzbd #sab-queue div.progressbar {
-	width:85%;
+	width: 100%;
+	height: 16px;
 	overflow:hidden;
-	float:left;
+	vertical-align: top;
 }
 #wSabnzbd #sab-queue div.progresslabel {
 	padding: 0 4px;
 	overflow:hidden;
 }
 #wSabnzbd div.actions { 
-	width:100%; 
+	display: table-cell;
+	width:36px;
+	vertical-align: top;
 }
 #wSabnzbd div.actions img { 
 	width:16px; 
 	height:16px;
-	margin-left:4px;
+	margin-left:2px;
 }
 
 /* wRECENTMOVIES */
@@ -245,5 +256,4 @@ table.popupwrapper, table.popup{
 table.popupwrapper tr {
 	background: #3D3D3D;
 }
-
 

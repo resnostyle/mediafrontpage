@@ -91,9 +91,7 @@ function sabStatus($count = 15) {
 		}
 		echo "\t\t</div><!-- #sab-header -->\n";
 	}
-
-		echo "\t\t<div id=\"sab-queue\">\n";
-
+	echo "\t\t<div id=\"sab-queue\">\n";
 	$i = 0;
 	foreach($sabqueue["slots"] as $slot) {
 		if($i < $count) {
@@ -131,17 +129,21 @@ function sabStatus($count = 15) {
 					$actions = "<a href=\"".$cmdPauseResume."\" target=\"nothing\"><img src=\"".$pathtoimages."media/btnPlayPause.png\" /></a>";
 					$actions .= "<a href=\"".$cmdDelete."\" target=\"nothing\"><img src=\"".$pathtoimages."media/btnQueueDelete.png\" /></a>";
 				}
-				echo "\t\t\t<div class=\"queueitem\"><div class=\"progressbar\"><div class=\"progress\" style=\"width:".$percentage."%\"></div><div class=\"progresslabel\">".$name."</div></div><div class=\"actions\">".$actions."</div>\n";
-				echo "\t\t\t<div class=\"clear-float\"></div>";
-				echo "\t\t</div><!-- #sab-queue -->\n";
+				echo "\t\t\t<div class=\"queueitem\">\n";
+				echo "\t\t\t\t<div class=\"progressbar\">";
+				echo "\t\t\t\t\t<div class=\"progress\" style=\"width:".$percentage."%\"></div>";
+				echo "\t\t\t\t\t<div class=\"progresslabel\">".$name."</div>";
+				echo "\t\t\t\t</div><!-- .progressbar -->";
+				echo "\t\t\t\t<div class=\"actions\">".$actions."</div>\n";
+				echo "\t\t\t</div><!-- .queueitem -->\n";
 			}
-		} else {
+
+	} else {
 			break;
 		}
 		$i += 1;
 	}
-	//echo "\t\t<table>\n";
-
+	echo "\t\t</div><!-- #sab-queue -->\n";
 
 }
 
