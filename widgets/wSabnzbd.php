@@ -1,5 +1,5 @@
 <?php
-$wdgtSabnzbd = array("name" => "Sabnzbd", "type" => "ajax", "block" => "sabnzbdwrapper", "headerfunction" => "widgetSabnzbdHeader();", "call" => "widgets/wSabnzbd.php?style=w&c=15", "interval" => 900000);
+$wdgtSabnzbd = array("name" => "Sabnzbd", "type" => "ajax", "block" => "sabnzbdwrapper", "headerfunction" => "widgetSabnzbdHeader();", "call" => "widgets/wSabnzbd.php?style=w&c=15", "interval" => 10000);
 $wIndex["wSabnzbd"] = $wdgtSabnzbd;
 
 function widgetSabnzbdHeader() {
