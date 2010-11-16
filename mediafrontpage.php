@@ -21,6 +21,7 @@ if (empty ($arrLayout)) {
 	<head>
 		<title>Media Front Page</title>
 		<script type="text/javascript" language="javascript" src="js/ajax.js"></script>
+		<script type="text/javascript" language="javascript" src="js/popuptext.js"></script>
 		<script type="text/javascript" src="http://jqueryjs.googlecode.com/files/jquery-1.2.6.min.js"></script>
 		<script type="text/javascript" src="js/highslide/highslide.js"></script>
 		<link rel="stylesheet" type="text/css" href="js/highslide/highslide.css" />
@@ -66,7 +67,7 @@ if (empty ($arrLayout)) {
 ?>
 
 		<!-- END: Dynamic Header Inserts From Widgets -->
-
+		<script type="text/javascript">InitPopupBox();</script>
 	</head>
 
 	<body>
