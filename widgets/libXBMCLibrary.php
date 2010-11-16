@@ -221,16 +221,10 @@ function executeVideo($style = "w", $action, $breadcrumb, $params = array()) {
 		case "so": // Songs
 			echo "<ul class=\"widget-list\"><li>Under Construction</li></ul>";
 			if (!empty($params['artistid']) && !empty($params['albumid'])) {
-				$artistid = $params['artistid'];
-				$albumid = $params['albumid'];
-				$request = jsonstring("AudioLibrary.GetSongs", array("artistid" => '"artistid": '.$artistid.',', "albumid" => '"albumid": '.$albumid.','));
+				$request = jsonstring("AudioLibrary.GetSongs", array("artistid" => '"artistid": '.$params['artistid'].',', "albumid" => '"albumid": '.$params['albumid'].','));
 			} elseif (!empty($params['albumid'])) {
-				$artistid = "";
-				$albumid = $params['albumid'];
-				$request = jsonstring("AudioLibrary.GetSongs", array("artistid" => '"artistid": '.$artistid.',', "albumid" => ''));
+				$request = jsonstring("AudioLibrary.GetSongs", array("artistid" => '"artistid": "" ,', "albumid" => '"albumid": '.$params['albumid'].','));
 			} else {
-				$artistid = (!empty($params['artistid']) ? $params['artistid'] : "");
-				$albumid = "";
 				$request = jsonstring("AudioLibrary.GetSongs", array("artistid" => '', "albumid" => ''));
 			} 
 			$results = jsoncall($request);

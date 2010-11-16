@@ -39,4 +39,15 @@ $arrLayout = array(
 			)
 		)
 	);
+/*
+			"wExample" => array(
+				"title" => "Example Widget",
+				"display" => ""
+			),
+                        "wRSS" => array(
+                                "title" => "RSS Feed",
+                                "display" => ""
+                        )
+
+*/
 ?>

@@ -50,7 +50,6 @@ function sabQuery($command, $values = array()) {
 function sabStatus($count = 15) {
 	global $saburl, $sabapikey;
 
-	echo "\t<div id=\"sabnzbd\">\n";
 
 	//$sabqueue = sabQuery("qstatus");
 	$sabqueueAdvanced = sabQuery("queue");
@@ -64,7 +63,7 @@ function sabStatus($count = 15) {
 	$pathtoimages = ((!empty($_GET['style']) && (($_GET['style'] == "m") || ($_GET['style'] == "s"))) ? "../" : "./");
 	$state = ($sabqueue["status"]);	
 
-	echo "\t\t<div id=\"sabheader\">\n";
+	echo "\t\t<div id=\"sab-header\">\n";
 	if (strtolower($state) == "downloading") {
 		$cmdPauseResume = $ajaxurl."cmd=pause";
 		if(!empty($_GET['style']) && ($_GET['style'] == "w")) {
@@ -74,14 +73,13 @@ function sabStatus($count = 15) {
 		}
 
 		//href link is the resume URL for all the queue
-		echo " AT ".$sabqueue["speed"]."</p>\n";
-		echo "\t\t\t<p>TIMELEFT - ".$sabqueue["timeleft"]."</p>\n";
+		echo " - Speed: ".$sabqueue["speed"]." - Timeleft: ".$sabqueue["timeleft"]."</p>\n";
 		$totalQ = (int)$sabqueue["mb"];
 		$remainingQ = (int)$sabqueue["mbleft"];
 		if($totalQ!=0){
 			$percentageQ = (int)((($totalQ - $remainingQ) / $totalQ)*100);
 			//Total progress bar with Time Left and MB left/ MB remainig as you can see from previous posts. It only shows up when the queue is not paused
-			echo "\t\t\t<div class=\"progressbar\"><div class=\"progress\" style=\"width:".$percentageQ."%\"></div><div class=\"progresslabel\">Time Left: ".$sabqueue["timeleft"]." TOTAL:".$sabqueue['sizeleft']."/".$sabqueue['size']."</div></div>\n";
+			echo "\t\t\t<div id=\"sab-total\" class=\"progressbar\"><div class=\"progress\" style=\"width:".$percentageQ."%\"></div><div class=\"progresslabel\">".$sabqueue['sizeleft']." / ".$sabqueue['size']."</div></div>\n";
 		}
 	} else {
 		//href link is the pause URL for all the queue
@@ -91,11 +89,12 @@ function sabStatus($count = 15) {
 		} else {
 			echo "\t\t\t<p><a href=\"".$cmdPauseResume."\" target=\"nothing\">$state</a></p>\n";	
 		}
-		echo "\t\t</div><!-- #sabheader -->\n";
+		echo "\t\t</div><!-- #sab-header -->\n";
 	}
 
+		echo "\t\t<div id=\"sab-queue\">\n";
+
 	$i = 0;
-	echo "\t\t<table>\n";
 	foreach($sabqueue["slots"] as $slot) {
 		if($i < $count) {
 			$total = (int)$slot["mb"];
@@ -132,16 +131,18 @@ function sabStatus($count = 15) {
 					$actions = "<a href=\"".$cmdPauseResume."\" target=\"nothing\"><img src=\"".$pathtoimages."media/btnPlayPause.png\" /></a>";
 					$actions .= "<a href=\"".$cmdDelete."\" target=\"nothing\"><img src=\"".$pathtoimages."media/btnQueueDelete.png\" /></a>";
 				}
-				echo "\t\t\t<tr class=\"queueitem\"><td><div class=\"progressbar\"><div class=\"progress\" style=\"width:".$percentage."%\"></div><div class=\"progresslabel\">".$name."</div></div></td><td class=\"actions\">".$actions."</td></tr>\n";
+				echo "\t\t\t<div class=\"queueitem\"><div class=\"progressbar\"><div class=\"progress\" style=\"width:".$percentage."%\"></div><div class=\"progresslabel\">".$name."</div></div><div class=\"actions\">".$actions."</div>\n";
+				echo "\t\t\t<div class=\"clear-float\"></div>";
+				echo "\t\t</div><!-- #sab-queue -->\n";
 			}
 		} else {
 			break;
 		}
 		$i += 1;
 	}
-	echo "\t\t<table>\n";
+	//echo "\t\t<table>\n";
 
-	echo "\t</div><!-- sabnzbd -->\n";
+
 }
 
 if(!empty($_GET['cmd'])) {

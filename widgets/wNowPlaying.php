@@ -13,6 +13,7 @@ function widgetNowPlayingControls() {
 		<a class='controlbutton' onclick='cmdNowPlaying("SkipNext");' href='#'><img src='media/btnSkipForward.png' alt='Skip Next'/></a>
 		<a class='controlbutton' onclick='cmdNowPlaying("ShowPlaylist");' href='#'>Show Playlist</a>
 	</div>
+	<div class="clear-float"></div>
 	<div id='nowplaying-list'>
 	</div>
 NOWPLAYINGCONTROLS;
@@ -195,6 +196,7 @@ function processCommand($command) {
 						echo "\t<p>".$title."</p>\n";
 						echo "\t<p>".$album."</p>\n";
 						echo "</div>\n";
+						echo "<div class=\"clear-float\"></div>\n";
 					}
 					$i++;
 				}

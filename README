@@ -1,5 +1,5 @@
 1. Download ie: 'git clone git://github.com/nick8888/mediafrontpage.git'
-2. Copy all files to  to web server directory eg /var/www/ 
+2. Copy all files to the web server directory eg /var/www/ 
 3. Open default-config.php with gedit and edit appropriately
 4. Rename default-config.php to config.php
 5. Rename default-layout.php to layout.php
