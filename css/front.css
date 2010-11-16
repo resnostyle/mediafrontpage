@@ -235,4 +235,14 @@ div.library-info img {
 	width: 125px;
 	margin: 0px 5px 0 0;
 }
+table.popupwrapper {
+	width: 50%;
+}
+table.popupwrapper, table.popup{
+	font-size:1em;
+	text-align:left;
+}
+table.popupwrapper tr {
+	background: #3D3D3D;
+}
 
