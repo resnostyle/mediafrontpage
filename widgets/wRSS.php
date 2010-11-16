@@ -34,7 +34,7 @@ RSSHEADER;
 
 function widgetRSS() {
 	global $rssfeeds;
-	echo "10 Most Recent - <form>\n";
+	echo "<form>\n";
 	echo "\t<select onchange=\"showRSS(this.value)\">\n";
 	echo "\t\t<option value=\"\">Select an RSS-feed:</option>\n";
 	foreach($rssfeeds as $name => $feed) {
@@ -42,7 +42,6 @@ function widgetRSS() {
 	}
 	echo "\t</select>\n";
 	echo "</form>\n";
-	echo "<br />\n";
 	echo "<div id=\"rssOutput\">RSS-feed will take a few seconds to load...</div>\n";
 }
 
