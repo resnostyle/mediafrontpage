@@ -91,57 +91,60 @@ function sabStatus($count = 15) {
 		}
 		echo "\t\t</div><!-- #sab-header -->\n";
 	}
+
 	echo "\t\t<div id=\"sab-queue\">\n";
-	$i = 0;
-	foreach($sabqueue["slots"] as $slot) {
-		if($i < $count) {
-			$total = (int)$slot["mb"];
-			$remaining = (int)$slot["mbleft"];
-			if($total > 0 && is_numeric($remaining)) {
-				$percentage = (int)((($total - $remaining) / $total)*100);
+	if(!empty($sabqueue["slots"])) {
+		$i = 0;
+		foreach($sabqueue["slots"] as $slot) {
+			if($i < $count) {
+				$total = (int)$slot["mb"];
+				$remaining = (int)$slot["mbleft"];
+				if($total > 0 && is_numeric($remaining)) {
+					$percentage = (int)((($total - $remaining) / $total)*100);
 
-				// filename
-				$fullname = $slot["filename"];
+					// filename
+					$fullname = $slot["filename"];
 
-				//The sab ID to get individual pause/resume and delete 
-				$id = $slot["nzo_id"];
+					//The sab ID to get individual pause/resume and delete 
+					$id = $slot["nzo_id"];
 
-				//the delete url for individual items
-				$cmdDelete = $ajaxurl."cmd=".urlencode("queue&name=delete&value=".$id);
+					//the delete url for individual items
+					$cmdDelete = $ajaxurl."cmd=".urlencode("queue&name=delete&value=".$id);
 
-				//the current status for individual item
-				$status = ($slot["status"]);
-				if (strtolower($status) == "paused"){
-					//If paused $pause is the RESUME url (the button resumes the item)
-					$cmdPauseResume = $ajaxurl."cmd=".urlencode("queue&name=resume&value=".$id);
-					//When paused, adds PAUSED to the front of the name.
-					$name = "PAUSED - ".$fullname;
+					//the current status for individual item
+					$status = ($slot["status"]);
+					if (strtolower($status) == "paused"){
+						//If paused $pause is the RESUME url (the button resumes the item)
+						$cmdPauseResume = $ajaxurl."cmd=".urlencode("queue&name=resume&value=".$id);
+						//When paused, adds PAUSED to the front of the name.
+						$name = "PAUSED - ".$fullname;
+					}
+					else{
+						// if not paused $pause is the PAUSE url
+						$cmdPauseResume = $ajaxurl."cmd=".urlencode("queue&name=pause&value=".$id);
+						$name = $fullname;
+					}
+					if(!empty($_GET['style']) && ($_GET['style'] == "w")) {
+						$actions = "<img src=\"".$pathtoimages."media/btnPlayPause.png\" onclick=\"cmdSabnzbd('".$cmdPauseResume."');\" />";
+						$actions .= "<img src=\"".$pathtoimages."media/btnQueueDelete.png\" onclick=\"cmdSabnzbd('".$cmdDelete."');\" />";
+					} else {
+						$actions = "<a href=\"".$cmdPauseResume."\" target=\"nothing\"><img src=\"".$pathtoimages."media/btnPlayPause.png\" /></a>";
+						$actions .= "<a href=\"".$cmdDelete."\" target=\"nothing\"><img src=\"".$pathtoimages."media/btnQueueDelete.png\" /></a>";
+					}
+					echo "\t\t\t<div class=\"queueitem\">\n";
+					echo "\t\t\t\t<div class=\"progressbar\">\n";
+					echo "\t\t\t\t\t<div class=\"progress\" style=\"width:".$percentage."%\"></div>\n";
+					echo "\t\t\t\t\t<div class=\"progresslabel\">".$name."</div>\n";
+					echo "\t\t\t\t</div><!-- .progressbar -->\n";
+					echo "\t\t\t\t<div class=\"actions\">".$actions."</div>\n";
+					echo "\t\t\t</div><!-- .queueitem -->\n";
 				}
-				else{
-					// if not paused $pause is the PAUSE url
-					$cmdPauseResume = $ajaxurl."cmd=".urlencode("queue&name=pause&value=".$id);
-					$name = $fullname;
-				}
-				if(!empty($_GET['style']) && ($_GET['style'] == "w")) {
-					$actions = "<img src=\"".$pathtoimages."media/btnPlayPause.png\" onclick=\"cmdSabnzbd('".$cmdPauseResume."');\" />";
-					$actions .= "<img src=\"".$pathtoimages."media/btnQueueDelete.png\" onclick=\"cmdSabnzbd('".$cmdDelete."');\" />";
-				} else {
-					$actions = "<a href=\"".$cmdPauseResume."\" target=\"nothing\"><img src=\"".$pathtoimages."media/btnPlayPause.png\" /></a>";
-					$actions .= "<a href=\"".$cmdDelete."\" target=\"nothing\"><img src=\"".$pathtoimages."media/btnQueueDelete.png\" /></a>";
-				}
-				echo "\t\t\t<div class=\"queueitem\">\n";
-				echo "\t\t\t\t<div class=\"progressbar\">";
-				echo "\t\t\t\t\t<div class=\"progress\" style=\"width:".$percentage."%\"></div>";
-				echo "\t\t\t\t\t<div class=\"progresslabel\">".$name."</div>";
-				echo "\t\t\t\t</div><!-- .progressbar -->";
-				echo "\t\t\t\t<div class=\"actions\">".$actions."</div>\n";
-				echo "\t\t\t</div><!-- .queueitem -->\n";
+
+		} else {
+				break;
 			}
-
-	} else {
-			break;
+			$i += 1;
 		}
-		$i += 1;
 	}
 	echo "\t\t</div><!-- #sab-queue -->\n";
 
