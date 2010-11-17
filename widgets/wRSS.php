@@ -114,7 +114,10 @@ function displayRSS($rssfeed, $count = 10, $returnonly = false) {
 		for ($i=0; $i<$count; $i++){
 			if(!empty($rssfeed['type']) && ($rssfeed['type'] == 'atom')) {
 				$item_title = $x->item($i)->getElementsByTagName('title')->item(0)->childNodes->item(0)->nodeValue;
-				$item_desc = str_replace("\n", "", $x->item($i)->getElementsByTagName('content')->item(0)->childNodes->item(0)->nodeValue);
+				$item_desc = $x->item($i)->getElementsByTagName('content')->item(0)->childNodes->item(0)->nodeValue;
+				$item_desc = str_replace("  ", " ", $item_desc);
+				$item_desc = str_replace("\n\n", "\n", $item_desc);
+				$item_desc = str_replace("\n", " <br/>", $item_desc);
 				$item_link = $x->item($i)->getElementsByTagName('link')->item(0)->getAttribute('href');
 			} else {
 				$item_title = $x->item($i)->getElementsByTagName('title')->item(0)->childNodes->item(0)->nodeValue;
