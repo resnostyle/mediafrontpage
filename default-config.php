@@ -67,13 +67,14 @@ $drive["Sata 2"] = "/media/sata2/";
 $drive["Sata 3"] = "/media/sata3/";
 $drive["Sata 4"] = "/media/sata4/";
 
-$rssfeeds["NZBMatrix - TV Shows (DivX)"] = "http://rss.nzbmatrix.com/rss.php?subcat=6";
-$rssfeeds["NZBMatrix - TV Shows (HD x264)"] = "http://rss.nzbmatrix.com/rss.php?subcat=41";
-$rssfeeds["NZBMatrix - Movies (DivX)"] = "http://rss.nzbmatrix.com/rss.php?subcat=2";
-$rssfeeds["NZBMatrix - Movies (HD x264)"] = "http://rss.nzbmatrix.com/rss.php?subcat=42";
-$rssfeeds["NZBMatrix - Music (MP3)"] = "http://rss.nzbmatrix.com/rss.php?subcat=22";
-$rssfeeds["NZBMatrix - Music (Loseless)"] = "http://rss.nzbmatrix.com/rss.php?subcat=23";
-$rssfeeds["xbmcFreak"] = "http://www.xbmcfreak.nl/en/feed/";
+$rssfeeds["mediafrontpage on github"]       = array("url" => "https://github.com/nick8888/mediafrontpage/commits/master.atom");
+$rssfeeds["NZBMatrix - Sports"]             = array("url" => "http://rss.nzbmatrix.com/rss.php?subcat=7", "cat" => "sports");
+$rssfeeds["NZBMatrix - TV Shows (DivX)"]    = array("url" => "http://rss.nzbmatrix.com/rss.php?subcat=6", "cat" => "tv");
+$rssfeeds["NZBMatrix - TV Shows (HD x264)"] = array("url" => "http://rss.nzbmatrix.com/rss.php?subcat=41", "cat" => "tv");
+$rssfeeds["NZBMatrix - Movies (DivX)"]      = array("url" => "http://rss.nzbmatrix.com/rss.php?subcat=2", "cat" => "movies");
+$rssfeeds["NZBMatrix - Movies (HD x264)"]   = array("url" => "http://rss.nzbmatrix.com/rss.php?subcat=42", "cat" => "movies");
+$rssfeeds["NZBMatrix - Music (MP3)"]        = array("url" => "http://rss.nzbmatrix.com/rss.php?subcat=22", "cat" => "music");
+$rssfeeds["NZBMatrix - Music (Loseless)"]   = array("url" => "http://rss.nzbmatrix.com/rss.php?subcat=23", "cat" => "music");
 
 $customStyleSheet = "";
 //Example of how to use this
