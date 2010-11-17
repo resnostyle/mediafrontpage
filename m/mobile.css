@@ -81,26 +81,44 @@ td {
 	margin: -16px 5px;
 	overflow: hidden;
 }
-#sabnzbd table {
-	font-size:1em;
-	text-align:left;
-	border-spacing: 0px 0px;
+#sab-total.progressbar {
+	width:96%;
+	overflow:hidden;
+	margin-bottom:10px;
 }
-#sabnzbd div.progressbar { 
-	width:100%;
-	margin: 0;
+#sab-total .progresslabel {
+	padding: 0 4px;
+	overflow:hidden;
+	text-align:center;
 }
-#sabnzbd div.progressbar div.progresslabel {
-	font-weight:bold;
+#sab-queue {
+	display: inline-table;
+	width: 100%;
 }
-#sabnzbd td.actions { 
-	height:16px;
-	margin: 0px 0px 10px 0px; 
+#sab-queue div.queueitem{
+	display: table-row;
+	width: 100%;
 }
-#sabnzbd td.actions img { 
+#sab-queue div.progressbar {
+	width: 100%;
+	height: 16px;
+	overflow:hidden;
+	vertical-align: top;
+}
+#sab-queue div.progresslabel {
+	padding: 0 4px;
+	overflow:hidden;
+}
+#sab-queue div.actions { 
+	display: table-cell;
+	width:36px;
+	vertical-align: top;
+}
+#sab-queue div.actions img { 
 	width:16px; 
 	height:16px;
 }
+
 div.highslide-caption {
 	display: none;
 }
