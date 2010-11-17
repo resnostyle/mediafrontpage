@@ -36,18 +36,17 @@ $arrLayout = array(
 			"wRecentMovies" => array(
 				"title" => "Recent Movies",
 				"display" => ""
-			)
+			),
+                        "wRSS" => array(
+                                "title" => "RSS Feed",
+                                "display" => ""
+                        )
 		)
 	);
 /*
 			"wExample" => array(
 				"title" => "Example Widget",
 				"display" => ""
-			),
-                        "wRSS" => array(
-                                "title" => "RSS Feed",
-                                "display" => ""
-                        )
-
+			)
 */
 ?>

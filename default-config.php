@@ -67,7 +67,8 @@ $drive["Sata 2"] = "/media/sata2/";
 $drive["Sata 3"] = "/media/sata3/";
 $drive["Sata 4"] = "/media/sata4/";
 
-$rssfeeds["mediafrontpage on github"]       = array("url" => "https://github.com/nick8888/mediafrontpage/commits/master.atom");
+// enter rss feeds. Ensure sabnzbd > config > index sites is set. Supports cat, pp, script, priority as per the sabnzbd api.
+$rssfeeds["mediafrontpage on github"]       = array("url" => "https://github.com/nick8888/mediafrontpage/commits/master.atom"); 
 $rssfeeds["NZBMatrix - Sports"]             = array("url" => "http://rss.nzbmatrix.com/rss.php?subcat=7", "cat" => "sports");
 $rssfeeds["NZBMatrix - TV Shows (DivX)"]    = array("url" => "http://rss.nzbmatrix.com/rss.php?subcat=6", "cat" => "tv");
 $rssfeeds["NZBMatrix - TV Shows (HD x264)"] = array("url" => "http://rss.nzbmatrix.com/rss.php?subcat=41", "cat" => "tv");
