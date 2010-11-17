@@ -68,13 +68,14 @@ function widgetRSS() {
 
 	echo "<form>\n";
 	echo "\t<select onchange=\"showRSS(this.value);\">\n";
-	echo "\t\t<option value=\"\">Select an RSS-feed:</option>\n";
 	foreach($rssfeeds as $name => $feed) {
 		echo "\t\t<option value=\"".$name."\">".$name."</option>\n";
 	}
 	echo "\t</select>\n";
 	echo "</form>\n";
-	echo "<div id=\"rssOutput\">RSS-feed will take a few seconds to load...</div>\n";
+	echo "<div id=\"rssOutput\">";
+	displayRSS(reset($rssfeeds));
+	echo "</div>\n";
 }
 function sab_addurl($link, $name, $rssfeed){
 	global $saburl, $sabapikey;
