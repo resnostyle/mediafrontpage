@@ -69,13 +69,13 @@ $drive["Sata 4"] = "/media/sata4/";
 
 // enter rss feeds. Ensure sabnzbd > config > index sites is set. Supports cat, pp, script, priority as per the sabnzbd api.
 $rssfeeds["mediafrontpage on github"]       = array("url" => "https://github.com/nick8888/mediafrontpage/commits/master.atom", "type" => "atom");
-$rssfeeds["NZBMatrix - Sports"]             = array("url" => "http://rss.nzbmatrix.com/rss.php?subcat=7", "cat" => "sports");
-$rssfeeds["NZBMatrix - TV Shows (DivX)"]    = array("url" => "http://rss.nzbmatrix.com/rss.php?subcat=6", "cat" => "tv");
-$rssfeeds["NZBMatrix - TV Shows (HD x264)"] = array("url" => "http://rss.nzbmatrix.com/rss.php?subcat=41", "cat" => "tv");
 $rssfeeds["NZBMatrix - Movies (DivX)"]      = array("url" => "http://rss.nzbmatrix.com/rss.php?subcat=2", "cat" => "movies");
 $rssfeeds["NZBMatrix - Movies (HD x264)"]   = array("url" => "http://rss.nzbmatrix.com/rss.php?subcat=42", "cat" => "movies");
 $rssfeeds["NZBMatrix - Music (MP3)"]        = array("url" => "http://rss.nzbmatrix.com/rss.php?subcat=22", "cat" => "music");
 $rssfeeds["NZBMatrix - Music (Loseless)"]   = array("url" => "http://rss.nzbmatrix.com/rss.php?subcat=23", "cat" => "music");
+$rssfeeds["NZBMatrix - Sports"]             = array("url" => "http://rss.nzbmatrix.com/rss.php?subcat=7", "cat" => "sports");
+$rssfeeds["NZBMatrix - TV Shows (DivX)"]    = array("url" => "http://rss.nzbmatrix.com/rss.php?subcat=6", "cat" => "tv");
+$rssfeeds["NZBMatrix - TV Shows (HD x264)"] = array("url" => "http://rss.nzbmatrix.com/rss.php?subcat=41", "cat" => "tv");
 
 $customStyleSheet = "";
 //Example of how to use this
