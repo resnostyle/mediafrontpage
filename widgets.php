@@ -9,7 +9,7 @@ foreach (glob("widgets/*.php") as $filename) {
 }
 
 
-function renderWidget($widget, $params = "") {
+function renderWidget($widget) {
 	global $DEBUG;
 	
 	switch ($widget["Type"]) {

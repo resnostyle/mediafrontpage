@@ -14,7 +14,7 @@ error_reporting($errlevel);
 try {$db = new PDO('sqlite:settings.db');
 
 	//create the database
-	$db->exec("CREATE TABLE Widgets (Id TEXT PRIMARY KEY, Type TEXT, Parts TEXT, Block TEXT, Title TEXT, Function TEXT, Call TEXT, Interval INTEGER, Header TEXT, Stylesheet TEXT, Script TEXT, Section INTEGER, Position INTEGER)");
+	$db->exec("CREATE TABLE Widgets (Id TEXT PRIMARY KEY, Type TEXT, Parts TEXT, Block TEXT, Title TEXT, Function TEXT, Call TEXT, Interval INTEGER, HeaderFunction TEXT, Stylesheet TEXT, Script TEXT, Section INTEGER, Position INTEGER)");
 
 	foreach (glob("widgets/*/w*.php") as $filename) {
 		include_once $filename;
