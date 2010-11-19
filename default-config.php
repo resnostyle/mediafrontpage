@@ -1,7 +1,16 @@
 <?php
+// Only set the $mfpsecured variable to true if you have secured
+// MediaFrontPage with a password via .htaccess or some other method
+// use at your own risk as this can create a security vulnerability in
+// the wControl widget.
+$mfpsecured = false;
+
+// Alternativly you can set a unique key here.
+$mfpapikey = '';  //
+
 // enter hostname and port of the xbmc json service here. By default 8080
 $xbmcjsonservice = "http://USER:PASSWORD@localhost:8080/jsonrpc"; //remove 'USER:PASSWORD@' if your xbmc install does not require a password.
-$xbmcimgpath = '/vfs/'; //leave as default if unsure
+$xbmcimgpath = 'http://localhost:8080/vfs/'; //leave as default if unsure
 
 $xbmcdbconn = array(
 		'video' => array('dns' => 'sqlite:/home/xbmc/.xbmc/userdata/Database/MyVideos34.db', 'username' => '', 'password' => '', 'options' => array()),
@@ -46,6 +55,7 @@ $navlink["Sabnzbd"] = "/sabnzbd";
 $shortcut;
 $shortcut["Shutdown XBMC"] = array("cmd" => 'shutdown');
 $shortcut["Update XBMC Video Library"] = array("cmd" => 'vidscan');
+$shortcut["Clean XBMC Video Library"] = array("xbmcsend" => 'CleanLibrary(video)');
 $shortcut["Update XBMC Audio Library"] = array("json" => '{"jsonrpc": "2.0", "method": "AudioLibrary.ScanForContent", "id" : 1 }');
 $shortcut["Google"] = "http://www.google.com/";
 /*

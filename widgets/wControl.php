@@ -9,6 +9,23 @@ function widgetControlHeader() {
 			function cmdControl(requesturl) {
 				var cmdControlRequest = new ajaxRequest();
 				cmdControlRequest.open("GET", requesturl, true);
+				cmdControlRequest.onreadystatechange = function() {//Call a function when the state changes.
+					if(cmdControlRequest.readyState == 4 && cmdControlRequest.status == 200) {
+						try {
+							var returnedjson = eval("("+cmdControlRequest.responseText+")");
+							if(returnedjson.status) {
+								if(returnedjson.message) {
+									alert(returnedjson.message);
+								}
+							} else {
+								alert("Error returned from call to widget.\\r\\n\\r\\nError: " + returnedjson.error);
+							}
+						}
+						catch(e) {
+							alert("Problem calling Control Widget.\\r\\n\\r\\n"+cmdControlRequest.responseText);
+						}
+					}
+				}
 				cmdControlRequest.send(null);
 			}
 		-->
@@ -35,6 +52,12 @@ function widgetMenu($baseurl) {
 			if(!empty($shortcutmixed["cmd"])) {
 				$href = $baseurl."?w=wControl&style=".$style."&cmd=".$shortcutmixed["cmd"];
 			}
+			if(!empty($shortcutmixed["xbmcsend"])) {
+				$href = $baseurl."?w=wControl&style=".$style."&xbmcsend=".urlencode($shortcutmixed["xbmcsend"]).(!empty($mfpapikey) ? "&apikey=".$mfpapikey : "");
+			}
+			if(!empty($shortcutmixed["shell"])) {
+				$href = $baseurl."?w=wControl&style=".$style."&shell=".urlencode($shortcutmixed["shell"]).(!empty($mfpapikey) ? "&apikey=".$mfpapikey : "");
+			}
 			if($style == "m") {
 				echo "\t<li".(($alt) ? " class=\"alt\"" : "")."><a class=\"shortcut\" href=\"".$href."\">".$shortcutlabel."</a><br/></li>\n";
 			} elseif($style == "w") {
@@ -48,50 +71,74 @@ function widgetMenu($baseurl) {
 	echo "</ul>\n";
 }
 function widgetControl($baseurl = "widgets/wControl.php", $forcemenu = false) {
+	global $mfpsecured, $mfpapikey;
+
+	$json = '{"status":true}';
+	$errmsg = '';
 	if(!empty($_GET["style"]) && (($_GET["style"] == "w") || ($_GET["style"] == "m"))) {
-		$displayMenu = false;
+		$displayMenu = ($_GET["style"] == "m");
 		if(!empty($_GET["cmd"])) {
 			switch ($_GET["cmd"]) {
 				case "shutdown":  // Shutdown
 					$results = jsonmethodcall("System.Shutdown");
-					$displayMenu = ($_GET["style"] == "m");
 					break;
    				case "suspend":  // Suspend
 					$results = jsonmethodcall("System.Suspend");
-					$displayMenu = ($_GET["style"] == "m");
 					break;                  
    				case "hibernate":  // Hibernate
 					$results = jsonmethodcall("System.Hibernate");
-					$displayMenu = ($_GET["style"] == "m");
 					break;
 				case "reboot":    // Reboot
 					$results = jsonmethodcall("System.Reboot");
-					$displayMenu = ($_GET["style"] == "m");
 					break;
    				case "exit":  // Exit
 				case "quit":
 					$results = jsonmethodcall("XBMC.Quit");
-					$displayMenu = ($_GET["style"] == "m");
 					break;                    
 				case "vidscan":  // Video Library ScanForContent
 					$results = jsonmethodcall("VideoLibrary.ScanForContent");
-					$displayMenu = ($_GET["style"] == "m");
 					break;
 				default:
-					echo "Invalid Command";
+					$errmsg = "Invalid Command";
+					$displayMenu = false;
 			}
 		} elseif(!empty($_GET["json"])) {
 			$request = stripslashes(urldecode($_GET["json"]));
 			$results = jsoncall($request);
-			$displayMenu = ($_GET["style"] == "m");
+		// This method will only work if MFP is on the same system as xbmc.
+		} elseif(!empty($_GET["xbmcsend"])) {
+			if((!empty($mfpapikey) && !empty($_GET["apikey"]) && ($_GET["apikey"] == $mfpapikey)) || $mfpsecured) {
+				$request = "xbmc-send -a \"".stripslashes(urldecode($_GET["xbmcsend"]))."\"";
+				$results = shell_exec($request);
+				$json = '{"status":true, "message": "'.str_replace("\"", "\\\"", $results).'"}';
+			} else {
+				$errmsg = "Authorization failure";
+			}
+		} elseif(!empty($_GET["shell"])) {
+			if((!empty($mfpapikey) && !empty($_GET["apikey"]) && ($_GET["apikey"] == $mfpapikey)) || $mfpsecured) {
+				$request = stripslashes(urldecode($_GET["shell"]));
+				$results = shell_exec($request);
+				$json = '{"status":true, "message": "'.str_replace("\"", "\\\"", $results).'"}';
+			} else {
+				$errmsg = "Authorization failure";
+			}
 		} else {
 			$displayMenu = $forcemenu;
+			$errmsg = "No action.";
+			$displayMenu = false;
 		}
 	} else {
-		$displayMenu = ((!empty($_GET["style"]) && ($_GET["style"] == "m")) || $forcemenu);
+		$displayMenu = $forcemenu;
 	}
 	if($displayMenu) {
 		widgetMenu($baseurl);
+	} else {
+		if(!empty($_GET["style"]) && ($_GET["style"] == "w")) {
+			if(!empty($errmsg)) {
+				$json = '{"status":false, "error": "'.$errmsg.'"}';
+			}
+			echo str_replace("\n", "\\n", $json);
+		}
 	}
 }
 
