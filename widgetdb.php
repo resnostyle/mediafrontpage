@@ -35,31 +35,35 @@ if(!class_exists("widget")) {
 		public $MovilePosition;
 		public $MobileClass;
 		public function addWidget() {
-			// Open Database
-			try {
-				$db = new PDO('sqlite:settings.db');
+
+				// Open the database
+			try {   $db = new PDO('sqlite:settings.db');
+
 				// Create the database
 				$db->exec("CREATE TABLE Widgets (Id TEXT PRIMARY KEY, Type TEXT, Parts TEXT, Block TEXT, Title TEXT, Function TEXT, Call TEXT, Interval INTEGER, HeaderFunction TEXT, Stylesheet TEXT, Script TEXT, Section INTEGER, Position INTEGER)");
 				// Add widget to database
 				$db->exec("INSERT INTO Widgets (Id, Type, Block, Title, HeaderFunction, Function, Call, Interval, Section, Position) VALUES ('".$this->Id."', '".$this->Type."', '".$this->Block."', '".$this->Title."', '".$this->HeaderFunction."', '".$this->Function."', '".$this->Call."', '".$this->Interval."', '".$this->Section."', '".$this->Position."');");
+
 			} catch(PDOException $e) {
 				print 'Exception : '.$e->getMessage();	
 			}
+
 			// Close the database connection
 			$db = NULL;
 		}		
 		public function getWidget() {
-			try {
-				// Create the database
-				$db = new PDO('sqlite:settings.db');
 
-				/*** fetch into an PDOStatement object ***/			
+				// Open the database
+			try {	$db = new PDO('sqlite:settings.db');
+
+				//Fetch into an PDOStatement object			
 				$request = $db->prepare("SELECT * FROM Widgets WHERE Id='".$this->Id."'");
 				$request->execute();
 
-				/* Exercise PDOStatement::fetch styles */
+				// Into array
 				$widget = $request->fetch(PDO::FETCH_ASSOC);
-    			/*** close the database connection ***/
+
+    			// Close the database connection 
     			$db = null;
 
 			} catch(PDOException $e) {
@@ -68,22 +72,20 @@ if(!class_exists("widget")) {
 			return $widget;
 		}
 		public function updateWidget($column, $value) {
-			try {
-				// Create the database
-				$db = new PDO('sqlite:settings.db');
 
-				/*** fetch into an PDOStatement object ***/			
+				// Open the database
+			try {	$db = new PDO('sqlite:settings.db');
+
+				// Replace value in specified column for this widget
 				$request = $db->prepare("UPDATE Widgets SET $column='$value' WHERE Id='".$this->Id."'");
-				$request->execute();//(array(Block,"'RSS'", $this->Id));
+				$request->execute();
 
-
-			
+    			// Close the database connection 
     			$db = null;
 
 			} catch(PDOException $e) {
 				print 'Exception : '.$e->getMessage();	
 			}
-
 		}								
 	}
 }
