@@ -53,7 +53,7 @@ function widgetMenu($baseurl) {
 				$href = $baseurl."?w=wControl&style=".$style."&cmd=".$shortcutmixed["cmd"];
 			}
 			if(!empty($shortcutmixed["xbmcsend"])) {
-				$href = $baseurl."?w=wControl&style=".$style."&xbmcsend=".urlencode($shortcutmixed["xbmcsend"]).(!empty($mfpapikey) ? "&apikey=".$mfpapikey : "");
+				$href = $baseurl."?w=wControl&style=".$style."&xbmcsend=".urlencode($shortcutmixed["xbmcsend"]).(!empty($shortcutmixed["host"]) ? "&host=".$shortcutmixed["host"] : "").(!empty($shortcutmixed["port"]) ? "&port=".$shortcutmixed["port"] : "").(!empty($mfpapikey) ? "&apikey=".$mfpapikey : "");
 			}
 			if(!empty($shortcutmixed["shell"])) {
 				$href = $baseurl."?w=wControl&style=".$style."&shell=".urlencode($shortcutmixed["shell"]).(!empty($mfpapikey) ? "&apikey=".$mfpapikey : "");
@@ -108,7 +108,10 @@ function widgetControl($baseurl = "widgets/wControl.php", $forcemenu = false) {
 		// This method will only work if MFP is on the same system as xbmc.
 		} elseif(!empty($_GET["xbmcsend"])) {
 			if((!empty($mfpapikey) && !empty($_GET["apikey"]) && ($_GET["apikey"] == $mfpapikey)) || $mfpsecured) {
-				$request = "xbmc-send -a \"".stripslashes(urldecode($_GET["xbmcsend"]))."\"";
+				$request = "xbmc-send";
+				$request .= (!empty($_GET["host"]) ? " --host=".$_GET["host"] : "");
+				$request .= (!empty($_GET["port"]) ? " --port=".$_GET["port"] : "");
+				$request .= " --action=\"".stripslashes(urldecode($_GET["xbmcsend"]))."\"";
 				$results = shell_exec($request);
 				$json = '{"status":true, "message": "'.str_replace("\"", "\\\"", $results).'"}';
 			} else {

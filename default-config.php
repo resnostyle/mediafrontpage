@@ -55,7 +55,7 @@ $navlink["Sabnzbd"] = "/sabnzbd";
 $shortcut;
 $shortcut["Shutdown XBMC"] = array("cmd" => 'shutdown');
 $shortcut["Update XBMC Video Library"] = array("cmd" => 'vidscan');
-$shortcut["Clean XBMC Video Library"] = array("xbmcsend" => 'CleanLibrary(video)');
+$shortcut["Clean XBMC Video Library"] = array("xbmcsend" => 'CleanLibrary(video)'); // Optionally add 'host' => 'localhost', 'port' => 9777 to connect to a different machine.
 $shortcut["Update XBMC Audio Library"] = array("json" => '{"jsonrpc": "2.0", "method": "AudioLibrary.ScanForContent", "id" : 1 }');
 $shortcut["Google"] = "http://www.google.com/";
 /*
