@@ -22,6 +22,7 @@ try {$db = new PDO('sqlite:settings.db');
 		//insert some data...
 		$db->exec($widget);
 	}    	
+	$widgets = $db->query('SELECT * FROM Widgets');
 ?>
 <html>
 	<head>
@@ -68,9 +69,9 @@ try {$db = new PDO('sqlite:settings.db');
 		foreach( $widgets as $widget ) {
 			renderWidgetHeaders($widget);	
 		}
-		if(!empty($settings['customStyleSheet'])) {
-			echo "\t\t<link rel=\"stylesheet\" type=\"text/css\" href=\"".$settings['customStyleSheet']."\">\n";
-		}
+		//if(!empty($settings['customStyleSheet'])) {
+		//	echo "\t\t<link rel=\"stylesheet\" type=\"text/css\" href=\"".$settings['customStyleSheet']."\">\n";
+		//}
 ?>
 
 		<!-- END: Dynamic Header Inserts From Widgets -->
@@ -83,14 +84,9 @@ try {$db = new PDO('sqlite:settings.db');
 		
 <?php
 
-
-
-
-
-
 	$i=1;
 
-	while ($i != 4) {
+	while ($i != 4) { // Needs work to allow more than 3 sections.
 		$widgets = $db->query('SELECT * FROM Widgets WHERE Section='.$i.'');
 		echo "\n\t<ul id=\"section-$i\" class=\"section ui-sortable\">\n";
 		
@@ -115,7 +111,6 @@ try {$db = new PDO('sqlite:settings.db');
 	$i++;
 	}
 	
-
 }	
 	catch(PDOException $e) {
 		print 'Exception : '.$e->getMessage();	

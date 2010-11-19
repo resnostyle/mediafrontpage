@@ -2,13 +2,6 @@
 require_once "config.php";
 require_once "functions.php";
 
-$wIndex = array();
-
-foreach (glob("widgets/*.php") as $filename) {
-    include_once $filename;
-}
-
-
 function renderWidget($widget) {
 	global $DEBUG;
 	
@@ -25,9 +18,7 @@ function renderWidget($widget) {
 			//Support header only widgets.
 			break;
 		case "mixed":
-			foreach( $widget["Parts"] as $widgetsub ) {
-				renderWidget($widgetsub);
-			}
+			echo $widget["Parts"];
 			break;
 		default:	
 			if(!empty($widget)) {
@@ -35,6 +26,7 @@ function renderWidget($widget) {
 			}
 	}
 }
+
 //Support the Widget "sytlesheet", "headerfunction", "headerinclude", "script" properties
 function renderWidgetHeaders($widget) {
 	global $DEBUG;
@@ -56,18 +48,18 @@ function renderWidgetHeaders($widget) {
 			}
 			break;
 	}
-	if(!empty($widget["Stylesheet"]) && (strlen($widget["Stylesheet"]) > 0)) {
-		echo "\t\t<link rel=\"stylesheet\" type=\"text/css\" href=\"".$widget["Stylesheet"]."\">\n";
+	if(!empty($widget['Stylesheet']) && (strlen($widget['Stylesheet']) > 0)) {
+		echo "\t\t<link rel=\"stylesheet\" type=\"text/css\" href=\"".$widget['Stylesheet']."\">\n";
 	}
-	if(!empty($widget["Script"]) && (strlen($widget["script"]) > 0)) {
-		echo "\t\t<link type=\"text/javascript\" language=\"javascript\ src=\"".$widget["Script"]."\">\n";
+	if(!empty($widget['Script']) && (strlen($widget['script']) > 0)) {
+		echo "\t\t<link type=\"text/javascript\" language=\"javascript\ src=\"".$widget['Script']."\">\n";
 	}
-	if(!empty($widget["HeaderInclude"]) && (strlen($widget["HeaderInclude"]) > 0)) {
+	if(!empty($widget['HeaderInclude']) && (strlen($widget['HeaderInclude']) > 0)) {
 		echo "\t\t".$widget["HeaderInclude"]."\n";
 	}
-	if(!empty($widget["HeaderFunction"]) && (strlen($widget["HeaderFunction"]) > 0)) {
-		if($DEBUG) { echo "\n<!-- Calling Function:".$widget["HeaderFunction"]." -->\n"; }
-		eval($widget["HeaderFunction"]);
+	if(!empty($widget['HeaderFunction']) && (strlen($widget['HeaderFunction']) > 0)) {
+		if($DEBUG) { echo "\n<!-- Calling Function:".$widget['HeaderFunction']." -->\n"; }
+		eval($widget['HeaderFunction']);
 	}
 }
 
