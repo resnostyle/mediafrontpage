@@ -42,7 +42,7 @@ if(!class_exists("widget")) {
 				// Create the database
 				$db->exec("CREATE TABLE Widgets (Id TEXT PRIMARY KEY, Type TEXT, Parts TEXT, Block TEXT, Title TEXT, Function TEXT, Call TEXT, Interval INTEGER, HeaderFunction TEXT, Stylesheet TEXT, Script TEXT, Section INTEGER, Position INTEGER)");
 				// Add widget to database
-				$db->exec("INSERT INTO Widgets (Id, Type, Block, Title, HeaderFunction, Function, Call, Interval, Section, Position) VALUES ('".$this->Id."', '".$this->Type."', '".$this->Block."', '".$this->Title."', '".$this->HeaderFunction."', '".$this->Function."', '".$this->Call."', '".$this->Interval."', '".$this->Section."', '".$this->Position."');");
+				$db->exec("INSERT INTO Widgets (Id, Type, Block, Title, HeaderFunction, Function, Call, Interval, Section, Position) VALUES ('$this->Id', '$this->Type', '$this->Block', '$this->Title', '$this->HeaderFunction', '$this->Function', '$this->Call', '$this->Interval', '$this->Section', '$this->Position');");
 
 			} catch(PDOException $e) {
 				print 'Exception : '.$e->getMessage();	
@@ -94,7 +94,7 @@ $wRSS = new widget("wRSS", "inline", "rsswrapper", "RSS Feeds", "widgetRSS();", 
 $wRSS->addWidget();
 $wRSS->updateWidget('Function', 'RSS Feeds');
 $widget = $wRSS->getWidget();
-echo print_r($widget,1);
+echo $widget['Id'];
 
 ?>
 		</div><!-- #main -->
