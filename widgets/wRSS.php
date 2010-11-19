@@ -104,7 +104,7 @@ function displayRSS($rssfeed, $count = 10, $returnonly = false) {
 		}
 
 		if($type == "unknown") {
-			$return = "Error: Unable to determine feed type.";
+			$return = "<p>Error: Unable to determine feed type.</p>";
 		} else {
 			switch($type) {
 				case 'atom':
@@ -157,7 +157,7 @@ function displayRSS($rssfeed, $count = 10, $returnonly = false) {
 			}
 		}
 	} else {
-		$return = "<p>No RSS feed supplied.</p>";
+		$return = "<p>Error: No RSS feed supplied.</p>";
 	}
 
 	if(!$returnonly) {
