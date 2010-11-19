@@ -95,49 +95,66 @@ function displayRSS($rssfeed, $count = 10, $returnonly = false) {
 		$xmlDoc = new DOMDocument();
 		$xmlDoc->load($rssfeed['url']);
 
-		//get elements from "<channel>"
-		//$channel = $xmlDoc->getElementsByTagName('channel')->item(0);
-		//$channel_title = $channel->getElementsByTagName('title')->item(0)->childNodes->item(0)->nodeValue;
-		//$channel_link = $channel->getElementsByTagName('link')->item(0)->childNodes->item(0)->nodeValue;
-		//$channel_desc = $channel->getElementsByTagName('description')->item(0)->childNodes->item(0)->nodeValue;
-
-		//output elements from "<channel>"
-		//$return .= "<p><a href='".$channel_link."'>".$channel_title."</a></p>");
-
-		if(!empty($rssfeed['type']) && ($rssfeed['type'] == 'atom')) {
-			//get and output "<item>" elements
-			$x = $xmlDoc->getElementsByTagName('entry');
+		if(is_object($xmlDoc->getElementsByTagName('channel')) && ($xmlDoc->getElementsByTagName('channel')->length > 0)) {
+			$type = "rss";
+		} elseif(is_object($xmlDoc->getElementsByTagName('entry')) && ($xmlDoc->getElementsByTagName('entry')->length > 0)) {
+			$type = "atom";
 		} else {
-			//get and output "<item>" elements
-			$x = $xmlDoc->getElementsByTagName('item');
+			$type = "unknown";
 		}
-		$alt = false;
-		for ($i=0; $i<$count; $i++){
-			if(!empty($rssfeed['type']) && ($rssfeed['type'] == 'atom')) {
-				$item_title = $x->item($i)->getElementsByTagName('title')->item(0)->childNodes->item(0)->nodeValue;
-				$item_desc = $x->item($i)->getElementsByTagName('content')->item(0)->childNodes->item(0)->nodeValue;
-				$item_desc = str_replace("  ", " ", $item_desc);
-				$item_desc = str_replace("\n\n", "\n", $item_desc);
-				$item_desc = str_replace("\n", " <br/>", $item_desc);
-				$item_link = $x->item($i)->getElementsByTagName('link')->item(0)->getAttribute('href');
+
+		if($type == "unknown") {
+			$return = "Error: Unable to determine feed type.";
+		} else {
+			switch($type) {
+				case 'atom':
+					$items = $xmlDoc->getElementsByTagName('entry');
+					break;
+				case 'rss':
+					$items = $xmlDoc->getElementsByTagName('item');
+					break;
+			}
+			if(is_object($items)) {
+				if($items->length < $count) {
+					$itemsListLength = $items->length;
+				} else {
+					$itemsListLength = $count;
+				}
 			} else {
-				$item_title = $x->item($i)->getElementsByTagName('title')->item(0)->childNodes->item(0)->nodeValue;
-				$item_link = $x->item($i)->getElementsByTagName('link')->item(0)->childNodes->item(0)->nodeValue;
-				$item_desc = $x->item($i)->getElementsByTagName('description')->item(0)->childNodes->item(0)->nodeValue;
+				$itemsListLength = 0;
 			}
-			$item_desc = str_replace("'", "", str_replace("\"", "'", $item_desc));
-			$return .= "<p class=\"".($alt ? " alt" : "")."\">";
+			
+			$alt = false;
+			for ($i=0; $i<$itemsListLength; $i++){
+				switch($type) {
+					case 'atom':
+						$item_title = $items->item($i)->getElementsByTagName('title')->item(0)->childNodes->item(0)->nodeValue;
+						$item_link = $items->item($i)->getElementsByTagName('link')->item(0)->getAttribute('href');
+						$item_desc = $items->item($i)->getElementsByTagName('content')->item(0)->childNodes->item(0)->nodeValue;
+						$item_desc = str_replace("  ", " ", $item_desc);
+						$item_desc = str_replace("\n\n", "\n", $item_desc);
+						$item_desc = str_replace("\n", " <br/>", $item_desc);
+						break;
+					case 'rss':
+						$item_title = $items->item($i)->getElementsByTagName('title')->item(0)->childNodes->item(0)->nodeValue;
+						$item_link = $items->item($i)->getElementsByTagName('link')->item(0)->childNodes->item(0)->nodeValue;
+						$item_desc = $items->item($i)->getElementsByTagName('description')->item(0)->childNodes->item(0)->nodeValue;
+						break;
+				}
+				$item_desc = str_replace("'", "", str_replace("\"", "'", $item_desc));
+				$return .= "<p class=\"".($alt ? " alt" : "")."\">";
 
-			if(!empty($rssfeed['cat']) || !empty($rssfeed['script']) || !empty($rssfeed['pp']) || !empty($rssfeed['priority'])) {
-				$return .= "<a href=\"#\" class=\"sablink\" onclick=\"sabAddUrl('".htmlentities(sab_addurl($item_link, $item_title, $rssfeed))."'); return false;\">";
-				$return .= "<img class=\"sablink\" src=\"media/sab2_16.png\" alt=\"Download with SABnzdd+\"/>";
-				$return .= "</a>";
+				if(!empty($rssfeed['cat']) || !empty($rssfeed['script']) || !empty($rssfeed['pp']) || !empty($rssfeed['priority'])) {
+					$return .= "<a href=\"#\" class=\"sablink\" onclick=\"sabAddUrl('".htmlentities(sab_addurl($item_link, $item_title, $rssfeed))."'); return false;\">";
+					$return .= "<img class=\"sablink\" src=\"media/sab2_16.png\" alt=\"Download with SABnzdd+\"/>";
+					$return .= "</a>";
+				}
+
+				$return .= "<a href=\"".$item_link."\" target=\"_blank\" onMouseOver=\"ShowPopupBox('".$item_desc."');\" onMouseOut=\"HidePopupBox();\">".$item_title."</a>";
+				$return .= "</p>";
+
+				$alt = !$alt;
 			}
-
-			$return .= "<a href=\"".$item_link."\" target=\"_blank\" onMouseOver=\"ShowPopupBox('".$item_desc."');\" onMouseOut=\"HidePopupBox();\">".$item_title."</a>";
-			$return .= "</p>";
-
-			$alt = !$alt;
 		}
 	} else {
 		$return = "<p>No RSS feed supplied.</p>";
