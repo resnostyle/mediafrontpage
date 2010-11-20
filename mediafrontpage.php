@@ -17,14 +17,14 @@ foreach (glob("widgets/*/w*.php") as $widgetfile) {
 	// Initialise widget 
 	$$widget_init['Id'] = new widget ($widget_init, $widgetfile);
 	
-	if (!empty($$widget_init['Id']->Parts) && $$widget_init['Id']->Type == 'mixed') {
+	if (!empty($$widget_init['Id']->Parts)) {
 		foreach ($$widget_init['Id']->Parts as $part) {
 			$$part['Id'] = new widget ($part, $widgetfile);
 		}
 	}
 	// Add widget to database
 	$$widget_init['Id']->addWidget();
-	if (!empty($$widget_init['Id']->Parts) && $$widget_init['Id']->Type == 'mixed') {
+	if (!empty($$widget_init['Id']->Parts)) {
 		foreach ($$widget_init['Id']->Parts as $part) {
 			$$part['Id']->addWidget();
 		}
@@ -97,8 +97,9 @@ foreach (glob("widgets/*/w*.php") as $widgetfile) {
 
 			// Output widgets
 			foreach ($widgets as $widget) {
+
 				// Don't give child widgets their own widget box				
-				if ($widget['Child'] != 'true') {
+				if ($widget['Child'] != 'true' && $widget['Type'] != 'empty') {
 					echo "\t\t<li id=\"".$widget['Id']."\" class=\"widget";
 	
 					// Is widget collapsed

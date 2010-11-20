@@ -19,6 +19,7 @@ if(!class_exists("widget")) {
 				$this->HeaderFunction = $widget_init['HeaderFunction'];
 				$this->Function = $widget_init['Function'];
 				$this->Call = $widget_init['Call'];
+				$this->Loader = $widget_init['Loader'];
 				$this->Interval = $widget_init['Interval'];
 				$this->Stylesheet = $widget_init['Stylesheet'];
 				$this->Script = $widget_init['Script'];
@@ -35,6 +36,7 @@ if(!class_exists("widget")) {
 		public $HeaderFunction;
 		public $Function;
 		public $Call;
+		public $Loader;
 		public $Interval;
 		public $Stylesheet;
 		public $Script;
@@ -52,10 +54,10 @@ if(!class_exists("widget")) {
 			try {   $db = new PDO('sqlite:settings.db');
 
 				// Create the database
-				$db->exec("CREATE TABLE Widgets (Id TEXT PRIMARY KEY, Child BOOLEAN, File TEXT, Type TEXT, Parts TEXT, Block TEXT, Title TEXT, Function TEXT, Call TEXT, Interval INTEGER, HeaderFunction TEXT, Stylesheet TEXT, Script TEXT, Section INTEGER, Position INTEGER)");
+				$db->exec("CREATE TABLE Widgets (Id TEXT PRIMARY KEY, Child BOOLEAN, File TEXT, Type TEXT, Parts TEXT, Block TEXT, Title TEXT, Function TEXT, Call TEXT, Loader TEXT, Interval INTEGER, HeaderFunction TEXT, Stylesheet TEXT, Script TEXT, Section INTEGER, Position INTEGER)");
 
 				// Add widget to database
-				$db->exec("INSERT INTO Widgets (Id, Child, File, Type, Block, Title, Parts, HeaderFunction, Function, Call, Interval, Stylesheet, Script, Section, Position) VALUES ('$this->Id', '$this->Child', '$this->File', '$this->Type', '$this->Block', '$this->Title', '".serialize($this->Parts)."', '$this->HeaderFunction', '$this->Function', '$this->Call', '$this->Interval',  '$this->Stylesheet', '$this->Script', '$this->Section', '$this->Position');");
+				$db->exec("INSERT INTO Widgets (Id, Child, File, Type, Block, Title, Parts, HeaderFunction, Function, Call, Loader, Interval, Stylesheet, Script, Section, Position) VALUES ('$this->Id', '$this->Child', '$this->File', '$this->Type', '$this->Block', '$this->Title', '".serialize($this->Parts)."', '$this->HeaderFunction', '$this->Function', '$this->Call', '$this->Loader', '$this->Interval',  '$this->Stylesheet', '$this->Script', '$this->Section', '$this->Position');");
 				
 				/*// If the widget has parts add them
 				if (!empty($this->Type) && $this->Type == 'mixed') {
@@ -115,10 +117,10 @@ if(!class_exists("widget")) {
 						echo "\t\t<script type=\"text/javascript\" language=\"javascript\">\n";
 						
 						$loader = (!empty($this->Loader)) ? $this->Loader : "ajaxPageLoad('".$this->Call."', '".$this->Block."');"; 
-						if((int)$widget["interval"] > 0) {
-							echo "\t\t\tvar ".$this->Block."_interval = setInterval(\"".$this->Loader."\", ".$this->Interval.");\n";
+						if($this->Interval > 0) {
+							echo "\t\t\tvar ".$this->Block."_interval = setInterval(\"".$loader."\", ".$this->Interval.");\n";
 						}
-						echo "\t\t\t".$this->Loader."\n";
+						echo "\t\t\t".$loader."\n";
 						echo "\t\t</script>\n";
 							break;
 					case "mixed":

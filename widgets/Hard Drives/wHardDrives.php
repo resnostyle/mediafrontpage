@@ -8,12 +8,13 @@ $widget_init = array(	'Id' 			=> "wHardDrives",
 			'Stylesheet' 		=> "harddrives.css",
 			'Section' 		=> 1, 
 			'Position' 		=> 3,
-			'HeaderFunction' 	=> '', 
-			'Parts'			=> '',
-			'Block' 		=> '',  
-			'Call'			=> '',
-			'Interval'		=> '',
-			'Script'		=> ''
+			'HeaderFunction' 	=> "", 
+			'Parts'			=> "",
+			'Block' 		=> "",  
+			'Call'			=> "",
+			'Loader'		=> "",
+			'Interval'		=> "",
+			'Script'		=> ""
 		    );
 
 function widgetHardDrives() {

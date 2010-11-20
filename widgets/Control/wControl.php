@@ -5,15 +5,16 @@ $widget_init = array(	'Id' 			=> "wControl",
 			'Type' 			=> "inline", 
 			'Title' 		=> "Control", 
 			'Function' 		=> "widgetControl(\"widgets/wControl.php\", true);",
-			'HeaderFunction' 	=> 'widgetControlHeader();', 
+			'HeaderFunction' 	=> "widgetControlHeader();", 
 			'Stylesheet' 		=> "control.css",
 			'Section' 		=> 1, 
 			'Position' 		=> 3,
-			'Parts'			=> '',
-			'Block' 		=> '',  
-			'Call'			=> '',
-			'Interval'		=> '',
-			'Script'		=> ''
+			'Parts'			=> "",
+			'Block' 		=> "",  
+			'Call'			=> "",
+			'Loader'		=> "",
+			'Interval'		=> "",
+			'Script'		=> ""
 		    );
 
 function widgetControlHeader() {

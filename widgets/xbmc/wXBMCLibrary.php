@@ -1,12 +1,75 @@
 <?php
-$widget = "INSERT INTO Widgets (Id, Type, Title, Parts, Section, Position) VALUES ('wXBMC', mixed', 'XBMC', '\$widgetMediaLibrary, \$widgetRecentTV, \$wRecentMovies', 0, 0);";
 
-$widgetMediaLibrary = "INSERT INTO Widgets (Id, Type, Title, Block, HeaderFunction, Call, Interval, Section, Position) VALUES ('MediaLibrary', 'ajax', 'Media Library', 'medialibrarywrapper', 'widgetMediaLibraryHeader(\$params);', 'widgets/wXBMCLibrary.php?w=l&style=w&a=l', 0, 2, 1);";
+$widgetMediaLibrary = array(
+			'Id' 			=> "wMediaLibrary", 
+			'Child'			=> "false",
+			'Type' 			=> "ajax", 
+			'Title' 		=> "Media Library", 
+			'Parts'			=> "",
+			'Stylesheet' 		=> "",
+			'Section' 		=> 1, 
+			'Position' 		=> 3,
+			'Function' 		=> "",
+			'HeaderFunction' 	=> "widgetMediaLibraryHeader();",
+			'Block' 		=> "medialibrarywrapper",   
+			'Call'			=> "widgets/xbmc/wXBMCLibrary.php?w=l&style=w&a=l",
+			'Loader'		=> "",
+			'Interval'		=> "0",
+			'Script'		=> ""
+		     );
 
-$widgetRecentEpisodes = "INSERT INTO Widgets (Id, Type, Title, Block, HeaderFunction, Call, Interval, Loader, Section, Position) VALUES ('RecentEpisodes', 'ajax', 'Media Library', 'recenttvwrapper', 'widgetMediaLibraryHeader(\$params);', 'widgets/wXBMCLibrary.php?w=l&style=w&a=l', 60000, 'cmdXbmcLibrary(\'recenttvwrapper\', \'widgets/wXBMCLibrary.php?w=re&\', \'re\', \'\', \'\', true);', 2, 1);";
+$widgetRecentEpisodes = array(	
+			'Id' 			=> "wRecentEpisodes", 
+			'Child'			=> "false",
+			'Type' 			=> "ajax", 
+			'Title' 		=> "Recent Episodes", 
+			'Parts'			=> "",
+			'Stylesheet' 		=> "",
+			'Section' 		=> 1, 
+			'Position' 		=> 3,
+			'Function' 		=> "",
+			'HeaderFunction' 	=> "widgetMediaLibraryHeader();",
+			'Block' 		=> "recentepisodeswrapper",   
+			'Call'			=> "widgets/xbmc/wXBMCLibrary.php?w=l&style=w&a=re&c=15",
+			'Loader'		=> "",
+			'Interval'		=> "60000",
+			'Script'		=> ""
+		     );
 
-$widgetRecentMovies = "INSERT INTO Widgets (Id, Type, Title, Block, HeaderFunction, Call, Interval, Loader, Section, Position) VALUES ('RecentMovies', 'ajax', 'Recent Movies', 'recentmoviewrapper', 'widgetMediaLibraryHeader(\$params);', 'widgets/wXBMCLibrary.php?w=rm&style=w&a=rm&c=15', 60000, 'cmdXbmcLibrary(\'recentmoviewrapper\', \'widgets/wXBMCLibrary.php?w=rm&\', \'rm\', \'\', \'\', true);', 1, 2;";
+$widgetRecentMovies = array(	
+			'Id' 			=> "wRecentMovies", 
+			'Child'			=> "false",
+			'Type' 			=> "ajax", 
+			'Title' 		=> "Recent Movies", 
+			'Parts'			=> "",
+			'Stylesheet' 		=> "",
+			'Section' 		=> 1, 
+			'Position' 		=> 3,
+			'Function' 		=> "",
+			'HeaderFunction' 	=> "widgetMediaLibraryHeader();",
+			'Block' 		=> "recentmovieswrapper",   
+			'Call'			=> "widgets/xbmc/wXBMCLibrary.php?w=rm&style=w&a=rm&c=15",
+			'Loader'		=> "",
+			'Interval'		=> "60000",
+			'Script'		=> ""
+		     );
 
+$widget_init = array(	'Id' 			=> "", 
+			'Child'			=> "false",
+			'Type' 			=> "empty", 
+			'Title' 		=> "", 
+			'Parts'			=> array($widgetMediaLibrary,$widgetRecentEpisodes,$widgetRecentMovies),
+			'Stylesheet' 		=> "",
+			'Section' 		=> 1, 
+			'Position' 		=> 3,
+			'Function' 		=> "",
+			'HeaderFunction' 	=> "",
+			'Block' 		=> "",   
+			'Call'			=> "",
+			'Loader'		=> "",
+			'Interval'		=> "",
+			'Script'		=> ""
+		     );
 
 function widgetMediaLibraryHeader($params = array('count' => 15)) {
 	//check the parameter
@@ -35,8 +98,8 @@ function widgetMediaLibraryHeader($params = array('count' => 15)) {
 					if(action=="rm" && recentmoviewrapper_interval=="") {
 						recentmoviewrapper_interval = setInterval(cmd, 60000);
 					}
-					if(action=="re" && recenttvwrapper_interval=="") {
-						recenttvwrapper_interval = setInterval(cmd, 60000);
+					if(action=="re" && recentepisodeswrapper_interval=="") {
+						recentepisodeswrapper_interval = setInterval(cmd, 60000);
 					}
 					if(action=="d") {
 						if(breadcrumb == "rm") {
@@ -45,8 +108,8 @@ function widgetMediaLibraryHeader($params = array('count' => 15)) {
 							recentmoviewrapper_interval = "";
 						}
 						if(breadcrumb == "re") {
-							clearInterval(recenttvwrapper_interval);
-							recenttvwrapper_interval = "";
+							clearInterval(recentepisodeswrapper_interval);
+							recentepisodeswrapper_interval = "";
 						}
 					}
 				}
@@ -56,9 +119,6 @@ function widgetMediaLibraryHeader($params = array('count' => 15)) {
 
 LIBRARYHEADER;
 }
-// ajaxPageLoad('widgets/wXBMCLibrary.php?w=re&style=w&a=re&c=15', 'recenttvwrapper');
-// cmdXbmcLibrary('recenttvwrapper', 'widgets/wXBMCLibrary.php?w=re&', 'lv', 'l', '', false);
-// echo "\t\t\tsetInterval(\"ajaxPageLoad('".$widget["call"]."', '".$widget["block"]."')\", ".$widget["interval"].");\n";
 
 if (!empty($_GET['style']) && (($_GET['style'] == "w") || ($_GET['style'] == "s"))) {
 	require_once "../../config.php";
@@ -93,12 +153,12 @@ if (!empty($_GET['style']) && (($_GET['style'] == "w") || ($_GET['style'] == "s"
 				if(empty($params['href'])) {
 					$params['wrapper'] = $widgetMediaLibrary['Block'];
 				}
-				$params['harness'] = "widgets/wXBMCLibrary.php?w=l&";
+				$params['harness'] = "widgets/xbmc/wXBMCLibrary.php?w=l&";
 		}
 		$params['href'] = "#";
 	} else {
 		if(empty($params['href'])) {
-			$params['href'] = "wXBMCLibrary.php";
+			$params['href'] = "xbmc/wXBMCLibrary.php";
 		}
 	}
 	

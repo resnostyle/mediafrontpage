@@ -5,15 +5,16 @@ $widget_init = array(	'Id' 			=> "wRSS",
 			'Type' 			=> "inline", 
 			'Title' 		=> "RSS Feeds", 
 			'Function' 		=> "widgetRSS();",
-			'HeaderFunction' 	=> 'widgetRSSHeader();', 
+			'HeaderFunction' 	=> "widgetRSSHeader();", 
 			'Stylesheet' 		=> "rss.css",
 			'Section' 		=> 1, 
 			'Position' 		=> 3,
-			'Parts'			=> '',
-			'Block' 		=> '',  
-			'Call'			=> '',
-			'Interval'		=> '',
-			'Script'		=> ''
+			'Parts'			=> "",
+			'Block' 		=> "",  
+			'Call'			=> "",
+			'Loader'		=> "",
+			'Interval'		=> "",
+			'Script'		=> ""
 		    );
 
 function widgetRSSHeader() {
@@ -22,7 +23,7 @@ function widgetRSSHeader() {
 	<!--
 		function showRSS(str) {
 			if (str.length==0) {
-				document.getElementById("rssOutput").innerHTML="";
+				document.getElementById("rssList").innerHTML="";
 				return;
 			}
 			if (window.XMLHttpRequest) {
@@ -34,10 +35,10 @@ function widgetRSSHeader() {
 			}
 			xmlhttp.onreadystatechange = function() {
 				if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-					document.getElementById("rssOutput").innerHTML=xmlhttp.responseText;
+					document.getElementById("rssList").innerHTML=xmlhttp.responseText;
 				}
 			}
-			xmlhttp.open("GET","widgets/wRSS.php?style=s&rss="+str,true);
+			xmlhttp.open("GET","widgets/RSS Feeds/wRSS.php?style=s&rss="+str,true);
 			xmlhttp.send();
 		}
 		function sabAddUrl(sablink) {
@@ -48,7 +49,7 @@ function widgetRSSHeader() {
 				// code for IE6, IE5
 				xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
 			}
-			xmlhttp.open("POST", "widgets/wRSS.php?style=a", true);
+			xmlhttp.open("POST", "widgets/RSS Feeds/wRSS.php?style=a", true);
 
 			//Send the proper header information along with the request
 			xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -87,7 +88,7 @@ function widgetRSS() {
 	}
 	echo "\t</select>\n";
 	echo "</form>\n";
-	echo "<div id=\"rssOutput\">";
+	echo "<div id=\"rssList\">";
 	displayRSS(reset($rssfeeds));
 	echo "</div>\n";
 }
@@ -177,7 +178,7 @@ if(!empty($_GET['style']) && ($_GET['style'] == "a")){
 }
 
 if(!empty($_GET['style']) && (($_GET['style'] == "w") || ($_GET['style'] == "s"))) {
-	require_once "../config.php";
+	require_once "../../config.php";
 	global $rssfeeds;
 
 	$count = (!empty($_GET['c'])) ? $_GET['c'] : 10;
