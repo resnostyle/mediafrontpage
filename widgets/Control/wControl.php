@@ -1,17 +1,19 @@
 <?php
 
-$widget_init = array(	'Id' 			=> "wControl", 
+$widget_init = array(	'Id' 			=> "wControl",
+			'Child'			=> "false",
 			'Type' 			=> "inline", 
 			'Title' 		=> "Control", 
-			'Block' 		=> '',  
 			'Function' 		=> "widgetControl(\"widgets/wControl.php\", true);",
 			'HeaderFunction' 	=> 'widgetControlHeader();', 
+			'Stylesheet' 		=> "control.css",
+			'Section' 		=> 1, 
+			'Position' 		=> 3,
+			'Parts'			=> '',
+			'Block' 		=> '',  
 			'Call'			=> '',
 			'Interval'		=> '',
-			'Stylesheet' 		=> "control.css",
-			'Script'		=> '',
-			'Section' 		=> 1, 
-			'Position' 		=> 3
+			'Script'		=> ''
 		    );
 
 function widgetControlHeader() {

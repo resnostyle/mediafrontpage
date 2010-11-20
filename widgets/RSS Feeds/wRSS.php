@@ -1,5 +1,20 @@
 <?php
-$widget = "INSERT INTO Widgets (Id, Type, Title, Function, HeaderFunction, Section, Position) VALUES ('wRSS', 'inline', 'RSS Feeds', 'widgetRSS();', 'widgetRSSHeader();', 3, 4);";
+
+$widget_init = array(	'Id' 			=> "wRSS", 
+			'Child'			=> "false",
+			'Type' 			=> "inline", 
+			'Title' 		=> "RSS Feeds", 
+			'Function' 		=> "widgetRSS();",
+			'HeaderFunction' 	=> 'widgetRSSHeader();', 
+			'Stylesheet' 		=> "rss.css",
+			'Section' 		=> 1, 
+			'Position' 		=> 3,
+			'Parts'			=> '',
+			'Block' 		=> '',  
+			'Call'			=> '',
+			'Interval'		=> '',
+			'Script'		=> ''
+		    );
 
 function widgetRSSHeader() {
 	echo <<< RSSHEADER

@@ -14,12 +14,21 @@ error_reporting($errlevel);
 foreach (glob("widgets/*/w*.php") as $widgetfile) {
 	include_once $widgetfile;
 
-	// Initialise widget
+	// Initialise widget 
 	$$widget_init['Id'] = new widget ($widget_init, $widgetfile);
-
+	
+	if (!empty($$widget_init['Id']->Parts) && $$widget_init['Id']->Type == 'mixed') {
+		foreach ($$widget_init['Id']->Parts as $part) {
+			$$part['Id'] = new widget ($part, $widgetfile);
+		}
+	}
 	// Add widget to database
 	$$widget_init['Id']->addWidget();
-
+	if (!empty($$widget_init['Id']->Parts) && $$widget_init['Id']->Type == 'mixed') {
+		foreach ($$widget_init['Id']->Parts as $part) {
+			$$part['Id']->addWidget();
+		}
+	}
 	// Get widgets
 	$widgets = getAllWidgets();
 }
@@ -64,13 +73,14 @@ foreach (glob("widgets/*/w*.php") as $widgetfile) {
 		</style>		
 		<link href="css/widget.css" rel="stylesheet" type="text/css" />	
 		<link href="css/front.css" rel="stylesheet" type="text/css" />
-		<link href="layouts/3col.css" rel="stylesheet" type="text/css" />
+		<link href="layouts/3col-equal.css" rel="stylesheet" type="text/css" />
 
 		<!-- START: Dynamic Header Inserts From Widgets -->
 <?php
 		// Render widget headers 
 		foreach ($widgets as $widget) {
 			$directory = dirname($widget['File']);
+			//echo print_r($widget,1);
 			$$widget['Id']->renderWidgetHeaders($directory);
 		}    	
 ?>
@@ -85,24 +95,37 @@ foreach (glob("widgets/*/w*.php") as $widgetfile) {
 
 			echo "\n\t<ul id=\"section-1\" class=\"section ui-sortable\">\n";
 
+			// Output widgets
 			foreach ($widgets as $widget) {
-				echo "\t\t<li id=\"".$widget['Id']."\" class=\"widget";
+				// Don't give child widgets their own widget box				
+				if ($widget['Child'] != 'true') {
+					echo "\t\t<li id=\"".$widget['Id']."\" class=\"widget";
 	
-				// Is widget collapsed
-				if (!empty($widget["Display"])) {
-					echo " ".$widget["Display"];
-				}
-				echo "\">";
-				echo "\t\t\t<div class=\"widget-head\">";
-				echo "\t\t\t\t<h3>".$widget['Title']."</h3>\n";
-				echo "\t\t\t</div><!-- .widget-head -->\n";
-				echo "\t\t\t<div class=\"widget-content\">\n";
-				
-				// Output widget content
-				$$widget['Id']->renderWidget($widget);
+					// Is widget collapsed
+					if (!empty($widget["Display"])) {
+						echo " ".$widget["Display"];
+					}
+					echo "\">";
+					echo "\t\t\t<div class=\"widget-head\">";
+					echo "\t\t\t\t<h3>".$widget['Title']."</h3>\n";
+					echo "\t\t\t</div><!-- .widget-head -->\n";
+					echo "\t\t\t<div class=\"widget-content\">\n";
 					
-				echo "\t\t\t</div><!-- .widget-content -->\n";
-				echo "\t\t</li><!-- #".$widget['Id']." .widget -->\n";
+					// Render parent widget
+					$$widget['Id']->renderWidget($widget);
+				
+					// Render child widgets	
+					if (!empty($widget['Parts']) && $widget['Type'] == 'mixed') {
+						$parts = unserialize($widget['Parts']);
+						foreach ($parts as $part) {
+							$part_class = $part['Id'];
+							$$part_class->renderWidget();
+						}
+					}
+						
+					echo "\t\t\t</div><!-- .widget-content -->\n";
+					echo "\t\t</li><!-- #".$widget['Id']." .widget -->\n";
+				}
 			}
 			echo "\t</ul><!-- #section-1 .section -->\n";    	
 		//} END of Layout

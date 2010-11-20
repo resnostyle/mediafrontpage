@@ -1,9 +1,55 @@
 <?php
-$widget = "INSERT INTO Widgets (Id, Type, Title, Parts, Section, Position) VALUES ('wNowPlaying', 'mixed', 'Now Playing', 'widgetNowPlayingAjax, widgetNowPlayingControls', 3, 1);";
 
-$wdgtNowPlayingAjax = array("type" => "ajax", "block" => "nowplayingwrapper", "call" => "widgets/wNowPlaying.php?ajax=w", "interval" => 1000);
-$wdgtNowPlayingControls = array("type" => "inline", "function" => "widgetNowPlayingControls();", "headerfunction" => "widgetNowPlayingHeader();");
-$wdgtNowPlaying = array("name" => "Now Playing", "type" => "mixed", "parts" => array($wdgtNowPlayingAjax, $wdgtNowPlayingControls));
+$widgetNowPlayingAjax = array(
+			'Id'			=> "wNowPlayingAjax",
+			'Child' 		=> "true", 
+			'Type' 			=> "ajax", 
+			'Block' 		=> "nowplayingwrapper", 
+			'Call' 			=> "\"widgets/Now Playing/wNowPlaying.php?ajax=w\"", 
+			'Interval'		=> 1000,
+			'Title' 		=> "", 
+			'Parts'			=> "",
+			'Function' 		=> "",
+			'HeaderFunction' 	=> "", 
+			'Stylesheet' 		=> "",
+			'Script'		=> "",
+			'Section' 		=> "", 
+			'Position' 		=> ""
+		     );
+$widgetNowPlayingControls = array(
+			'Id'			=> "wNowPlayingControls",
+			'Child' 		=> "true", 
+			'Type' 			=> "inline", 
+			'Function' 		=> "widgetNowPlayingControls();",
+			'HeaderFunction' 	=> "widgetNowPlayingHeader();", 
+			'Title' 		=> "", 
+			'Block' 		=> "", 
+			'Call' 			=> "", 
+			'Interval'		=> "",
+			'Parts'			=> "",
+			'Stylesheet' 		=> "",
+			'Script'		=> "",
+			'Section' 		=> "", 
+			'Position' 		=> ""
+		     );
+
+$widget_init = array(	'Id' 			=> "wNowPlaying", 
+			'Child'			=> "false",
+			'Type' 			=> "mixed", 
+			'Title' 		=> "Now Playing", 
+			'Parts'			=> array($widgetNowPlayingAjax, $widgetNowPlayingControls),
+			'Stylesheet' 		=> "nowplaying.css",
+			'Section' 		=> 1, 
+			'Position' 		=> 3,
+			'Function' 		=> "",
+			'HeaderFunction' 	=> "",
+			'Block' 		=> "",   
+			'Call'			=> "",
+			'Interval'		=> "",
+			'Script'		=> ""
+
+		     );
+
 
 
 function widgetNowPlayingControls() {
@@ -26,7 +72,7 @@ function widgetNowPlayingHeader() {
 		<!--
 			function cmdNowPlaying(cmd) {
 				var cmdXbmcPlayingRequest = new ajaxRequest();
-				cmdXbmcPlayingRequest.open("GET", "widgets/wNowPlaying.php?ajax=c&command="+cmd, true);
+				cmdXbmcPlayingRequest.open("GET", "widgets/Now Playing/wNowPlaying.php?ajax=c&command="+cmd, true);
 					cmdXbmcPlayingRequest.onreadystatechange = function() {
 						if (cmdXbmcPlayingRequest.readyState==4) {
 							if (cmdXbmcPlayingRequest.status==200 || window.location.href.indexOf("http")==-1) {
@@ -250,15 +296,15 @@ function processCommand($command) {
 }
 
 if (!empty($_GET['ajax']) && ($_GET['ajax'] == "w")) {
-	require_once "../config.php";
-	require_once "../functions.php";
+	require_once "../../config.php";
+	require_once "../../functions.php";
 	displayNowPlaying();
 }
 ?>
 <?php
 if (!empty($_GET['ajax']) && ($_GET['ajax'] == "c")) {
-	require_once "../config.php";
-	require_once "../functions.php";
+	require_once "../../config.php";
+	require_once "../../functions.php";
 
 	if (!empty($_GET['command'])) {
 		$command = $_GET["command"];
@@ -273,7 +319,7 @@ if (!empty($_GET['ajax']) && ($_GET['ajax'] == "c")) {
 }
 
 if (!empty($_GET['style']) && (($_GET['style'] == "w") || ($_GET['style'] == "s"))) {
-	require_once "../config.php";
+	require_once "../../config.php";
 
 	if ($_GET['style'] == "w") {
 ?>
