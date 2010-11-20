@@ -46,7 +46,7 @@ if(!empty($DEBUG) && $DEBUG && !empty($arrRequest['jsonrpc']) && ($arrRequest['j
 	echo json_encode($arrResult);
 }
 
-function save_layout($arrRequest) {
+/*function save_layout($arrRequest) {
 	if(!empty($arrRequest["params"]) && is_array($arrRequest["params"])) {
 		$layoutfile = "layout.php";
 		if(is_writable($layoutfile)) {
@@ -69,7 +69,7 @@ function save_layout($arrRequest) {
 		$arrResult = error_array(-32602, "Invalid parameters.");
 	}
 	return $arrResult;
-}
+}*/
 
 function get_widgets($arrRequest) {
 	if(!empty($arrRequest["params"]) && is_array($arrRequest["params"])) {
