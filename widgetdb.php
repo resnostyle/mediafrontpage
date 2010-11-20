@@ -5,15 +5,15 @@ ini_set('display_errors', '1');
 
 if(!class_exists("widget")) {
 	class widget {
-		function __construct($Id, $Type, $Block, $Title, $Function, $HeaderFunction, $Section, $Position) {
-			$this->Id = $Id;
-			$this->Type = $Type;
-			$this->Block = $Block;
-			$this->Title = $Title;
-			$this->Function = $Function;
-			$this->HeaderFunction = $HeaderFunction;
-			$this->Section = $Section;
-			$this->Position = $Position;
+		function __construct($widget_init) {
+			$this->Id = $widget_init['Id'];
+			$this->Type = $widget_init['Type'];
+			$this->Block = $widget_init['Block'];
+			$this->Title = $widget_init['Title'];
+			$this->Function = $widget_init['Function'];
+			$this->HeaderFunction = $widget_init['HeaderFunction'];
+			$this->Section = $widget_init['Section'];
+			$this->Position = $widget_init['Position'];
 		}
 		public $Id;
 		public $Type;
@@ -89,16 +89,4 @@ if(!class_exists("widget")) {
 		}								
 	}
 }
-
-$wRSS = new widget("wRSS", "inline", "rsswrapper", "RSS Feeds", "widgetRSS();", "widgetRSSHeader();", 3, 4);
-$wRSS->addWidget();
-$wRSS->updateWidget('Function', 'RSS Feeds');
-$widget = $wRSS->getWidget();
-echo $widget['Id'];
-
 ?>
-		</div><!-- #main -->
-    	<script type="text/javascript" src="js/jquery.js"></script>
-    	<script type="text/javascript" src="js/widget.js"></script>
-		</body>
-</html>
