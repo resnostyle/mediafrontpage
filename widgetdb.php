@@ -128,6 +128,30 @@ if(!class_exists("widget")) {
 				eval($this->HeaderFunction);
 			}
 		}
+		function renderWidget() {
+			global $DEBUG;
+	
+			switch ($this->Type) {
+				case "inline":
+					if($DEBUG) { echo "\n<!-- Calling Function:".$this->Function." -->\n"; }
+					eval($this->Function);
+					echo "\n";
+					break;
+				case "ajax":
+					echo "\n\t\t\t<div id=\"".$this->Block."\"></div>\n";
+					break;
+				case "header":
+					//Support header only widgets.
+					break;
+				case "mixed":
+					echo $this->Parts;
+					break;
+				default:	
+					if(!empty($this)) {
+						echo "\n\n<strong>INVALID WIDGET SPECIFIED (".$this->Block.")</strong>\n<pre>".print_r($this)."</pre>\n";
+					}
+			}
+		}
 								
 	}
 }
