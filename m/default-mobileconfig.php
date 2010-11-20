@@ -10,7 +10,7 @@ $mobilelayout = array(
 					"Drives" => "wHardDrives"
 				);
 $mobilefunction["wXBMCLibrary"] = "executeVideo(\"m\", \$action, \$breadcrumb, \$params);";
-$mobilefunction["wNowPlaying"] = "displayNowPlaying(true);";
+$mobilefunction["wNowPlaying"] = "displayNowPlaying(\"index.php\");";
 $mobilefunction["wComingEpisodes"] = "displayComingSoon();";
 $mobilefunction["wControl"] = "widgetControl(\"index.php\", true);";
 $mobilefunction["wSabnzbd"]	= "sabStatus();";
