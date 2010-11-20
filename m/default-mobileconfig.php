@@ -6,6 +6,7 @@ $mobilelayout = array(
 					"<span class=\"upcoming\">Coming Soon</span>" => "wComingEpisodes",
 					"<span class=\"control\">Control</span>" => "wControl",
 					"<span class=\"downloads\">SABnzbd</span>" => "wSabnzbd",
+					"<span class=\"rss\">RSS</span>" => "wRSS",
 					"<span class=\"drives\">Hard Drives</span>" => "wHardDrives"
 				);
 $mobilefunction["wXBMCLibrary"] = "executeVideo(\"m\", \$action, \$breadcrumb, \$params);";
@@ -13,5 +14,6 @@ $mobilefunction["wNowPlaying"] = "displayNowPlaying(true);";
 $mobilefunction["wComingEpisodes"] = "displayComingSoon();";
 $mobilefunction["wControl"] = "widgetControl(\"index.php\", true);";
 $mobilefunction["wSabnzbd"]	= "sabStatus();";
+$mobilefunction["wRSS"]	= "widgetRSS(\"index.php\");";
 $mobilefunction["wHardDrives"] = "widgetHardDrives();";
 ?>
