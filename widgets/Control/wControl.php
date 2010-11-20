@@ -1,6 +1,18 @@
 <?php
 
-$widget = "INSERT INTO Widgets (Id, Type, Title, Function, HeaderFunction, Section, Position) VALUES ('wControl', 'inline', 'Control', 'widgetControl(\"widgets/wControl.php\", true);', 'widgetControlHeader();', 1, 3);";
+$widget_init = array(	'Id' 			=> "wControl", 
+			'Type' 			=> "inline", 
+			'Title' 		=> "Control", 
+			'Block' 		=> '',  
+			'Function' 		=> "widgetControl(\"widgets/wControl.php\", true);",
+			'HeaderFunction' 	=> 'widgetControlHeader();', 
+			'Call'			=> '',
+			'Interval'		=> '',
+			'Stylesheet' 		=> "control.css",
+			'Script'		=> '',
+			'Section' 		=> 1, 
+			'Position' 		=> 3
+		    );
 
 function widgetControlHeader() {
 	echo <<< CONTROLHEADER

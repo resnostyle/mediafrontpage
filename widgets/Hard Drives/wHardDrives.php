@@ -1,4 +1,5 @@
 <?php
+
 $widget_init = array(	'Id' 			=> "wHardDrives", 
 			'Type' 			=> "inline", 
 			'Title' 		=> "Hard Drives", 

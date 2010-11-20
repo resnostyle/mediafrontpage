@@ -1,7 +1,7 @@
 <?php
 require_once "config.php";
 require_once "functions.php";
-require_once "widgetdb.php";
+require_once "widgets.php";
 
 //turn off warnings
 $errlevel = error_reporting();
@@ -10,6 +10,20 @@ error_reporting(E_ALL & ~E_WARNING);
 // Turn on warnings
 error_reporting($errlevel); 
 
+// Add Widgets
+foreach (glob("widgets/*/w*.php") as $widgetfile) {
+	include_once $widgetfile;
+
+	// Initialise widget
+	$$widget_init['Id'] = new widget ($widget_init, $widgetfile);
+
+	// Add widget to database
+	$$widget_init['Id']->addWidget();
+
+	// Get widgets
+	$widgets = getAllWidgets();
+}
+	
 ?>
 <html>
 	<head>
@@ -50,24 +64,15 @@ error_reporting($errlevel);
 		</style>		
 		<link href="css/widget.css" rel="stylesheet" type="text/css" />	
 		<link href="css/front.css" rel="stylesheet" type="text/css" />
+		<link href="layouts/3col.css" rel="stylesheet" type="text/css" />
 
 		<!-- START: Dynamic Header Inserts From Widgets -->
 <?php
-
-	foreach (glob("widgets/*/w*.php") as $widget) {
-		include_once $widget;
-
-		// Initialise widget
-		$$widget_init['Id'] = new widget ($widget_init);
-
-		// Add widget to database
-		$$widget_init['Id']->addWidget();
-		$$widget_init['Id']->updateWidget('Title', 'Hard Drives');
-
-		// Render Widget Headers 
-		$directory = dirname($widget);
-		$$widget_init['Id']->renderWidgetHeaders($directory);
-	}    	
+		// Render widget headers 
+		foreach ($widgets as $widget) {
+			$directory = dirname($widget['File']);
+			$$widget['Id']->renderWidgetHeaders($directory);
+		}    	
 ?>
 		<!-- END: Dynamic Header Inserts From Widgets -->
 		<script type="text/javascript">InitPopupBox();</script>
@@ -76,37 +81,32 @@ error_reporting($errlevel);
 		<div id="main">
 		<!-- START: Dynamic Inserts From Widgets -->
 <?php
-		// Print Section	
-		//foreach ($arrLayout as $sectionId => $widgets) { //needs work
+		//While ( $i < $settings['sections'] ) { //needs work
 
 			echo "\n\t<ul id=\"section-1\" class=\"section ui-sortable\">\n";
-				foreach (glob("widgets/*/w*.php") as $widget) {
-					include_once $widget;
 
-					// Get widget properties from db
-					$widget = $$widget_init['Id']->getWidget();
-
-					echo "\t\t<li id=\"".$widget['Id']."\" class=\"widget";
-
-					// Is widget collapsed
-					if (!empty($widget['Type'])) {
-						echo " ".$widget['Type'];
-					}
-
-					echo "\">";
-					echo "\t\t\t<div class=\"widget-head\">";
-					echo "\t\t\t\t<h3>".$widget['Title']."</h3>\n";
-					echo "\t\t\t</div><!-- .widget-head -->\n";
-					echo "\t\t\t<div class=\"widget-content\">\n";
+			foreach ($widgets as $widget) {
+				echo "\t\t<li id=\"".$widget['Id']."\" class=\"widget";
 	
-					// Render Widget 
-					$$widget_init['Id']->renderWidget();
-
-					echo "\t\t\t</div><!-- .widget-content -->\n";
-					echo "\t\t</li><!-- #".$widget['Id']." .widget -->\n";
+				// Is widget collapsed
+				if (!empty($widget["Display"])) {
+					echo " ".$widget["Display"];
+				}
+				echo "\">";
+				echo "\t\t\t<div class=\"widget-head\">";
+				echo "\t\t\t\t<h3>".$widget['Title']."</h3>\n";
+				echo "\t\t\t</div><!-- .widget-head -->\n";
+				echo "\t\t\t<div class=\"widget-content\">\n";
+				
+				// Output widget content
+				$$widget['Id']->renderWidget($widget);
+					
+				echo "\t\t\t</div><!-- .widget-content -->\n";
+				echo "\t\t</li><!-- #".$widget['Id']." .widget -->\n";
 			}
 			echo "\t</ul><!-- #section-1 .section -->\n";    	
-?>
+		//} END of Layout
+ ?>
 		<!-- END: Dynamic Inserts From Widgets -->
 		</div><!-- #main -->
 	    	<script type="text/javascript" src="js/jquery.js"></script>
