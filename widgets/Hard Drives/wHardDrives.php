@@ -1,5 +1,13 @@
 <?php
-$widget = "INSERT INTO Widgets (Id, Type, Title, Function, Section, Position) VALUES ('wHardDrives', 'inline', 'Hard Drives', 'widgetHardDrives();', 1, 1);";
+$widget_init = array(	'Id' => "wHardDrives", 
+			'Type' => "inline", 
+			'Title' => "Hard Drives", 
+			'Block' => '',  
+			'Function' => "widgetHardDrives();", 
+			'HeaderFunction' => '', 
+			'Section' => 1, 
+			'Position' => 1
+		    );
 
 function widgetHardDrives() {
 	global $drive;
