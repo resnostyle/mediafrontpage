@@ -5,25 +5,8 @@
     min-height: 400px;
     height: auto !important; 
 }
-#main #section-1 { 
-    width: 25%;
-}
-#main #section-2 { 
-    width: 50%;
-}
-#main #section-3 { 
-    width: 25%;
-}
 #main .widget-placeholder { 
     border: 2px dashed #999;
-}
-#main #section-1 .widget-placeholder { 
-    margin: 10px 10px 0 10px; 
-}
-#main #section-2 .widget-placeholder { 
-    margin: 10px 10px 0 10px; 
-}
-#main #section-3 .widget-placeholder { 
     margin: 10px 10px 0 10px; 
 }
 #main .section .widget {
