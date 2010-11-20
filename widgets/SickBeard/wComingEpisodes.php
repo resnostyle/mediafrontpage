@@ -1,6 +1,21 @@
 <?php
 
-$widget = "INSERT INTO Widgets (Id, Type, Title, Function, HeaderFunction, Stylesheet, Section, Position) VALUES ('wComingEpisodes', 'inline', 'Coming Episodes', 'widgetComingEpisodes();', 'widgetComingEpisodesHeader();', 'widgets/SickBeard/comingepisodes.css', 2, 2);";
+$widget_init = array(	'Id' 			=> "wComingEpisodes",
+			'Child'			=> "false",
+			'Type' 			=> "inline", 
+			'Title' 		=> "Coming Episodes", 
+			'Function' 		=> "widgetComingEpisodes();",
+			'HeaderFunction' 	=> "widgetComingEpisodesHeader();", 
+			'Stylesheet' 		=> "comingepisodes.css",
+			'Section' 		=> 1, 
+			'Position' 		=> 3,
+			'Parts'			=> "",
+			'Block' 		=> "",  
+			'Call'			=> "",
+			'Loader'		=> "",
+			'Interval'		=> "",
+			'Script'		=> ""
+		    );
 
 function widgetComingEpisodes() {
 	global $sickbeardcomingepisodes;
@@ -108,7 +123,6 @@ if(!empty($_GET["display"])) {
 	}
 	$uri_domain = str_replace($urldata["path"], "", $sickbeardcomingepisodes);
 
-	
 	$regex  = '/(<[(img)|(a)]\s*(.*?)\s*[(src)|(href)]=(?P<link>[\'"]+?\s*\S+\s*[\'"])+?\s*(.*?)\s*>)/i';
 
 	preg_match_all($regex, $body, $matches);

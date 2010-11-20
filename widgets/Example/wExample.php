@@ -1,6 +1,21 @@
 <?php
-$widget = "INSERT INTO Widgets (Id, Type, Title, Function, Section, Position) VALUES ('wExample', 'inline', 'Example Widget', 'widgetExample();', 2, 3);";
 
+$widget_init = array(	'Id' 			=> "wExample",
+			'Child'			=> "false",
+			'Type' 			=> "inline", 
+			'Title' 		=> "Example Widget", 
+			'Function' 		=> "widgetExample();",
+			'HeaderFunction' 	=> "", 
+			'Stylesheet' 		=> "example.css",
+			'Section' 		=> 1, 
+			'Position' 		=> 3,
+			'Parts'			=> "",
+			'Block' 		=> "",  
+			'Call'			=> "",
+			'Loader'		=> "",
+			'Interval'		=> "",
+			'Script'		=> ""
+		    );
 function widgetExample() {
 	echo "<p>Hello World</p>";
 }
