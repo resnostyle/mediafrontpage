@@ -76,7 +76,8 @@ function widgetControl($baseurl = "widgets/wControl.php", $forcemenu = false) {
 	$json = '{"status":true}';
 	$errmsg = '';
 	if(!empty($_GET["style"]) && (($_GET["style"] == "w") || ($_GET["style"] == "m"))) {
-		$displayMenu = ($_GET["style"] == "m");
+
+		$displayMenu = (($_GET["style"] == "m") || $forcemenu);
 		if(!empty($_GET["cmd"])) {
 			switch ($_GET["cmd"]) {
 				case "shutdown":  // Shutdown
@@ -100,7 +101,7 @@ function widgetControl($baseurl = "widgets/wControl.php", $forcemenu = false) {
 					break;
 				default:
 					$errmsg = "Invalid Command";
-					$displayMenu = false;
+					$displayMenu = ($_GET["style"] != "m");
 			}
 		} elseif(!empty($_GET["json"])) {
 			$request = stripslashes(urldecode($_GET["json"]));
@@ -128,11 +129,11 @@ function widgetControl($baseurl = "widgets/wControl.php", $forcemenu = false) {
 		} else {
 			$displayMenu = $forcemenu;
 			$errmsg = "No action.";
-			$displayMenu = false;
 		}
 	} else {
 		$displayMenu = $forcemenu;
 	}
+
 	if($displayMenu) {
 		widgetMenu($baseurl);
 	} else {

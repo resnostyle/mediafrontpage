@@ -63,18 +63,46 @@ function widgetRSSHeader() {
 
 RSSHEADER;
 }
-function widgetRSS() {
+function widgetRSS($formaction = "") {
 	global $rssfeeds;
 
-	echo "<form>\n";
-	echo "\t<select onchange=\"showRSS(this.value);\">\n";
+	$response = sabadd();
+	if(!empty($response)) {
+		$responsejson = json_decode($response, true);
+		if(!empty($responsejson)) {
+			if($responsejson['status']) {
+				echo "<p>Item successfully added to SABnzdd+.</p>\n";
+			} else {
+				echo "<p>Problem adding link to SABnzdd+.</p>\n<p>Error: ".$responsejson["error"]."</p>\n";
+			}
+		} else {
+			echo "<p>Problem calling SABnzdd+.</p>\n<pre>\n".$response."\n</pre>\n";
+		}
+	}
+	
+	if(!empty($formaction)) {
+		echo "<form action=\"".$formaction."\" method=\"get\">\n";
+		echo "<input type=\"hidden\" name=\"style\" value=\"".(!empty($_GET['style']) ? $_GET['style'] : "m")."\" />";
+		echo "<input type=\"hidden\" name=\"w\" value=\"wRSS\" />";
+		echo "\t<select name=\"feed\">\n";
+	} else {
+		echo "<form>\n";
+		echo "\t<select onchange=\"showRSS(this.value);\">\n";
+	}
 	foreach($rssfeeds as $name => $feed) {
-		echo "\t\t<option value=\"".$name."\">".$name."</option>\n";
+		echo "\t\t<option value=\"".$name."\"".((!empty($_GET['feed']) && ($_GET['feed'] == $name)) ? " selected=\"selected\"" : "").">".$name."</option>\n";
 	}
 	echo "\t</select>\n";
+	if(!empty($formaction)) {
+		echo "\t<input type=\"submit\" value=\"Go\" />\n";
+	}
 	echo "</form>\n";
 	echo "<div id=\"rssOutput\">";
-	displayRSS(reset($rssfeeds));
+	if(!empty($_GET['feed']) && !empty($rssfeeds[$_GET['feed']])) {
+		displayRSS($rssfeeds[$_GET['feed']]);
+	} else {
+		displayRSS(reset($rssfeeds));
+	}
 	echo "</div>\n";
 }
 function sab_addurl($link, $name, $rssfeed){
@@ -88,6 +116,24 @@ function sab_addurl($link, $name, $rssfeed){
 	$queryurl .= (!empty($rssfeed['priority']) ? "&priority=".$rssfeed['priority'] : "");
 	$queryurl .= "&output=json&apikey=".$sabapikey;
 	return $queryurl;
+}
+function sabadd($sabaddurl = "") {
+	$response = "";
+	
+	if(!empty($_GET['sabadd']) && empty($sabaddurl)) {
+		$sabaddurl = ($_GET['sabadd']);
+	}
+	if(!empty($sabaddurl)) {
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_HTTPGET, 1);
+		curl_setopt($ch, CURLOPT_URL, $sabaddurl);
+
+		$response = curl_exec($ch);
+		curl_close($ch);
+	}
+
+	return $response;
 }
 function displayRSS($rssfeed, $count = 10, $returnonly = false) {
 	$return = "";
@@ -145,9 +191,19 @@ function displayRSS($rssfeed, $count = 10, $returnonly = false) {
 				$return .= "<p class=\"".($alt ? " alt" : "")."\">";
 
 				if(!empty($rssfeed['cat']) || !empty($rssfeed['script']) || !empty($rssfeed['pp']) || !empty($rssfeed['priority'])) {
-					$return .= "<a href=\"#\" class=\"sablink\" onclick=\"sabAddUrl('".htmlentities(sab_addurl($item_link, $item_title, $rssfeed))."'); return false;\">";
-					$return .= "<img class=\"sablink\" src=\"media/sab2_16.png\" alt=\"Download with SABnzdd+\"/>";
-					$return .= "</a>";
+					if(!empty($_GET['style']) && ($_GET['style'] == 'm')) {
+						$sabaddlink = "?style=m";
+						$sabaddlink .= "&w=".(!empty($_GET['w']) ? $_GET['w'] : "wRSS");
+						$sabaddlink .= (!empty($_GET['feed']) ? "&feed=".$_GET['feed'] : "");
+						$sabaddlink .= "&sabadd=".urlencode(sab_addurl($item_link, $item_title, $rssfeed));
+						$return .= "<a href=\"".$sabaddlink."\" class=\"sablink\">";
+						$return .= "<img class=\"sablink\" src=\"../media/sab2_16.png\" alt=\"Download with SABnzdd+\"/>";
+						$return .= "</a>";
+					} else {
+						$return .= "<a href=\"#\" class=\"sablink\" onclick=\"sabAddUrl('".htmlentities(sab_addurl($item_link, $item_title, $rssfeed))."'); return false;\">";
+						$return .= "<img class=\"sablink\" src=\"media/sab2_16.png\" alt=\"Download with SABnzdd+\"/>";
+						$return .= "</a>";
+					}
 				}
 
 				$return .= "<a href=\"".$item_link."\" target=\"_blank\" onMouseOver=\"ShowPopupBox('".$item_desc."');\" onMouseOut=\"HidePopupBox();\">".$item_title."</a>";
@@ -167,16 +223,7 @@ function displayRSS($rssfeed, $count = 10, $returnonly = false) {
 }
 if(!empty($_GET['style']) && ($_GET['style'] == "a")){
 	$sablink = file_get_contents("php://input");
-
-	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($ch, CURLOPT_HTTPGET, 1);
-	curl_setopt($ch, CURLOPT_URL, $sablink);
-
-	$response = curl_exec($ch);
-	curl_close($ch);
-
-	echo $response;
+	echo sabadd($sablink);
 }
 
 if(!empty($_GET['style']) && (($_GET['style'] == "w") || ($_GET['style'] == "s"))) {
