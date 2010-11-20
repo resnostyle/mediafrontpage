@@ -1,12 +1,16 @@
 <?php
-$widget_init = array(	'Id' => "wHardDrives", 
-			'Type' => "inline", 
-			'Title' => "Hard Drives", 
-			'Block' => '',  
-			'Function' => "widgetHardDrives();", 
-			'HeaderFunction' => '', 
-			'Section' => 1, 
-			'Position' => 1
+$widget_init = array(	'Id' 			=> "wHardDrives", 
+			'Type' 			=> "inline", 
+			'Title' 		=> "Hard Drives", 
+			'Block' 		=> '',  
+			'Function' 		=> "widgetHardDrives();", 
+			'HeaderFunction' 	=> '', 
+			'Call'			=> '',
+			'Interval'		=> '',
+			'Stylesheet' 		=> "harddrives.css",
+			'Script'		=> '',
+			'Section' 		=> 1, 
+			'Position' 		=> 1
 		    );
 
 function widgetHardDrives() {
