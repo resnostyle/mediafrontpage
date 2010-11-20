@@ -91,8 +91,8 @@ foreach (glob("widgets/*/w*.php") as $widgetfile) {
 		<div id="main">
 		<!-- START: Dynamic Inserts From Widgets -->
 <?php
+		$i=0;
 		//While ( $i < $settings['sections'] ) { //needs work
-
 			echo "\n\t<ul id=\"section-1\" class=\"section ui-sortable\">\n";
 
 			// Output widgets
@@ -128,8 +128,13 @@ foreach (glob("widgets/*/w*.php") as $widgetfile) {
 					echo "\t\t\t</div><!-- .widget-content -->\n";
 					echo "\t\t</li><!-- #".$widget['Id']." .widget -->\n";
 				}
+
 			}
 			echo "\t</ul><!-- #section-1 .section -->\n";    	
+			echo "\n\t<ul id=\"section-2\" class=\"section ui-sortable\">\n";		
+			echo "\t</ul><!-- #section-2 .section -->\n";    
+			echo "\n\t<ul id=\"section-3\" class=\"section ui-sortable\">\n"; 	
+			echo "\t</ul><!-- #section-3 .section -->\n";   
 		//} END of Layout
  ?>
 		<!-- END: Dynamic Inserts From Widgets -->
