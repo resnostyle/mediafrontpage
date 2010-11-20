@@ -67,13 +67,7 @@ if(empty($params['href'])) {
 			<ul>
 <?php
 			foreach($mobilelayout as $widgetlabel => $widgetindex) {
-				if($widgetindex == $widget) {
-					echo "\t\t\t\t<li><a href=\"?w=".$widgetindex."\">".$widgetlabel."</a>\n";
-					//eval($mobilefunction[$widget]);
-					echo "</li>\n";
-				} else {
-					echo "\t\t\t\t<li><a href=\"?w=".$widgetindex."\">".$widgetlabel."</a></li>\n";
-				}
+				echo "\t\t\t\t<li class=\"menuitem ".$widgetlabel."".(($widgetindex == $widget) ? " current" : "")."\"><a href=\"?w=".$widgetindex."\"><span>".$widgetlabel."</span></a></li>\n";
 			}
 ?>
 			</ul>

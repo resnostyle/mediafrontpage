@@ -157,68 +157,81 @@ div.highslide-caption {
 	width: 50px;
 	height: 53px;
 	display: inline-block!important;
+	vertical-align: top;
 }
 
 #header ul li a{
 	display:block;
-	margin-bottom:6px;
-	height:29px;
-	padding-left:12px;
-	color:#525151;
+	width: 50px;
+	color:#888888;
 	font-weight:bold;
-	text-shadow:#FFFFFF 0px 1px 1px;
 	text-decoration:none;
-	line-height:29px;
-	text-indent: -10000px;
+	overflow: hidden;
+}
+#header ul li a span {
+	width: 20px;
+	height: 40px;
+	display: inline;
+	//margin-top: 32px;
+	//font-size: 10px;
 }
 
-#header ul li a span.library{
+#header ul li.menuitem  a  {
+	height: 40px;
+	display: block;
+	margin-top: 33px;
+	margin-left: 10px;
+	font-size: 10px;
+}
+#header ul li.Library  a  {
 	background: url(images/icon-library.png) top left no-repeat;
 	width: 30px;
-	height: 40px;
-	display: block;
 	margin-top: 8px;
-	margin-left: -1px;
 }
-#header ul li a span.playing{
+#header ul li.Library  a span {
+	display: none;
+}
+#header ul li.Playing a  {
 	background: url(images/icon-playing.png) top left no-repeat;
 	width: 40px;
-	height: 40px;
-	display: block;
 	margin-top: 8px;
-	margin-left: -2px;
 }
-#header ul li a span.upcoming{
+#header ul li.Playing  a span {
+	display: none;
+}
+#header ul li.Upcoming a  {
 	background: url(images/icon-upcoming.png) top left no-repeat;
 	width: 50px;
-	height: 40px;
-	display: block;
+	margin-left: 3px;
 	margin-top: 8px;
-	margin-left: -8px;
 }
-#header ul li a span.control{
+#header ul li.Upcoming  a span {
+	display: none;
+}
+#header ul li.Control a {
 	background: url(images/icon-control.png) top left no-repeat;
 	width: 40px;
-	height: 40px;
-	display: block;
 	margin-top: 8px;
-	margin-left: -3px;
 }
-#header ul li a span.downloads{
+#header ul li.Control  a span {
+	display: none;
+}
+#header ul li.SABnzbd a {
 	background: url(images/icon-downloads.png) top left no-repeat;
 	width: 40px;
-	height: 40px;
-	display: block;
+	margin-left: 4px;
 	margin-top: 8px;
-	margin-left: -6px;
 }
-#header ul li a span.drives{
+#header ul li.SABnzbd  a span {
+	display: none;
+}
+#header ul li.Drives a {
 	background: url(images/icon-drives.png) top left no-repeat;
 	width: 40px;
-	height: 40px;
-	display: block;
 	margin-top: 8px;
-	margin-left: 0px;
+}
+#header ul li.Drives  a span {
+	display: none;
 }
 
 #header ul li ul li a{
