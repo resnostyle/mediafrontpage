@@ -103,6 +103,7 @@ foreach (glob("widgets/*/w*.php") as $widgetfile) {
 					echo "\t\t<li id=\"".$widget['Id']."\" class=\"widget";
 	
 					// Is widget collapsed
+					echo " collapsed";  //yes
 					if (!empty($widget["Display"])) {
 						echo " ".$widget["Display"];
 					}
