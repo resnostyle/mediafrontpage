@@ -1,12 +1,12 @@
 <?php
 $mobilelayout = array(
-					"Library" => "wXBMCLibrary",
+					"<span class=\"library\">Library</span>" => "wXBMCLibrary",
 					//"Remote" => "wRemote",
-					"Now Playing" => "wNowPlaying",
-					"Coming Soon" => "wComingEpisodes",
-					"Control" => "wControl",
-					"SABnzbd" => "wSabnzbd",
-					"Hard Drives" => "wHardDrives"
+					"<span class=\"playing\">Now Playing</span>" => "wNowPlaying",
+					"<span class=\"upcoming\">Coming Soon</span>" => "wComingEpisodes",
+					"<span class=\"control\">Control</span>" => "wControl",
+					"<span class=\"downloads\">SABnzbd</span>" => "wSabnzbd",
+					"<span class=\"drives\">Hard Drives</span>" => "wHardDrives"
 				);
 $mobilefunction["wXBMCLibrary"] = "executeVideo(\"m\", \$action, \$breadcrumb, \$params);";
 $mobilefunction["wNowPlaying"] = "displayNowPlaying(true);";

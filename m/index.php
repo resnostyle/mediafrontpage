@@ -62,7 +62,7 @@ if(empty($params['href'])) {
 	<body>
 	
 <div class="container bg_black">
-	<h1>Media Center</h1>
+	<!-- <h1>Media Center</h1> -->
 		<div id="header">
 			<ul>
 <?php

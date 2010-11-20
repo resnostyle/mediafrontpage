@@ -135,28 +135,34 @@ div.highslide-caption {
 
 
 #header {
-    /*border:1px solid white;
+    border:1px solid white;
     -moz-border-radius:6px 6px 6px 6px;
     border-radius:6px 6px 6px 6px;
     margin:10px 5px;
-    background: white;*/
+    background: white;
 }
 
 #header ul{
 	list-style-type:none;
 	margin:0px;
-	padding: 0 0 0 1px;
-	display: block!important;
-	width: 320px!important;
-	
+	padding-top:3px;
+	padding-left:6px;
+	padding-right:6px;
+	display:block;
 }
 
 #header ul li{
-	margin: 0;
-	background-image:url(images/button-menu.png);
-	width: 50px;
-	height: 53px;
-	display: inline-block!important;
+	margin:0px;
+}
+
+#header ul li ul {
+	margin:0px 0px 0px 16px;
+	padding:0px 0px 0px 6px;
+}
+
+#header ul li ul li {
+	list-style-image:url(images/small_arrow.png);
+	list-style-position:outside;
 }
 
 #header ul li a{
@@ -169,56 +175,16 @@ div.highslide-caption {
 	text-shadow:#FFFFFF 0px 1px 1px;
 	text-decoration:none;
 	line-height:29px;
-	text-indent: -10000px;
 }
 
-#header ul li a span.library{
-	background: url(images/icon-library.png) top left no-repeat;
-	width: 30px;
-	height: 40px;
-	display: block;
-	margin-top: 8px;
-	margin-left: -1px;
+#header ul li a.last{
+	margin-bottom:3px;
 }
-#header ul li a span.playing{
-	background: url(images/icon-playing.png) top left no-repeat;
-	width: 40px;
-	height: 40px;
-	display: block;
-	margin-top: 8px;
-	margin-left: -2px;
-}
-#header ul li a span.upcoming{
-	background: url(images/icon-upcoming.png) top left no-repeat;
-	width: 50px;
-	height: 40px;
-	display: block;
-	margin-top: 8px;
-	margin-left: -8px;
-}
-#header ul li a span.control{
-	background: url(images/icon-control.png) top left no-repeat;
-	width: 40px;
-	height: 40px;
-	display: block;
-	margin-top: 8px;
-	margin-left: -3px;
-}
-#header ul li a span.downloads{
-	background: url(images/icon-downloads.png) top left no-repeat;
-	width: 40px;
-	height: 40px;
-	display: block;
-	margin-top: 8px;
-	margin-left: -6px;
-}
-#header ul li a span.drives{
-	background: url(images/icon-drives.png) top left no-repeat;
-	width: 40px;
-	height: 40px;
-	display: block;
-	margin-top: 8px;
-	margin-left: 0px;
+
+#header ul li a{
+	background-image:url(images/item_menu_long.png);
+	background-repeat:no-repeat;
+	background-position:top right;
 }
 
 #header ul li ul li a{
