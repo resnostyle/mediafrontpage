@@ -28,7 +28,7 @@ h1 {
 	line-height:16px;
 	font-weight:bold;
 	color:#151618;
-	text-shadow:#747478 0px 1px 1px;
+	text-shadow:#747478 0px 0px 1px;
 	text-align:center;
 	margin: 0px;
 	padding: 4px 0 0 0;
@@ -69,8 +69,8 @@ td {
 	display: block;                 
 	height: 16px; 
 	margin: 0 0 2px;
-	background: #666; 
-	width: 100px;
+	background: #AAA; 
+	width: 100%;
 	overflow: hidden;
 }
 .progress { 
@@ -86,7 +86,7 @@ td {
 
 .progresslabel {
 	width: 100%;
-	text-align: left;
+	text-align: center;
 	height: 16px;
 	margin: -16px 5px;
 	overflow: hidden;
