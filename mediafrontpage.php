@@ -83,6 +83,9 @@ foreach (glob("widgets/*/w*.php") as $widgetfile) {
 			//echo print_r($widget,1);
 			$$widget['Id']->renderWidgetHeaders($directory);
 		}    	
+		if(!empty($customStyleSheet)) {
+			echo "\t\t<link rel=\"stylesheet\" type=\"text/css\" href=\"".$customStyleSheet."\">\n";
+		}
 ?>
 		<!-- END: Dynamic Header Inserts From Widgets -->
 		<script type="text/javascript">InitPopupBox();</script>

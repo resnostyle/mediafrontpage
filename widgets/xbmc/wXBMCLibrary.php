@@ -31,7 +31,7 @@ $widgetRecentEpisodes = array(
 			'HeaderFunction' 	=> "widgetMediaLibraryHeader();",
 			'Block' 		=> "recentepisodeswrapper",   
 			'Call'			=> "widgets/xbmc/wXBMCLibrary.php?w=l&style=w&a=re&c=15",
-			'Loader'		=> "",
+			'Loader'		=> "cmdXbmcLibrary('recentepisodeswrapper', 'widgets/xbmc/wXBMCLibrary.php?w=re&', 're', '', '', true);",
 			'Interval'		=> "60000",
 			'Script'		=> ""
 		     );
@@ -49,7 +49,7 @@ $widgetRecentMovies = array(
 			'HeaderFunction' 	=> "widgetMediaLibraryHeader();",
 			'Block' 		=> "recentmovieswrapper",   
 			'Call'			=> "widgets/xbmc/wXBMCLibrary.php?w=rm&style=w&a=rm&c=15",
-			'Loader'		=> "",
+			'Loader'		=> "cmdXbmcLibrary('recentmovieswrapper', 'widgets/xbmc/wXBMCLibrary.php?w=rm&', 'rm', '', '', true);",
 			'Interval'		=> "60000",
 			'Script'		=> ""
 		     );
@@ -95,8 +95,8 @@ function widgetMediaLibraryHeader($params = array('count' => 15)) {
 				cmdXbmcLibraryRequest.send(null);
 				if(refresh) {
 					var cmd = "cmdXbmcLibrary('" + wrapper + "', '" + harness + "', '" + action + "', '" + breadcrumb + "', '" + query + "', true)";
-					if(action=="rm" && recentmoviewrapper_interval=="") {
-						recentmoviewrapper_interval = setInterval(cmd, 60000);
+					if(action=="rm" && recentmovieswrapper_interval=="") {
+						recentmovieswrapper_interval = setInterval(cmd, 60000);
 					}
 					if(action=="re" && recentepisodeswrapper_interval=="") {
 						recentepisodeswrapper_interval = setInterval(cmd, 60000);
@@ -104,8 +104,8 @@ function widgetMediaLibraryHeader($params = array('count' => 15)) {
 					if(action=="d") {
 						if(breadcrumb == "rm") {
 							//alert("bc="+breadcrumb);
-							clearInterval(recentmoviewrapper_interval);
-							recentmoviewrapper_interval = "";
+							clearInterval(recentmovieswrapper_interval);
+							recentmoviewsrapper_interval = "";
 						}
 						if(breadcrumb == "re") {
 							clearInterval(recentepisodeswrapper_interval);
@@ -143,7 +143,7 @@ if (!empty($_GET['style']) && (($_GET['style'] == "w") || ($_GET['style'] == "s"
 			case "rm":  // Recent Movies
 				$params['onclickcmd'] = "cmdXbmcLibrary";
 				if(empty($params['wrapper'])) {
-					$params['wrapper'] = $widgetRecentMovie['Block'];
+					$params['wrapper'] = $widgetRecentMovies['Block'];
 				}
 				$params['harness'] = "widgets/xbmc/wXBMCLibrary.php?w=rm&";
 				$params['refresh'] = true;
@@ -158,7 +158,7 @@ if (!empty($_GET['style']) && (($_GET['style'] == "w") || ($_GET['style'] == "s"
 		$params['href'] = "#";
 	} else {
 		if(empty($params['href'])) {
-			$params['href'] = "xbmc/wXBMCLibrary.php";
+			$params['href'] = "widgets/xbmc/wXBMCLibrary.php";
 		}
 	}
 	

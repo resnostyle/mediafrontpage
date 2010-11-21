@@ -49,6 +49,7 @@ if(!class_exists("widget")) {
 		public $MobileSection;
 		public $MovilePosition;
 		public $MobileClass;
+
 		public function addWidget() {
 				// Open the database
 			try {   $db = new PDO('sqlite:settings.db');
@@ -57,7 +58,29 @@ if(!class_exists("widget")) {
 				$db->exec("CREATE TABLE Widgets (Id TEXT PRIMARY KEY, Child BOOLEAN, File TEXT, Type TEXT, Parts TEXT, Block TEXT, Title TEXT, Function TEXT, Call TEXT, Loader TEXT, Interval INTEGER, HeaderFunction TEXT, Stylesheet TEXT, Script TEXT, Section INTEGER, Position INTEGER)");
 
 				// Add widget to database
-				$db->exec("INSERT INTO Widgets (Id, Child, File, Type, Block, Title, Parts, HeaderFunction, Function, Call, Loader, Interval, Stylesheet, Script, Section, Position) VALUES ('$this->Id', '$this->Child', '$this->File', '$this->Type', '$this->Block', '$this->Title', '".serialize($this->Parts)."', '$this->HeaderFunction', '$this->Function', '$this->Call', '$this->Loader', '$this->Interval',  '$this->Stylesheet', '$this->Script', '$this->Section', '$this->Position');");
+//				$db->exec("INSERT INTO Widgets (Id, Child, File, Type, Block, Title, Parts, HeaderFunction, Function, Call, Loader, Interval, Stylesheet, Script, Section, Position) VALUES ('$this->Id', '$this->Child', '$this->File', '$this->Type', '$this->Block', '$this->Title', '".serialize($this->Parts)."', '$this->HeaderFunction', '$this->Function', '$this->Call', '$this->Loader', '$this->Interval',  '$this->Stylesheet', '$this->Script', '$this->Section', '$this->Position');");
+
+				// Prepare the SQL Statement
+				$sql = "INSERT INTO Widgets (Id, Child, File, Type, Block, Title, Parts, HeaderFunction, Function, Call, Loader, Interval, Stylesheet, Script, Section, Position) VALUES (:Id, :Child, :File, :Type, :Block, :Title, :Parts, :HeaderFunction, :Function, :Call, :Loader, :Interval, :Stylesheet, :Script, :Section, :Position);";
+
+				$q = $db->prepare($sql);
+
+				$q->execute(array(	':Id'=>$this->Id, 
+							':Child'=>$this->Child,
+							':File'=>$this->File,
+							':Type'=>$this->Type, 
+							':Block'=>$this->Block, 
+							':Title'=>$this->Title, 
+							':Parts'=>serialize($this->Parts), 
+							':HeaderFunction'=>$this->HeaderFunction, 
+							':Function'=>$this->Function, 
+							':Call'=>$this->Call, 
+							':Loader'=>$this->Loader, 
+							':Interval'=>$this->Interval, 
+							':Stylesheet'=>$this->Stylesheet, 
+							':Script'=>$this->Script, 
+							':Section'=>$this->Section, 
+							':Position'=>$this->Position));
 				
 				/*// If the widget has parts add them
 				if (!empty($this->Type) && $this->Type == 'mixed') {
