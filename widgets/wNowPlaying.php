@@ -10,7 +10,7 @@ function widgetNowPlayingControls($baseurl = "") {
 	echo "\t".anchorControlButton($baseurl, 'PlayPause', 'btnPlayPause.png', 'Play/Pause')."\n";
 	echo "\t".anchorControlButton($baseurl, 'Stop', 'btnStop.png')."\n";
 	echo "\t".anchorControlButton($baseurl, 'SkipNext', 'btnSkipForward.png', 'Skip Next')."\n";
-	echo "\t".anchorControlButton($baseurl, 'ShowPlaylist')."\n";
+	echo "\t".anchorControlButton($baseurl, 'ShowPlaylist', 'btnPlayList.png')."\n";
 	echo "</div>\n";
 	echo "<div class=\"clear-float\"></div>\n";
 	echo "<div id=\"nowplaying-list\"></div>\n";
