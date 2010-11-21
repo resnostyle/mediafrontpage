@@ -83,7 +83,7 @@ if(empty($params['href'])) {
 		</div><!-- #header -->
 		<div id="main">
 <?php
-			echo "<h1>".$current."</h1>\n";
+			echo "<h1 class=\"title\">".$current."</h1>\n";
 			eval($mobilefunction[$widget]);
 ?>
 		</div><!-- #main -->

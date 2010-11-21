@@ -24,14 +24,14 @@ p {margin:0; padding:0;}
 a img {border:none;}
 
 h1 {
-	font-size:20px;
+	font-size:18px;
 	line-height:16px;
 	font-weight:bold;
 	color:#151618;
 	text-shadow:#747478 0px 1px 1px;
 	text-align:center;
 	margin: 0px;
-	padding: 0px;
+	padding: 4px 0 0 0;
 }
 table {
 	font-size:1.2em;
@@ -46,8 +46,18 @@ td {
     border:1px solid white;
     -moz-border-radius:6px 6px 6px 6px;
     border-radius:6px 6px 6px 6px;
-    margin:10px 5px;
+    margin:10px 7px;
     background: white;
+}
+#main h1.title {
+	background: url(images/header.png) top left no-repeat;
+	width: 306px;
+	height: 31px;
+	margin: -1px 0 0 -1px;
+	text-shadow:#747478 0px 1px 1px;
+	text-align:center;
+	padding: 4px 0 0 0;
+	color:#585858;
 }
 #main ul {
 	margin: 0;
@@ -231,6 +241,14 @@ div.highslide-caption {
 	margin-top: 8px;
 }
 #header ul li.Drives  a span {
+	display: none;
+}
+#header ul li.RSS a {
+	background: url(images/icon-rss.png) top left no-repeat;
+	width: 30px;
+	margin-top: 8px;
+}
+#header ul li.RSS  a span {
 	display: none;
 }
 
