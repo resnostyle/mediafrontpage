@@ -26,9 +26,7 @@ a img {border:none;}
 h1 {
 	font-size:18px;
 	line-height:16px;
-	font-weight:bold;
 	color:#151618;
-	text-shadow:#747478 0px 0px 1px;
 	text-align:center;
 	margin: 0px;
 	padding: 4px 0 0 0;
@@ -53,8 +51,6 @@ td {
 	background: url(images/header.png) top left no-repeat;
 	width: 306px;
 	height: 31px;
-	margin: -1px 0 0 -1px;
-	text-shadow:#747478 0px 1px 1px;
 	text-align:center;
 	padding: 4px 0 0 0;
 	color:#585858;
@@ -141,15 +137,6 @@ div.highslide-caption {
 	margin-right: auto;
 	margin-bottom: 10px;
 	margin-left: auto;
-}
-
-
-#header {
-    /*border:1px solid white;
-    -moz-border-radius:6px 6px 6px 6px;
-    border-radius:6px 6px 6px 6px;
-    margin:10px 5px;
-    background: white;*/
 }
 
 #header ul{
@@ -267,6 +254,7 @@ p.next, p.noMargin {
 }
 .listing {
 	display: inline;
+	margin-bottom:5px;
 }
 .listing h1 a {
 	display: none;
@@ -324,10 +312,15 @@ div.library-info img {
 }
 
 #listingWrapper {
-	padding: 1px 0px 10px 34px;
+	padding: 0px 0px 10px 25px;
+	margin-top:-20px;
 	overflow: auto;
 	height:auto!important;
 	font-size: 0.8em;
 }
 
-
+/* Hard Drives */
+#col-disk{width:20%;}
+#col-capacity{width:20%;}
+#col-remaining{width:20%;}
+#col-progress {width:40%;}
