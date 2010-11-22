@@ -205,6 +205,7 @@ div.highslide-caption {
 }
 #page #main .widget-content {
 	padding-left:5px;
+	padding-right:5px;
 	padding-bottom:5px;
 }
 /* SickBeard */
@@ -304,7 +305,7 @@ div.library-info img {
 	display: table-row;
 }
 #sab-queue div.progressbar {
-	width: 280px;
+	width: 275px;
 	height: 16px;
 	overflow:hidden;
 	vertical-align: top;
@@ -321,4 +322,11 @@ div.library-info img {
 #sab-queue div.actions img { 
 	width:16px; 
 	height:16px;
+}
+div.thumbblockvideo {
+	width: 100%;
+	text-align: center;
+}
+div.thumbblockvideo img {
+	max-width: 98%;
 }
