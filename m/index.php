@@ -61,10 +61,9 @@ if(empty($params['href'])) {
 	</head>
 	<body>
 	
-<div class="container bg_black">
-	<!-- <h1>Media Center</h1> -->
-		<div id="header">
-			<ul>
+		<div id="page">
+			<div id="header">
+				<ul>
 <?php
 			foreach($mobilelayout as $widgetlabel => $widgetindex) {
 				if(empty($current)) {
@@ -79,14 +78,16 @@ if(empty($params['href'])) {
 				echo "\t\t\t\t<li class=\"menuitem ".$widgetlabel."".$currentclass."\"><a href=\"?w=".$widgetindex."\"><span>".$widgetlabel."</span></a></li>\n";
 			}
 ?>
-			</ul>
-		</div><!-- #header -->
-		<div id="main">
+				</ul>
+			</div><!-- #header -->
+			<div id="main">
 <?php
-			echo "<h1 class=\"title\">".$current."</h1>\n";
+			echo "\t\t\t\t<h1 class=\"title\">".$current."</h1>\n";
+			echo "\t\t\t\t<div class=\"widget-content\">\n";
 			eval($mobilefunction[$widget]);
+			echo "\t\t\t\t</div>\n";
 ?>
-		</div><!-- #main -->
-		</div>
+			</div><!-- #main -->
+		</div><!-- #page -->
 	</body>
 </html>
