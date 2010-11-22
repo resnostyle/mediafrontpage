@@ -1,6 +1,21 @@
 <?php
-$wdgtControl = array("name" => "Control", "type" => "inline", "function" => "widgetControl(\"widgets/wControl.php\", true);", "headerfunction" => "widgetControlHeader();");
-$wIndex["wControl"] = $wdgtControl;
+
+$widget_init = array(	'Id' 			=> "wControl",
+			'Child'			=> "false",
+			'Type' 			=> "inline", 
+			'Title' 		=> "Control", 
+			'Function' 		=> "widgetControl(\"widgets/wControl.php\", true);",
+			'HeaderFunction' 	=> "widgetControlHeader();", 
+			'Stylesheet' 		=> "control.css",
+			'Section' 		=> 1, 
+			'Position' 		=> 3,
+			'Parts'			=> "",
+			'Block' 		=> "",  
+			'Call'			=> "",
+			'Loader'		=> "",
+			'Interval'		=> "",
+			'Script'		=> ""
+		    );
 
 function widgetControlHeader() {
 	echo <<< CONTROLHEADER
@@ -76,8 +91,7 @@ function widgetControl($baseurl = "widgets/wControl.php", $forcemenu = false) {
 	$json = '{"status":true}';
 	$errmsg = '';
 	if(!empty($_GET["style"]) && (($_GET["style"] == "w") || ($_GET["style"] == "m"))) {
-
-		$displayMenu = (($_GET["style"] == "m") || $forcemenu);
+		$displayMenu = ($_GET["style"] == "m");
 		if(!empty($_GET["cmd"])) {
 			switch ($_GET["cmd"]) {
 				case "shutdown":  // Shutdown
@@ -101,7 +115,7 @@ function widgetControl($baseurl = "widgets/wControl.php", $forcemenu = false) {
 					break;
 				default:
 					$errmsg = "Invalid Command";
-					$displayMenu = ($_GET["style"] != "m");
+					$displayMenu = false;
 			}
 		} elseif(!empty($_GET["json"])) {
 			$request = stripslashes(urldecode($_GET["json"]));
@@ -129,11 +143,11 @@ function widgetControl($baseurl = "widgets/wControl.php", $forcemenu = false) {
 		} else {
 			$displayMenu = $forcemenu;
 			$errmsg = "No action.";
+			$displayMenu = false;
 		}
 	} else {
 		$displayMenu = $forcemenu;
 	}
-
 	if($displayMenu) {
 		widgetMenu($baseurl);
 	} else {

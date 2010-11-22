@@ -1,7 +1,21 @@
 <?php
-$wdgtHardDrives = array("name" => "Hard Drives", "type" => "inline", "function" => "widgetHardDrives();");
-$wIndex["wHardDrives"] = $wdgtHardDrives;
 
+$widget_init = array(	'Id' 			=> "wHardDrives", 
+			'Child'			=> "false",	
+			'Type' 			=> "inline", 
+			'Title' 		=> "Hard Drives", 
+			'Function' 		=> "widgetHardDrives();",
+			'Stylesheet' 		=> "harddrives.css",
+			'Section' 		=> 1, 
+			'Position' 		=> 1,
+			'HeaderFunction' 	=> "", 
+			'Parts'			=> "",
+			'Block' 		=> "",  
+			'Call'			=> "",
+			'Loader'		=> "",
+			'Interval'		=> "",
+			'Script'		=> ""
+		    );
 
 function widgetHardDrives() {
 	global $drive;

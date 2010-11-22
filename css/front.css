@@ -126,27 +126,6 @@ a.controlbutton img {
 	margin: 0;
 }
 
-/* wHARDRIVES */
-
-#wHardDrives {
-	display: block;	
-	margin: 20px 0 0;
-}
-#wHardDrives table {
-	text-align: center;
-	width: 100%;
-}
-#col-disk{width:20%;}
-#col-capacity{width:20%;}
-#col-remaining{width:20%;}
-#col-progress {width:40%;}
-#wHardDrives div.progressbar { 
-	width: 100%;
-}
-#wHardDrives .progresslabel {
-	text-align: center;
-}
-
 /* wNOWPLAYING */
 #wNowPlaying img {
 	float: left;

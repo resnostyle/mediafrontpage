@@ -1,7 +1,21 @@
 <?php
-//Note this example uses the "stylesheet", and "headerfunction" properties.
-$wdgtComingEpisodes = array("name" => "Coming Episodes", "type" => "inline", "function" => "widgetComingEpisodes();", "stylesheet" => "css/comingepisodes.css", "headerfunction" => "widgetComingEpisodesHeader();");
-$wIndex["wComingEpisodes"] = $wdgtComingEpisodes;
+
+$widget_init = array(	'Id' 			=> "wComingEpisodes",
+			'Child'			=> "false",
+			'Type' 			=> "inline", 
+			'Title' 		=> "Coming Episodes", 
+			'Function' 		=> "widgetComingEpisodes();",
+			'HeaderFunction' 	=> "widgetComingEpisodesHeader();", 
+			'Stylesheet' 		=> "comingepisodes.css",
+			'Section' 		=> 2, 
+			'Position' 		=> 2,
+			'Parts'			=> "",
+			'Block' 		=> "",  
+			'Call'			=> "",
+			'Loader'		=> "",
+			'Interval'		=> "",
+			'Script'		=> ""
+		    );
 
 function widgetComingEpisodes() {
 	global $sickbeardcomingepisodes;
@@ -9,12 +23,12 @@ function widgetComingEpisodes() {
 	echo "\t<div id=\"comingepisodeswrapper\"></div>\n";
 
 	if(strpos($sickbeardcomingepisodes, "http://")===false) {
-			$iFrameSource= 'widgets/wComingEpisodes.php?style=s';
+			$iFrameSource= 'widgets/SickBeard/wComingEpisodes.php?style=s';
 	} else {
 		if(strpos($sickbeardcomingepisodes, "/sickbeard/")===false) {
-			$iFrameSource= 'widgets/wComingEpisodes.php?display=yes';
+			$iFrameSource= 'widgets/SickBeard/wComingEpisodes.php?display=yes';
 		} else {
-			$iFrameSource= 'widgets/wComingEpisodes.php?style=w';
+			$iFrameSource= 'widgets/SickBeard/wComingEpisodes.php?style=w';
 		}
 	}
 	echo "      <iframe onload='onIFrameLoad(this);' src ='".$iFrameSource."' name='middle' scrolling='no' frameborder='0' border='0' framespacing='0'>";
@@ -96,7 +110,7 @@ function widgetComingEpisodesHeader() {
 ComingEpisodesSCRIPT;
 }
 if(!empty($_GET["display"])) {
-	include_once "../config.php";
+	include_once "../../config.php";
 
 	$body = getComingSoon($sickbeardcomingepisodes);
 
@@ -108,7 +122,7 @@ if(!empty($_GET["display"])) {
 		$uri_full = $sickbeardcomingepisodes;
 	}
 	$uri_domain = str_replace($urldata["path"], "", $sickbeardcomingepisodes);
-	
+
 	$regex  = '/(<[(img)|(a)]\s*(.*?)\s*[(src)|(href)]=(?P<link>[\'"]+?\s*\S+\s*[\'"])+?\s*(.*?)\s*>)/i';
 
 	preg_match_all($regex, $body, $matches);
@@ -124,7 +138,6 @@ if(!empty($_GET["display"])) {
 		}
 		$body = str_replace($link, $newlink, $body);
 	}
-
 	echo $body;
 }
 
@@ -210,6 +223,7 @@ function getComingSoon($url = "") {
 }
 
 function displayComingSoon () {
+
 	global $sickbeardurl;
 
 	if(strrpos($sickbeardurl, "/") < strlen($sickbeardurl)) {
@@ -222,9 +236,9 @@ function displayComingSoon () {
 	//$body = changeLinks($body);
 	
 	if(!empty($_GET["style"]) && (($_GET["style"] == "s") || ($_GET["style"] == "m"))) {
-		$body = str_replace("src=\"".$sickbeardurl."showPoster/", "src=\"../sickbeardposter.php", $body);
-		$body = str_replace("src=\"/sickbeard/showPoster/", "src=\"../sickbeardposter.php", $body);
-		$body = str_replace("src=\"/showPoster/", "src=\"../sickbeardposter.php", $body);
+		$body = str_replace("src=\"".$sickbeardurl."showPoster/", "src=\"../../sickbeardposter.php", $body);
+		$body = str_replace("src=\"/sickbeard/showPoster/", "src=\"../../sickbeardposter.php", $body);
+		$body = str_replace("src=\"/showPoster/", "src=\"../../sickbeardposter.php", $body);
 	}
 	$body = str_replace("src=\"/sickbeard/", "src=\"".$sickbeardurl, $body);
 	$body = str_replace("href=\"/sickbeard/", "href=\"".$sickbeardurl, $body);
@@ -240,7 +254,7 @@ function displayComingSoon () {
 }
 
 if(!empty($_GET["style"]) && (($_GET["style"] == "s") || ($_GET["style"] == "w"))) {
-	include_once "../config.php";
+	include_once "../../config.php";
 	displayComingSoon();
 }
 

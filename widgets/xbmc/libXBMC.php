@@ -502,7 +502,7 @@ function displayVideoMovie($videoInfo, $style, $action, $breadcrumb, $params) {
 
 	echo "\t</span>\n";
 	echo "\t<span class='library-desc'>\n";
-	if(!empty($videoInfo['originaltitle']) && ($videoInfo['originaltitle'] != $videoInfo['title'])) {
+	if($videoInfo['originaltitle'] != $videoInfo['title']) {
 		echo "\t\t<p>".$videoInfo['originaltitle']."</p>\n";
 	}
 	echo "\t\t<p>".$videoInfo['genre']."</p>\n";

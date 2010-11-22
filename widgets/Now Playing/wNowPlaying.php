@@ -1,19 +1,73 @@
 <?php
-$wdgtNowPlayingAjax = array("type" => "ajax", "block" => "nowplayingwrapper", "call" => "widgets/wNowPlaying.php?ajax=w", "interval" => 1000);
-$wdgtNowPlayingControls = array("type" => "inline", "function" => "widgetNowPlayingControls();", "headerfunction" => "widgetNowPlayingHeader();");
-$wdgtNowPlaying = array("name" => "Now Playing", "type" => "mixed", "parts" => array($wdgtNowPlayingAjax, $wdgtNowPlayingControls));
-$wIndex["wNowPlaying"] = $wdgtNowPlaying;
 
-function widgetNowPlayingControls($baseurl = "") {
-	echo "<div id=\"nowplaying-controls\" class=\"controls\">\n";
-	echo "\t".anchorControlButton($baseurl, 'SkipPrevious', 'btnSkipBackward.png', 'Skip Back')."\n";
-	echo "\t".anchorControlButton($baseurl, 'PlayPause', 'btnPlayPause.png', 'Play/Pause')."\n";
-	echo "\t".anchorControlButton($baseurl, 'Stop', 'btnStop.png')."\n";
-	echo "\t".anchorControlButton($baseurl, 'SkipNext', 'btnSkipForward.png', 'Skip Next')."\n";
-	echo "\t".anchorControlButton($baseurl, 'ShowPlaylist', 'btnPlayList.png')."\n";
-	echo "</div>\n";
-	echo "<div class=\"clear-float\"></div>\n";
-	echo "<div id=\"nowplaying-list\"></div>\n";
+$widgetNowPlayingAjax = array(
+			'Id'			=> "wNowPlayingAjax",
+			'Child' 		=> "true", 
+			'Type' 			=> "ajax", 
+			'Block' 		=> "nowplayingwrapper", 
+			'Call' 			=> "widgets/Now Playing/wNowPlaying.php?ajax=w", 
+			'Interval'		=> 1000,
+			'Loader'		=> "",
+			'Title' 		=> "", 
+			'Parts'			=> "",
+			'Function' 		=> "",
+			'HeaderFunction' 	=> "", 
+			'Stylesheet' 		=> "",
+			'Script'		=> "",
+			'Section' 		=> "", 
+			'Position' 		=> ""
+		     );
+$widgetNowPlayingControls = array(
+			'Id'			=> "wNowPlayingControls",
+			'Child' 		=> "true", 
+			'Type' 			=> "inline", 
+			'Function' 		=> "widgetNowPlayingControls();",
+			'HeaderFunction' 	=> "widgetNowPlayingHeader();", 
+			'Title' 		=> "", 
+			'Block' 		=> "", 
+			'Call' 			=> "",
+			'Loader'		=> "", 
+			'Interval'		=> "",
+			'Parts'			=> "",
+			'Stylesheet' 		=> "",
+			'Script'		=> "",
+			'Section' 		=> "", 
+			'Position' 		=> ""
+		     );
+
+$widget_init = array(	'Id' 			=> "wNowPlaying", 
+			'Child'			=> "false",
+			'Type' 			=> "mixed", 
+			'Title' 		=> "Now Playing", 
+			'Parts'			=> array($widgetNowPlayingAjax, $widgetNowPlayingControls),
+			'Stylesheet' 		=> "nowplaying.css",
+			'Section' 		=> 3, 
+			'Position' 		=> 1,
+			'Function' 		=> "",
+			'HeaderFunction' 	=> "",
+			'Block' 		=> "",   
+			'Call'			=> "",
+			'Loader'		=> "",
+			'Interval'		=> "",
+			'Script'		=> ""
+
+		     );
+
+
+
+function widgetNowPlayingControls() {
+	echo <<< NOWPLAYINGCONTROLS
+	<div id='nowplaying-controls' class="controls">
+		<a class='controlbutton' onclick='cmdNowPlaying("SkipPrevious");' href='#'><img src='media/btnSkipBackward.png' alt='Skip Back'/></a>
+        	<a class='controlbutton' onclick='cmdNowPlaying("PlayPause");' href='#'><img src='media/btnPlayPause.png' alt='Play/Pause'/></a>
+		<a class='controlbutton' onclick='cmdNowPlaying("Stop");' href='#'><img src='media/btnStop.png' alt='Stop'/></a>
+		<a class='controlbutton' onclick='cmdNowPlaying("SkipNext");' href='#'><img src='media/btnSkipForward.png' alt='Skip Next'/></a>
+		<a class='controlbutton' onclick='cmdNowPlaying("ShowPlaylist");' href='#'>Show Playlist</a>
+	</div>
+	<div class="clear-float"></div>
+	<div id='nowplaying-list'>
+	</div>
+NOWPLAYINGCONTROLS;
 }
 function widgetNowPlayingHeader() {
 	echo <<< NOWPLAYINGHEADER
@@ -21,7 +75,7 @@ function widgetNowPlayingHeader() {
 		<!--
 			function cmdNowPlaying(cmd) {
 				var cmdXbmcPlayingRequest = new ajaxRequest();
-				cmdXbmcPlayingRequest.open("GET", "widgets/wNowPlaying.php?ajax=c&command="+cmd, true);
+				cmdXbmcPlayingRequest.open("GET", "widgets/Now Playing/wNowPlaying.php?ajax=c&command="+cmd, true);
 					cmdXbmcPlayingRequest.onreadystatechange = function() {
 						if (cmdXbmcPlayingRequest.readyState==4) {
 							if (cmdXbmcPlayingRequest.status==200 || window.location.href.indexOf("http")==-1) {
@@ -41,28 +95,8 @@ NOWPLAYINGHEADER;
 }
 ?>
 <?php
-function anchorControlButton($baseurl, $cmd, $img = "", $label = "") {
-	if(empty($label)) {
-		$label = $cmd;
-	}
-	if(!empty($_GET['style']) && ($_GET['style'] == "m")) {
-		$mediadir = "../media";
-		$anchorlink = "href=\"".$baseurl."?style=m";
-		$anchorlink .= (!empty($_GET['w']) ? "&w=".$_GET['w'] : "");
-		$anchorlink .= "&cmd=".$cmd."\"";
-	} else {
-		$mediadir = "media";
-		$anchorlink = "onclick=\"cmdNowPlaying('".$cmd."');\" href=\"#\"";
-	}
-	$anchorlabel = (!empty($img) ? "<img src=\"".$mediadir."/".$img."\" alt=\"".$label."\"/>" : $label);
-	return "<a class=\"controlbutton\" ".$anchorlink.">".$anchorlabel."</a>";
-}
-function displayNowPlaying($baseurl = "") {
+function displayNowPlaying($static = false) {
 	global $xbmcimgpath;
-	
-	if(!empty($_GET['style']) && ($_GET['style'] == 'm') && !empty($_GET['cmd'])) {
-		processCommand($_GET['cmd']);
-	}
 	
 	echo "<div id=\"nowplaying\">\n";
 
@@ -111,7 +145,7 @@ function displayNowPlaying($baseurl = "") {
 			}
 			if(strlen($thumb) > 0) {
 				echo "\t<div id=\"thumbblock\" class=\"thumbblockvideo\">\n";
-				if(!empty($baseurl)) {
+				if($static) {
 					echo "\t\t<img src=\"".$xbmcimgpath.$thumb."\" alt=\"".htmlentities($plot, ENT_QUOTES)."\" />";
 				} else {
 					echo "\t\t<a href=\"".$xbmcimgpath.$thumb."\" class=\"highslide\" onclick=\"return hs.expand(this)\">\n";
@@ -137,9 +171,6 @@ function displayNowPlaying($baseurl = "") {
 		$percentage = $results['result'];
 		echo "\t\t<div class='progressbar'><div class='progress' style='width:".$percentage."%'></div></div>";
 
-		if(!empty($_GET['style']) && $_GET['style'] == 'm') {
-			widgetNowPlayingControls($baseurl);
-		}
 	} elseif (($results['result']['audio']) == 1) {
 		//get playlist items
 		$results = jsonmethodcall("AudioPlaylist.GetItems");
@@ -152,7 +183,7 @@ function displayNowPlaying($baseurl = "") {
 		$album = $items[$current]['album'];
 		if(strlen($thumb) > 0) {
 			echo "\t<div id=\"thumbblock\" class=\"thumbblockaudio\">\n";
-			if(!empty($baseurl)) {
+			if($static) {
 				echo "\t\t<img src=\"".$xbmcimgpath.$thumb."\" alt=\"".htmlentities($artist." - ".$album." - ".$title, ENT_QUOTES)."\" />";
 			} else {
 				echo "\t\t<a href=\"".$xbmcimgpath.$thumb."\" class=\"highslide\" onclick=\"return hs.expand(this)\">\n";
@@ -179,10 +210,6 @@ function displayNowPlaying($baseurl = "") {
 		$results = jsonmethodcall("AudioPlayer.GetPercentage");
 		$percentage = $results['result'];
 		echo "<div class=\"progressbar\"><div class=\"progress\" style=\"width:".$percentage."%\"></div></div>\n";
-
-		if(!empty($_GET['style']) && $_GET['style'] == 'm') {
-			widgetNowPlayingControls($baseurl);
-		}
 	} else {
 		echo "\t<p>Nothing Playing</p>\n";
 	} 
@@ -191,43 +218,42 @@ function displayNowPlaying($baseurl = "") {
 function processCommand($command) {
 	global $xbmcimgpath;
 	
-	switch($command) {
-		case "ShowPlaylist":
-			$results = jsonmethodcall("Player.GetActivePlayers");
-			if (($results['result']['video']) == 1) {
-				echo "\t<p>Not Yet Implemented</p>\n";
-			} elseif (($results['result']['audio']) == 1) {
-				$results = jsonmethodcall("AudioPlaylist.GetItems");
+	if ($command == "ShowPlaylist") {
 
-				if (array_key_exists('items', $results['result'])) {
-					$items = $results['result']['items'];
-					$current = $results['result']['current'];
+		$results = jsonmethodcall("Player.GetActivePlayers");
+		if (($results['result']['video']) == 1) {
+			echo "\t<p>Not Yet Implemented</p>\n";
+		} elseif (($results['result']['audio']) == 1) {
+			$results = jsonmethodcall("AudioPlaylist.GetItems");
 
-					$songcount = count($results);
-					$i = 0;
+			if (array_key_exists('items', $results['result'])) {
+				$items = $results['result']['items'];
+				$current = $results['result']['current'];
 
-					foreach ($items as $queueItem) {
-						if ($i > $current) {
-							$thumb = $queueItem['thumbnail'];
-							$artist = $queueItem['artist'];
-							$title = $queueItem['title'];
-							$album = $queueItem['album'];
-							if(strlen($thumb) > 0) {
-								echo "<div id=\"playlist-item-".$i."\" class=\"playlist-item\">\n";
-								echo "\t<img src=\"".$xbmcimgpath.$thumb."\" />\n";
-							}
-							echo "\t<p>".$artist."</p>\n";
-							echo "\t<p>".$title."</p>\n";
-							echo "\t<p>".$album."</p>\n";
-							echo "</div>\n";
-							echo "<div class=\"clear-float\"></div>\n";
+				$songcount = count($results);
+				$i = 0;
+
+				foreach ($items as $queueItem) {
+					if ($i > $current) {
+						$thumb = $queueItem['thumbnail'];
+						$artist = $queueItem['artist'];
+						$title = $queueItem['title'];
+						$album = $queueItem['album'];
+						if(strlen($thumb) > 0) {
+							echo "<div id=\"playlist-item-".$i."\" class=\"playlist-item\">\n";
+							echo "\t<img src=\"".$xbmcimgpath.$thumb."\" />\n";
 						}
-						$i++;
+						echo "\t<p>".$artist."</p>\n";
+						echo "\t<p>".$title."</p>\n";
+						echo "\t<p>".$album."</p>\n";
+						echo "</div>\n";
+						echo "<div class=\"clear-float\"></div>\n";
 					}
+					$i++;
 				}
 			}
-			break;
-		default:
+		}
+	} else {
 		/*
 			XBMC Player Commands
 			PlayPause,            Pauses or unpause playback
@@ -273,15 +299,15 @@ function processCommand($command) {
 }
 
 if (!empty($_GET['ajax']) && ($_GET['ajax'] == "w")) {
-	require_once "../config.php";
-	require_once "../functions.php";
+	require_once "../../config.php";
+	require_once "../../functions.php";
 	displayNowPlaying();
 }
 ?>
 <?php
 if (!empty($_GET['ajax']) && ($_GET['ajax'] == "c")) {
-	require_once "../config.php";
-	require_once "../functions.php";
+	require_once "../../config.php";
+	require_once "../../functions.php";
 
 	if (!empty($_GET['command'])) {
 		$command = $_GET["command"];
@@ -296,7 +322,7 @@ if (!empty($_GET['ajax']) && ($_GET['ajax'] == "c")) {
 }
 
 if (!empty($_GET['style']) && (($_GET['style'] == "w") || ($_GET['style'] == "s"))) {
-	require_once "../config.php";
+	require_once "../../config.php";
 
 	if ($_GET['style'] == "w") {
 ?>

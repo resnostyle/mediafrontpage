@@ -1,6 +1,21 @@
 <?php
-$wdgtSabnzbd = array("name" => "Sabnzbd", "type" => "ajax", "block" => "sabnzbdwrapper", "headerfunction" => "widgetSabnzbdHeader();", "call" => "widgets/wSabnzbd.php?style=w&c=15", "interval" => 10000);
-$wIndex["wSabnzbd"] = $wdgtSabnzbd;
+
+$widget_init = array(	'Id' 			=> "wSabnzbd",
+			'Child'			=> "false",
+			'Type' 			=> "ajax", 
+			'Title' 		=> "Sabnzbd", 
+			'Function' 		=> "",
+			'HeaderFunction' 	=> "widgetSabnzbdHeader();", 
+			'Stylesheet' 		=> "sabnzbd.css",
+			'Section' 		=> 3, 
+			'Position' 		=> 3,
+			'Parts'			=> "",
+			'Block' 		=> "sabnzbdwrapper",  
+			'Call'			=> "widgets/Sabnzbd/wSabnzbd.php?style=w&c=15",
+			'Loader'		=> "",
+			'Interval'		=> 10000,
+			'Script'		=> ""
+		    );
 
 function widgetSabnzbdHeader() {
 	echo <<< SABNZBDHEADER
@@ -59,7 +74,7 @@ function sabStatus($count = 15) {
 		echo "<br/><pre>".print_r($sabqueue, true)."</pre>";
 	}
 
-	$ajaxurl = (!empty($_GET['style']) && ($_GET['style'] == "m") ? "index.php?w=wSabnzbd&" : "widgets/wSabnzbd.php?").(!empty($_GET['style']) ? "style=".$_GET['style']."&" : "")."c=".$count."&";
+	$ajaxurl = (!empty($_GET['style']) && ($_GET['style'] == "m") ? "index.php?w=wSabnzbd&" : "widgets/Sabnzbd/wSabnzbd.php?").(!empty($_GET['style']) ? "style=".$_GET['style']."&" : "")."c=".$count."&";
 	$pathtoimages = ((!empty($_GET['style']) && (($_GET['style'] == "m") || ($_GET['style'] == "s"))) ? "../" : "./");
 	$state = ($sabqueue["status"]);	
 
@@ -151,13 +166,13 @@ function sabStatus($count = 15) {
 }
 
 if(!empty($_GET['cmd'])) {
-	require_once "../config.php";
+	require_once "../../config.php";
 
 	sabQuery(urldecode($_GET['cmd']));
 }
 
 if(!empty($_GET['style']) && (($_GET['style'] == "w") || ($_GET['style'] == "s"))) {
-	require_once "../config.php";
+	require_once "../../config.php";
 
 	$count = (!empty($_GET['c'])) ? $_GET['c'] : 15;
 	if($_GET['style'] == "w") {
