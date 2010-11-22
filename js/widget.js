@@ -162,14 +162,20 @@ var widgets = {
 			settings = this.settings,
 			arrLayout = '';
 		var jsonLayout = '';
+			var p = 1;
 			
         // Assemble the layout array in json
         $(settings.sections).each(function(i){
             jsonLayout += (i===0) ? '{ "method" : "SaveLayout", "params" : { "section'+(i+1)+'" : { ' : ', "section'+(i+1)+'" : { ';
             $(settings.widgetSelector,this).each(function(i){
                 jsonLayout += (i===0) ? '"' : ', "';
+
+
+                jsonLayout += 'position'+p+'" : { ';
+		p++;
+
                 // ID of widget:
-                jsonLayout += $(this).attr('id') + '" : { "title" : "';
+                jsonLayout += '"id" : "'+$(this).attr('id')+'", "title" : "';
 
                 // Title of widget (replaced used characters)
                 jsonLayout += $('h3:eq(0)',this).text().replace(/\|/g,'[-PIPE-]').replace(/,/g,'[-COMMA-]') + '", "display" : "';
