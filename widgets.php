@@ -2,7 +2,6 @@
 require_once "config.php";
 require_once "functions.php";
 
-
 class widget {
 	function __construct($widget_init, $widgetfile) {
 			$this->Id = $widget_init['Id'];
@@ -197,6 +196,4 @@ function getAllWidgets() {
 	}
 	return $widgets;
 }
-
-
 ?>
