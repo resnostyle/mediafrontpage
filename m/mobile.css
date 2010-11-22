@@ -61,6 +61,8 @@ td {
 }
 
 .progressbar { 
+	-moz-border-radius:6px 6px 6px 6px;
+	border-radius:6px 6px 6px 6px;
 	display: block;                 
 	height: 16px; 
 	margin: 0 0 2px;
@@ -69,6 +71,8 @@ td {
 	overflow: hidden;
 }
 .progress { 
+	-moz-border-radius:6px 6px 6px 6px;
+	border-radius:6px 6px 6px 6px;
 	background: #FF9522; 
 	height: 100%; 
 	text-align: left;
@@ -313,6 +317,7 @@ div.library-info img {
 #sab-queue div.progresslabel {
 	padding: 0 4px;
 	overflow:hidden;
+	text-align:left;
 }
 #sab-queue div.actions { 
 	display: table-cell;
