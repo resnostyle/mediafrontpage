@@ -54,17 +54,14 @@ if(!class_exists("widget")) {
 				// Open the database
 			try {   $db = new PDO('sqlite:settings.db');
 
-				// Create the database
-				$db->exec("CREATE TABLE Widgets (Id TEXT PRIMARY KEY, Child BOOLEAN, File TEXT, Type TEXT, Parts TEXT, Block TEXT, Title TEXT, Function TEXT, Call TEXT, Loader TEXT, Interval INTEGER, HeaderFunction TEXT, Stylesheet TEXT, Script TEXT, Section INTEGER, Position INTEGER)");
-
-				// Add widget to database
-//				$db->exec("INSERT INTO Widgets (Id, Child, File, Type, Block, Title, Parts, HeaderFunction, Function, Call, Loader, Interval, Stylesheet, Script, Section, Position) VALUES ('$this->Id', '$this->Child', '$this->File', '$this->Type', '$this->Block', '$this->Title', '".serialize($this->Parts)."', '$this->HeaderFunction', '$this->Function', '$this->Call', '$this->Loader', '$this->Interval',  '$this->Stylesheet', '$this->Script', '$this->Section', '$this->Position');");
+				// Create the database if it doesn't exist
+				$db->exec("CREATE TABLE Widgets (Id TEXT PRIMARY KEY, Child BOOLEAN, File TEXT, Type TEXT, Parts TEXT, Block TEXT, Title TEXT, Function TEXT, Call TEXT, Loader TEXT, Interval INTEGER, HeaderFunction TEXT, Stylesheet TEXT, Script TEXT, Section INTEGER, Position INTEGER, Display TEXT)");
 
 				// Prepare the SQL Statement
 				$sql = "INSERT INTO Widgets (Id, Child, File, Type, Block, Title, Parts, HeaderFunction, Function, Call, Loader, Interval, Stylesheet, Script, Section, Position) VALUES (:Id, :Child, :File, :Type, :Block, :Title, :Parts, :HeaderFunction, :Function, :Call, :Loader, :Interval, :Stylesheet, :Script, :Section, :Position);";
-
 				$q = $db->prepare($sql);
 
+				// Add widget to database
 				$q->execute(array(	':Id'=>$this->Id, 
 							':Child'=>$this->Child,
 							':File'=>$this->File,
@@ -82,12 +79,6 @@ if(!class_exists("widget")) {
 							':Section'=>$this->Section, 
 							':Position'=>$this->Position));
 				
-				/*// If the widget has parts add them
-				if (!empty($this->Type) && $this->Type == 'mixed') {
-					foreach ( $this->Parts as $part) {
-						//$$part['Id']->addWidget();
-					}
-				}*/
 			} catch(PDOException $e) {
 				print 'Exception : '.$e->getMessage();	
 			}
@@ -192,13 +183,12 @@ if(!class_exists("widget")) {
 		}						
 	}
 }
-
 function getAllWidgets() {
 		// Open the database
 	try {	$db = new PDO('sqlite:settings.db');
 
 		// Fetch into an PDOStatement object			
-		$request = $db->prepare("SELECT * FROM Widgets");
+		$request = $db->prepare("SELECT * FROM Widgets ORDER BY Section ASC, Position ASC");
 		$request->execute();
 
 		// Into array

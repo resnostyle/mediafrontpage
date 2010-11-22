@@ -58,32 +58,4 @@ function formattimes($input1, $input2) {
 
 	return $output1." - ".$output2;
 }
-
-function return_array_code($array, $indent = 1, $quote = "\"") {
-	//Example call:
-	//$layout_code_string = '$arrLayout = '.return_array_code($arrLayout).";\n";
-
-	$first = true;
-	$indentstr = str_repeat("\t", $indent);
-
-	$output = "array(\n\t".$indentstr;
-
-	foreach($array as $key => $value) {
-		if($first) {
-			$first = false;
-		} else {
-			$output .= ",\n\t".$indentstr;
-		}
-		
-		if(is_array($value)) {
-			$value = return_array_code($value, $indent + 1, $quote);
-			$output .= $quote.$key.$quote.' => '.$value;
-		} else {
-			$output .= $quote.$key.$quote.' => '.$quote.$value.$quote;
-		}
-	}
-	$output .= "\n".$indentstr.")";
-
-	return $output;
-}
 ?>

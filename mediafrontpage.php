@@ -94,51 +94,48 @@ foreach (glob("widgets/*/w*.php") as $widgetfile) {
 		<div id="main">
 		<!-- START: Dynamic Inserts From Widgets -->
 <?php
-		$i=0;
-		//While ( $i < $settings['sections'] ) { //needs work
-			echo "\n\t<ul id=\"section-1\" class=\"section ui-sortable\">\n";
+		$s = 1;
+		while ( $s <= 3 ) {
+			echo "\n\t<ul id=\"section-".$s."\" class=\"section ui-sortable\">\n";
 
 			// Output widgets
 			foreach ($widgets as $widget) {
 
-				// Don't give child widgets their own widget box				
-				if ($widget['Child'] != 'true' && $widget['Type'] != 'empty') {
-					echo "\t\t<li id=\"".$widget['Id']."\" class=\"widget";
-	
-					// Is widget collapsed
-					echo " collapsed";  //yes
-					if (!empty($widget["Display"])) {
-						echo " ".$widget["Display"];
-					}
-					echo "\">";
-					echo "\t\t\t<div class=\"widget-head\">";
-					echo "\t\t\t\t<h3>".$widget['Title']."</h3>\n";
-					echo "\t\t\t</div><!-- .widget-head -->\n";
-					echo "\t\t\t<div class=\"widget-content\">\n";
-					
-					// Render parent widget
-					$$widget['Id']->renderWidget($widget);
-				
-					// Render child widgets	
-					if (!empty($widget['Parts']) && $widget['Type'] == 'mixed') {
-						$parts = unserialize($widget['Parts']);
-						foreach ($parts as $part) {
-							$part_class = $part['Id'];
-							$$part_class->renderWidget();
+				if ($widget['Section'] == $s) {
+					// Don't give child widgets their own widget box				
+					if ($widget['Child'] != 'true' && $widget['Type'] != 'empty') {
+						echo "\t\t<li id=\"".$widget['Id']."\" class=\"widget";
+		
+						// Is widget collapsed
+						if (!empty($widget["Display"])) {
+							echo " ".$widget["Display"];
 						}
-					}
+						echo "\">";
+						echo "\t\t\t<div class=\"widget-head\">";
+						echo "\t\t\t\t<h3>".$widget['Title']."</h3>\n";
+						echo "\t\t\t</div><!-- .widget-head -->\n";
+						echo "\t\t\t<div class=\"widget-content\">\n";
 						
-					echo "\t\t\t</div><!-- .widget-content -->\n";
-					echo "\t\t</li><!-- #".$widget['Id']." .widget -->\n";
+						// Render parent widget
+						$$widget['Id']->renderWidget($widget);
+					
+						// Render child widgets	
+						if (!empty($widget['Parts']) && $widget['Type'] == 'mixed') {
+							$parts = unserialize($widget['Parts']);
+							foreach ($parts as $part) {
+								$part_class = $part['Id'];
+								$$part_class->renderWidget();
+							}
+						}
+							
+						echo "\t\t\t</div><!-- .widget-content -->\n";
+						echo "\t\t</li><!-- #".$widget['Id']." .widget -->\n";
+					}
 				}
-
 			}
-			echo "\t</ul><!-- #section-1 .section -->\n";    	
-			echo "\n\t<ul id=\"section-2\" class=\"section ui-sortable\">\n";		
-			echo "\t</ul><!-- #section-2 .section -->\n";    
-			echo "\n\t<ul id=\"section-3\" class=\"section ui-sortable\">\n"; 	
-			echo "\t</ul><!-- #section-3 .section -->\n";   
-		//} END of Layout
+			echo "\n\t</ul><!-- #section-".$s." -->\n";
+			$s++;  
+		}
  ?>
 		<!-- END: Dynamic Inserts From Widgets -->
 		</div><!-- #main -->
