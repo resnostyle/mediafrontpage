@@ -7,12 +7,12 @@ $widgetMediaLibrary = array(
 			'Title' 		=> "Media Library", 
 			'Parts'			=> "",
 			'Stylesheet' 		=> "",
-			'Section' 		=> 1, 
-			'Position' 		=> 3,
+			'Section' 		=> 2, 
+			'Position' 		=> 1,
 			'Function' 		=> "",
 			'HeaderFunction' 	=> "widgetMediaLibraryHeader();",
 			'Block' 		=> "medialibrarywrapper",   
-			'Call'			=> "widgets/xbmc/wXBMCLibrary.php?w=l&style=w&a=l",
+			'Call'			=> "widgets/xbmc/wXBMC.php?w=l&style=w&a=l",
 			'Loader'		=> "",
 			'Interval'		=> "0",
 			'Script'		=> ""
@@ -26,12 +26,12 @@ $widgetRecentEpisodes = array(
 			'Parts'			=> "",
 			'Stylesheet' 		=> "",
 			'Section' 		=> 1, 
-			'Position' 		=> 3,
+			'Position' 		=> 2,
 			'Function' 		=> "",
 			'HeaderFunction' 	=> "widgetMediaLibraryHeader();",
 			'Block' 		=> "recentepisodeswrapper",   
-			'Call'			=> "widgets/xbmc/wXBMCLibrary.php?w=l&style=w&a=re&c=15",
-			'Loader'		=> "cmdXbmcLibrary('recentepisodeswrapper', 'widgets/xbmc/wXBMCLibrary.php?w=re&', 're', '', '', true);",
+			'Call'			=> "widgets/xbmc/wXBMC.php?w=l&style=w&a=re&c=15",
+			'Loader'		=> "cmdXbmcLibrary('recentepisodeswrapper', 'widgets/xbmc/wXBMC.php?w=re&', 're', '', '', true);",
 			'Interval'		=> "60000",
 			'Script'		=> ""
 		     );
@@ -43,13 +43,13 @@ $widgetRecentMovies = array(
 			'Title' 		=> "Recent Movies", 
 			'Parts'			=> "",
 			'Stylesheet' 		=> "",
-			'Section' 		=> 1, 
-			'Position' 		=> 3,
+			'Section' 		=> 3, 
+			'Position' 		=> 2,
 			'Function' 		=> "",
 			'HeaderFunction' 	=> "widgetMediaLibraryHeader();",
 			'Block' 		=> "recentmovieswrapper",   
-			'Call'			=> "widgets/xbmc/wXBMCLibrary.php?w=rm&style=w&a=rm&c=15",
-			'Loader'		=> "cmdXbmcLibrary('recentmovieswrapper', 'widgets/xbmc/wXBMCLibrary.php?w=rm&', 'rm', '', '', true);",
+			'Call'			=> "widgets/xbmc/wXBMC.php?w=rm&style=w&a=rm&c=15",
+			'Loader'		=> "cmdXbmcLibrary('recentmovieswrapper', 'widgets/xbmc/wXBMC.php?w=rm&', 'rm', '', '', true);",
 			'Interval'		=> "60000",
 			'Script'		=> ""
 		     );
@@ -63,7 +63,7 @@ $widget_init = array(	'Id' 			=> "",
 			'Section' 		=> 1, 
 			'Position' 		=> 3,
 			'Function' 		=> "",
-			'HeaderFunction' 	=> "",
+			'HeaderFunction' 	=> "widgetMediaLibraryHeader();",
 			'Block' 		=> "",   
 			'Call'			=> "",
 			'Loader'		=> "",
@@ -87,7 +87,7 @@ function widgetMediaLibraryHeader($params = array('count' => 15)) {
 							if (cmdXbmcLibraryRequest.status==200 || window.location.href.indexOf("http")==-1) {
 								document.getElementById(wrapper).innerHTML=cmdXbmcLibraryRequest.responseText;
 							} else {
-								//alert("An error has occured making the request (XbmcLibrary)");
+								alert("An error has occured making the request (XbmcLibrary)");
 							}
 						}
 					}
@@ -123,7 +123,7 @@ LIBRARYHEADER;
 if (!empty($_GET['style']) && (($_GET['style'] == "w") || ($_GET['style'] == "s"))) {
 	require_once "../../config.php";
 	require_once "../../functions.php";
-	require_once "libXBMCLibrary.php";
+	require_once "libXBMC.php";
 
 	$action = $_GET['a'];
 	$breadcrumb = (!empty($_GET['bc'])) ? $_GET['bc'] : "";
@@ -137,7 +137,7 @@ if (!empty($_GET['style']) && (($_GET['style'] == "w") || ($_GET['style'] == "s"
 				if(empty($params['wrapper'])) {
 					$params['wrapper'] = $widgetRecentEpisodes['Block'];
 				}
-				$params['harness'] = "widgets/xbmc/wXBMCLibrary.php?w=re&";
+				$params['harness'] = "widgets/xbmc/wXBMC.php?w=re&";
 				$params['refresh'] = true;
 				break;
 			case "rm":  // Recent Movies
@@ -145,7 +145,7 @@ if (!empty($_GET['style']) && (($_GET['style'] == "w") || ($_GET['style'] == "s"
 				if(empty($params['wrapper'])) {
 					$params['wrapper'] = $widgetRecentMovies['Block'];
 				}
-				$params['harness'] = "widgets/xbmc/wXBMCLibrary.php?w=rm&";
+				$params['harness'] = "widgets/xbmc/wXBMC.php?w=rm&";
 				$params['refresh'] = true;
 				break;
 			default:
@@ -153,12 +153,12 @@ if (!empty($_GET['style']) && (($_GET['style'] == "w") || ($_GET['style'] == "s"
 				if(empty($params['href'])) {
 					$params['wrapper'] = $widgetMediaLibrary['Block'];
 				}
-				$params['harness'] = "widgets/xbmc/wXBMCLibrary.php?w=l&";
+				$params['harness'] = "widgets/xbmc/wXBMC.php?w=l&";
 		}
 		$params['href'] = "#";
 	} else {
 		if(empty($params['href'])) {
-			$params['href'] = "widgets/xbmc/wXBMCLibrary.php";
+			$params['href'] = "widgets/xbmc/wXBMC.php";
 		}
 	}
 	
