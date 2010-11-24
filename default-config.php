@@ -91,4 +91,10 @@ $customStyleSheet = "";
 //Example of how to use this
 //$customStyleSheet = "css/lighttheme.css";
 
+//Show only posters for coming episodes
+//$customStyleSheet = "css/comingepisodes-minimal-poster.css";
+
+//Show only banners for coming episodes
+//$customStyleSheet = "css/comingepisodes-minimal-banner.css";
+
 ?>
