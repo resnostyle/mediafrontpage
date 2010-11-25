@@ -1,0 +1,32 @@
+.listing .title {
+	display: none;
+}
+.listing .info {
+	display: none;
+}
+.listing h1 {
+	display: none!important;
+}
+.listing {
+	text-align: left;
+	width: 200px;
+	height: 20px;
+/*	background: transparent!important;
+*/}
+.listingThumb {
+	width: 200px;
+	height: 30px;
+};
+br {
+	clear: both;
+}
+#outerWrapper {
+	padding-left: 12px!important;
+}
+#listingWrapper {
+max-height: 250px;
+}
+
+#main #wComingEpisodes.widget .widget-content {
+max-height:90%;
+}

@@ -83,12 +83,18 @@ $rssfeeds["NZBMatrix - TV Shows (HD x264)"] = array("url" => "http://rss.nzbmatr
 $rssfeeds["NZBMatrix - Movies (DivX)"]      = array("url" => "http://rss.nzbmatrix.com/rss.php?subcat=2", "cat" => "movies");
 $rssfeeds["NZBMatrix - Movies (HD x264)"]   = array("url" => "http://rss.nzbmatrix.com/rss.php?subcat=42", "cat" => "movies");
 $rssfeeds["NZBMatrix - Music (MP3)"]        = array("url" => "http://rss.nzbmatrix.com/rss.php?subcat=22", "cat" => "music");
-$rssfeeds["NZBMatrix - Music (Loseless)"]   = array("url" => "http://rss.nzbmatrix.com/rss.php?subcat=23", "cat" => "music");
+$rssfeeds["NZBMatrix - Music (Lossless)"]   = array("url" => "http://rss.nzbmatrix.com/rss.php?subcat=23", "cat" => "music");
 $rssfeeds["NZBMatrix - Sports"]             = array("url" => "http://rss.nzbmatrix.com/rss.php?subcat=7", "cat" => "sports");
 $rssfeeds["MediaFrontPage on Github"]       = array("url" => "https://github.com/nick8888/mediafrontpage/commits/master.atom", "type" => "atom");
 
 $customStyleSheet = "";
 //Example of how to use this
 //$customStyleSheet = "css/lighttheme.css";
+
+//Show only posters for coming episodes
+//$customStyleSheet = "css/comingepisodes-minimal-poster.css";
+
+//Show only banners for coming episodes
+//$customStyleSheet = "css/comingepisodes-minimal-banner.css";
 
 ?>

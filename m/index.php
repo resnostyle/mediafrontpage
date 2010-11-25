@@ -48,6 +48,7 @@ if(empty($params['href'])) {
 <html>
 	<head>
 		<title>Media Front Page - Mobile</title>
+		<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
 		<link href="mobile.css" rel="stylesheet" type="text/css" />	
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 <script type="text/javascript" charset="utf-8">
@@ -61,9 +62,10 @@ if(empty($params['href'])) {
 	</head>
 	<body>
 	
-		<div id="page">
-			<div id="header">
-				<ul>
+<div class="container bg_black">
+	<!-- <h1>Media Center</h1> -->
+		<div id="header">
+			<ul>
 <?php
 			foreach($mobilelayout as $widgetlabel => $widgetindex) {
 				if(empty($current)) {
@@ -78,16 +80,14 @@ if(empty($params['href'])) {
 				echo "\t\t\t\t<li class=\"menuitem ".$widgetlabel."".$currentclass."\"><a href=\"?w=".$widgetindex."\"><span>".$widgetlabel."</span></a></li>\n";
 			}
 ?>
-				</ul>
-			</div><!-- #header -->
-			<div id="main">
+			</ul>
+		</div><!-- #header -->
+		<div id="main">
 <?php
-			echo "\t\t\t\t<h1 class=\"title\">".$current."</h1>\n";
-			echo "\t\t\t\t<div class=\"widget-content\">\n";
+			echo "<h1 class=\"title\">".$current."</h1>\n";
 			eval($mobilefunction[$widget]);
-			echo "\t\t\t\t</div>\n";
 ?>
-			</div><!-- #main -->
-		</div><!-- #page -->
+		</div><!-- #main -->
+		</div>
 	</body>
 </html>

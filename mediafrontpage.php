@@ -20,6 +20,7 @@ if (empty ($arrLayout)) {
 <html>
 	<head>
 		<title>Media Front Page</title>
+		<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
 		<script type="text/javascript" language="javascript" src="js/ajax.js"></script>
 		<script type="text/javascript" language="javascript" src="js/popuptext.js"></script>
 		<script type="text/javascript" src="http://jqueryjs.googlecode.com/files/jquery-1.2.6.min.js"></script>
