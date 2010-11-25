@@ -76,22 +76,9 @@ function saveLayout($arrRequest) {
 	} else {
 		$arrResult = error_array(-32602, "Invalid parameters.");
 	}
-	return $arrResult;
-}
-
-function getWidgets($arrRequest) {
-	if(!empty($arrRequest["params"]) && is_array($arrRequest["params"])) {
-		$wIndex = array();
-
-		foreach (glob("widgets/*.php") as $filename) {
-			include_once $filename;
-		}
-		
-		$arrResult = array ( "result" => array ( "widgets" => $wIndex ) );
-	} else {
-		$arrResult = error_array(-32602, "Invalid parameters.");
+	if(!empty($arrResult)) {
+		return $arrResult;
 	}
-	return $arrResult;
 }
 
 function xbmcPassthough($arrRequest) {
