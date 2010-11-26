@@ -222,9 +222,9 @@ function displayComingSoon () {
 	//$body = changeLinks($body);
 	
 	if(!empty($_GET["style"]) && (($_GET["style"] == "s") || ($_GET["style"] == "m"))) {
-		$body = str_replace("src=\"".$sickbeardurl."showPoster/", "src=\"../sickbeardposter.php", $body);
-		$body = str_replace("src=\"/sickbeard/showPoster/", "src=\"../sickbeardposter.php", $body);
-		$body = str_replace("src=\"/showPoster/", "src=\"../sickbeardposter.php", $body);
+		$body = str_replace("src=\"".$sickbeardurl."showPoster/", "src=\"sickbeardposter.php", $body);
+		$body = str_replace("src=\"/sickbeard/showPoster/", "src=\"sickbeardposter.php", $body);
+		$body = str_replace("src=\"/showPoster/", "src=\"sickbeardposter.php", $body);
 	}
 	$body = str_replace("src=\"/sickbeard/", "src=\"".$sickbeardurl, $body);
 	$body = str_replace("href=\"/sickbeard/", "href=\"".$sickbeardurl, $body);
