@@ -221,14 +221,11 @@ function displayComingSoon () {
 	$body = stripInnerWrapper($body);
 	//$body = changeLinks($body);
 	
-	if(!empty($_GET["style"]) && (($_GET["style"] == "s"))) {
-		$body = str_replace("src=\"".$sickbeardurl."showPoster/", "src=\"sickbeardposter.php", $body);
-		$body = str_replace("src=\"/sickbeard/showPoster/", "src=\"sickbeardposter.php", $body);
-		$body = str_replace("src=\"/showPoster/", "src=\"sickbeardposter.php", $body);
-	} else if(!empty($_GET["style"]) && $_GET["style"] == "m") {
-		$body = str_replace("src=\"".$sickbeardurl."showPoster/", "src=\"../sickbeardposter.php", $body);
-		$body = str_replace("src=\"/sickbeard/showPoster/", "src=\"../sickbeardposter.php", $body);
-		$body = str_replace("src=\"/showPoster/", "src=\"../sickbeardposter.php", $body);
+	if(!empty($_GET["style"]) && (($_GET["style"] == "s") || ($_GET["style"] == "m"))) {
+		$reldir = (($_GET["style"] == "m") ? "../" : "");
+		$body = str_replace("src=\"".$sickbeardurl."showPoster/", "src=\"".$reldir."sickbeardposter.php", $body);
+		$body = str_replace("src=\"/sickbeard/showPoster/", "src=\"".$reldir."sickbeardposter.php", $body);
+		$body = str_replace("src=\"/showPoster/", "src=\"".$reldir."sickbeardposter.php", $body);
 	}
 	$body = str_replace("src=\"/sickbeard/", "src=\"".$sickbeardurl, $body);
 	$body = str_replace("href=\"/sickbeard/", "href=\"".$sickbeardurl, $body);
