@@ -35,16 +35,12 @@ $xbmcdbconn = array(
 	);
 */
 
-// enter path to sickbeards's coming episodes page
-$sickbeardcomingepisodes = 'http://user:password@COMPUTER:PORT/sickbeard/comingEpisodes/';
-$sickbeardurl = "http://user:password@COMPUTER:PORT/sickbeard/";
 
 // enter SABnzbd+ URL and API key
 $saburl = 'http://localhost:8080/sabnzbd/';  // The full URL you use to access SABnzbd.
 $sabapikey = '';                             // SABnzbd's API Key found in Config>General.
 
 // enter navigation bar links
-$navlink;
 $navlink["XBMC"] = "http://localhost:8080";
 $navlink["Sickbeard"] = "/sickbeard";
 $navlink["Couch Potato"] = "/couchpotato";

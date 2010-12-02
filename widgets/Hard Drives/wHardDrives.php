@@ -17,18 +17,18 @@ $widget_init = array(	'Id' 			=> "wHardDrives",
 			'Script'		=> ""
 		    );
 
-$settings_init['wHardDrives'] =	array(	'id'	=>	'drives',
-					'label'	=>	'Drives',
-					'value' =>	array(	'drivepath1' =>	array(	'label' 	=> '/',
-											'location'	=> '/'),
-								'drivepath2' =>	array(	'label' 	=> 'TV Shows',
-											'location'	=> '/path/to/tvshows'),
-								'drivepath3' =>	array(	'label' 	=> 'Movies',
-											'location'	=> '/path/to/movies'),
-								'drivepath4' =>	array(	'label' 	=> 'Music',
-											'location'	=> '/path/to/music'),
-								'drivepath5' =>	array(	'label' 	=> 'Downloads',
-											'location'	=> '/path/to/downloads')
+$settings_init['wHardDrives'] =	array(  'drives' =>	array(	'label'	=>	'Drives',
+								'value' =>	array(	'drivepath1' =>	array(	'label' 	=> '/',
+														'location'	=> '/'),
+											'drivepath2' =>	array(	'label' 	=> 'TV Shows',
+														'location'	=> '/path/to/tvshows'),
+											'drivepath3' =>	array(	'label' 	=> 'Movies',
+														'location'	=> '/path/to/movies'),
+											'drivepath4' =>	array(	'label' 	=> 'Music',
+														'location'	=> '/path/to/music'),
+											'drivepath5' =>	array(	'label' 	=> 'Downloads',
+														'location'	=> '/path/to/downloads')
+											)
 								)
 					);
 
@@ -65,15 +65,16 @@ function wHardDrivesSettings($settingsDB) {
 	//echo print_r($settingsDB,1);
 	echo "<form action='settings.php?w=wHardDrives' method='post'>\n";
 	foreach ($settingsDB as $setting) {
-		if ($setting['Id'] == 'drives') {
-			$drives = unserialize($setting['Value']);
-			$i = 1;
-//			echo print_r($drives,1);
-			foreach ($drives as $drive){
-				echo "\t<strong>Drive ".$i.":</strong>";
-				echo "\t\tLabel: <input type='text' value='".$drive['label']."' name='drivepath-".$i."-label'  />";
-				echo "\t\tLocation: <input type='text' value='".$drive['location']."' name='drivepath-".$i."-location'  /><br /><br />\n";
-				$i++;
+		if ($setting['Widget'] == 'wHardDrives' ) {
+			if ($setting['Id'] == 'drives') {
+				$drives = unserialize($setting['Value']);
+				$i = 1;
+				foreach ($drives as $drive){
+					echo "\t<strong>Drive ".$i.":</strong>";
+					echo "\t\tLabel: <input type='text' value='".$drive['label']."' name='drivepath-".$i."-label'  />";
+					echo "\t\tLocation: <input type='text' value='".$drive['location']."' name='drivepath-".$i."-location'  /><br /><br />\n";
+					$i++;
+				}
 			}
 		} 
 	}

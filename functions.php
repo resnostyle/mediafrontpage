@@ -63,17 +63,21 @@ function addSettings($settings) {
 	try {   $db = new PDO('sqlite:settings.db');
 
 		// Create the database if it doesn't exist
-		$db->exec("CREATE TABLE Settings (Id TEXT PRIMARY KEY, Label TEXT, Value TEXT)");
+		$db->exec("CREATE TABLE Settings (Id TEXT PRIMARY KEY, Label TEXT, Value TEXT, Widget TEXT)");
 
 		// Add each setting to database
-		foreach ($settings as $setting) {
-			//echo print_r($Value,1);
-			// Prepare the SQL Statement
-			$sql = "INSERT INTO Settings (Id, Label, Value) VALUES (:Id, :Label, :Value);";
-			$q = $db->prepare($sql);
-			$q->execute(array(	':Id'	=>$setting['id'],
-						':Label'=>$setting['label'],
-						':Value'=>serialize($setting['value'])));
+		foreach ($settings as $widgetid => $widgetsettings) {
+			foreach ($widgetsettings as $id => $setting) {
+				//echo $id;
+				//echo $setting['label'];
+				//Prepare the SQL Statement
+				$sql = "INSERT INTO Settings (Id, Label, Value, Widget) VALUES (:Id, :Label, :Value, :Widget);";
+				$q = $db->prepare($sql);
+				$q->execute(array(	':Id'		=>	$id,
+							':Label'	=>	$setting['label'],
+							':Value'	=>	serialize($setting['value']),
+							':Widget'	=>	$widgetid ));
+			}
 		}
 
 	} catch(PDOException $e) {

@@ -16,10 +16,18 @@ $widget_init = array(	'Id' 			=> "wComingEpisodes",
 			'Interval'		=> "",
 			'Script'		=> ""
 		    );
+$settings_init['wComingEpisodes'] =	array(  'sickbeardcomingepisodes' => 	array(	'id'	=>	'sickbeardcomingepisodes',
+											'label'	=>	'Coming Episodes URL',
+											'value' =>	'http://user:password@COMPUTER:PORT/sickbeard/comingEpisodes/'),
+						'sickbeardurl'		  =>	array(	'id'	=>	'sickbeardurl',
+											'label'	=>	'Sickbeard URL',
+											'value' =>	'http://user:password@COMPUTER:PORT/sickbeard/')
+					);
 
 function widgetComingEpisodes() {
-	global $sickbeardcomingepisodes;
-	
+	global $settings;
+
+	$sickbeardcomingepisodes = $settings['sickbeardcomingepisodes'];	
 	echo "\t<div id=\"comingepisodeswrapper\"></div>\n";
 
 	if(strpos($sickbeardcomingepisodes, "http://")===false) {
@@ -110,7 +118,12 @@ function widgetComingEpisodesHeader() {
 ComingEpisodesSCRIPT;
 }
 if(!empty($_GET["display"])) {
-	include_once "../../config.php";
+	include_once "../../functions.php";
+
+	$settingsDB = getAllSettings('sqlite:../../settings.db');
+	$settings = formatSettings($settingsDB);
+
+	$sickbeardcomingepisodes = $settings['sickbeardcomingepisodes'];
 
 	$body = getComingSoon($sickbeardcomingepisodes);
 
@@ -168,7 +181,9 @@ function stripInnerWrapper($body) {
 	return $body;
 }
 function changeLinks($body) {
-	global $sickbeardcomingepisodes;
+	global $settings;
+
+	$sickbeardcomingepisodes = $settings['sickbeardcomingepisodes'];
 	
 	$urldata = parse_url($sickbeardcomingepisodes);
 	$pos = strrpos($sickbeardcomingepisodes, "/");
@@ -191,7 +206,6 @@ function changeLinks($body) {
 				$newlink = substr($link , 0, 1).$uri_full.substr($link , 1);
 			}
 		}
-		//$body = str_replace($link, "\"".sickbeardposter(str_replace("\"", "", $newlink))."\"", $body);
 		$body = str_replace($link, $newlink, $body);
 	}
 	
@@ -222,10 +236,7 @@ function getComingSoon($url = "") {
 	return $html;
 }
 
-function displayComingSoon () {
-
-	global $sickbeardurl;
-
+function displayComingSoon ($sickbeardurl) {
 	if(strrpos($sickbeardurl, "/") < strlen($sickbeardurl)) {
 		$sickbeardurl .= "/";
 	}
@@ -233,8 +244,7 @@ function displayComingSoon () {
 	$html = getComingSoon();
 	$body = stripBody($html);
 	$body = stripInnerWrapper($body);
-	//$body = changeLinks($body);
-	
+
 	if(!empty($_GET["style"]) && (($_GET["style"] == "s") || ($_GET["style"] == "m"))) {
 		$body = str_replace("src=\"".$sickbeardurl."showPoster/", "src=\"thumbcache.php", $body);
 		$body = str_replace("src=\"/sickbeard/showPoster/", "src=\"thumbcache.php", $body);
@@ -252,10 +262,31 @@ function displayComingSoon () {
 	$body = str_replace("href=\"images/", "href=\"".$sickbeardurl."images/", $body);
 	echo $body;
 }
+function wComingEpisodesSettings($settingsDB) {
+	echo "<form action='settings.php?w=wComingEpisodes' method='post'>\n";
+	foreach ($settingsDB as $setting) {
+		if ($setting['Widget'] == 'wComingEpisodes' ) {
+			$setting['Value'] = unserialize($setting['Value']);
+			echo "\t\t".$setting['Label'].": <input type='text' value='".$setting['Value']."' name='".$setting['Id']."'  /><br />\n";
+		}
+	}
+	echo "\t\t<input type='submit' value='Update' />\n";
+	echo "</form>\n";
+}
+function wComingEpisodesUpdateSettings($post) {
+	$i = 1;
+	foreach ($post as $id => $value) {
+		updateSetting($id,$value); 
+	}
+} 
 
 if(!empty($_GET["style"]) && (($_GET["style"] == "s") || ($_GET["style"] == "w"))) {
-	include_once "../../config.php";
-	displayComingSoon();
+	include_once "../../functions.php";
+
+	$settingsDB = getAllSettings('sqlite:../../settings.db');
+	$settings = formatSettings($settingsDB);
+	$sickbeardurl = $settings['sickbeardurl'];
+	displayComingSoon($sickbeardurl);
 }
 
 ?>

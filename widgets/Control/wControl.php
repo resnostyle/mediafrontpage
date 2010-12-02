@@ -17,23 +17,23 @@ $widget_init = array(	'Id' 			=> "wControl",
 			'Script'		=> "",
 		    );
 
-$settings_init['wControl'] =	array(	'id'	=>	'shortcuts',
-					'label'	=>	'Shortcuts',
-					'value' =>	array(	'shortcut1' =>	array(	'label' 	=> 'Shutdown XBMC',
-											'type'	 	=> 'cmd',
-											'action'	=> 'shutdown'),
-								'shortcut2' =>	array(	'label' 	=> 'Update XBMC Video Library',
-											'type'	 	=> 'cmd',
-											'action'	=> 'vidscan'),
-								'shortcut3' =>	array(	'label' 	=> 'Clean XBMC Video Library',
-											'type'	 	=> 'xbmcsend',
-											'action'	=> 'CleanLibrary(video)'),
-								'shortcut4' =>	array(	'label' 	=> 'Update XBMC Audio Library',
-											'type'	 	=> 'json',
-											'action'	=> '{"jsonrpc": "2.0", "method": "AudioLibrary.ScanForContent", "id" : 1 }'),
-								'shortcut5' =>	array(	'label' 	=> 'Google',
-											'type'	 	=> 'link',
-											'action'	=> 'http://www.google.com')
+$settings_init['wControl'] =	array(  'shortcuts' =>	array(	'label'	=>	'Shortcuts',
+								'value' =>	array(	'shortcut1' =>	array(	'label' 	=> 'Shutdown XBMC',
+														'type'	 	=> 'cmd',
+														'action'	=> 'shutdown'),
+											'shortcut2' =>	array(	'label' 	=> 'Update XBMC Video Library',
+														'type'	 	=> 'cmd',
+														'action'	=> 'vidscan'),
+											'shortcut3' =>	array(	'label' 	=> 'Clean XBMC Video Library',
+														'type'	 	=> 'xbmcsend',
+														'action'	=> 'CleanLibrary(video)'),
+											'shortcut4' =>	array(	'label' 	=> 'Update XBMC Audio Library',
+														'type'	 	=> 'json',
+														'action'	=> '{"jsonrpc": "2.0", "method": "AudioLibrary.ScanForContent", "id" : 1 }'),
+											'shortcut5' =>	array(	'label' 	=> 'Google',
+														'type'	 	=> 'link',
+														'action'	=> 'http://www.google.com')
+											)
 								)
 					);
 
@@ -187,15 +187,17 @@ function widgetControl($baseurl = "widgets/Control/wControl.php", $forcemenu = f
 function wControlSettings($settingsDB) {
 	echo "<form action='settings.php?w=wControl' method='post'>\n";
 	foreach ($settingsDB as $setting) {
-		if ($setting['Id'] == 'shortcuts') {
-			$shortcuts = unserialize($setting['Value']);
-			$i = 1;
-			foreach ($shortcuts as $shortcut){
-				echo "\t<strong>Shortcut ".$i.":</strong>";
-				echo "\t\tLabel: <input type='text' value='".$shortcut['label']."' name='shortcut-".$i."-label'  />";
-				echo "\t\tType: <input type='text' value='".$shortcut['type']."' name='shortcut-".$i."-type'  />";
-				echo "\t\tAction: <input type='text' value='".$shortcut['action']."' name='shortcut-".$i."-action'  /><br /><br />\n";
-				$i++;
+		if ($setting['Widget'] == 'wControl' ) {
+			if ($setting['Id'] == 'shortcuts') {
+				$shortcuts = unserialize($setting['Value']);
+				$i = 1;
+				foreach ($shortcuts as $shortcut){
+					echo "\t<strong>Shortcut ".$i.":</strong>";
+					echo "\t\tLabel: <input type='text' value='".$shortcut['label']."' name='shortcut-".$i."-label'  />";
+					echo "\t\tType: <input type='text' value='".$shortcut['type']."' name='shortcut-".$i."-type'  />";
+					echo "\t\tAction: <input type='text' value='".$shortcut['action']."' name='shortcut-".$i."-action'  /><br /><br />\n";
+					$i++;
+				}
 			}
 		} 
 	}

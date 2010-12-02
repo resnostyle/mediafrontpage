@@ -18,76 +18,71 @@ $widget_init = array(	'Id' 			=> "wRSS",
 			'Script'		=> ""
 		    );
 
-$settings_init['wRSS'] =	array(	'id'	=>	'rssfeeds',
-					'label'	=>	'RSS Feeds',
-					'value' =>	array(	'rssfeed1' =>	array(	'label' 	=> 'mediafrontpage on github',
-											'type'	 	=> 'atom',
-											'url'		=> 'https://github.com/nick8888/mediafrontpage/commits/master.atom',
-											'category'		=> '',
-											'priority'	=> '',
-											'postprocess'	=> '',
-											'script'	=> ''),
-								'rssfeed2' =>	array(	'label' 	=> 'xbmc.org',
-											'type'	 	=> 'rss',
-											'url'		=> 'http://xbmc.org/feed/',
-											'category'		=> '',
-											'priority'	=> '',
-											'postprocess'	=> '',
-											'script'	=> ''),
-								'rssfeed3' =>	array(	'label' 	=> 'NZBMatrix - Sports',
-											'type'	 	=> 'rss',
-											'url'		=> 'http://rss.nzbmatrix.com/rss.php?subcat=7',
-											'category'		=> 'sports',
-											'priority'	=> '',
-											'postprocess'	=> '',
-											'script'	=> ''),
-								'rssfeed4' =>	array(	'label' 	=> 'NZBMatrix - TV Shows (DivX)',
-											'type'	 	=> 'rss',
-											'url'		=> 'http://rss.nzbmatrix.com/rss.php?subcat=6',
-											'category'		=> 'tv',
-											'priority'	=> '',
-											'postprocess'	=> '',
-											'script'	=> ''),
-								'rssfeed5' =>	array(	'label' 	=> 'NZBMatrix - TV Shows (HD x264)',
-											'type'	 	=> 'rss',
-											'url'		=> 'http://rss.nzbmatrix.com/rss.php?subcat=41',
-											'category'		=> 'tv',
-											'priority'	=> '',
-											'postprocess'	=> '',
-											'script'	=> ''),
-								'rssfeed6' =>	array(	'label' 	=> 'NZBMatrix - Movies (DivX)',
-											'type'	 	=> 'rss',
-											'url'		=> 'http://rss.nzbmatrix.com/rss.php?subcat=2',
-											'category'		=> 'movies',
-											'priority'	=> '',
-											'postprocess'	=> '',
-											'script'	=> ''),
-
-								'rssfeed7' =>	array(	'label' 	=> 'NZBMatrix - Movies (HD x264)',
-											'type'	 	=> 'rss',
-											'url'		=> 'http://rss.nzbmatrix.com/rss.php?subcat=42',
-											'category'		=> 'movies',
-											'priority'	=> '',
-											'postprocess'	=> '',
-											'script'	=> ''),
-
-								'rssfeed8' =>	array(	'label' 	=> 'NZBMatrix - Music (MP3)',
-											'type'	 	=> 'rss',
-											'url'		=> 'http://rss.nzbmatrix.com/rss.php?subcat=22',
-											'category'		=> 'music',
-											'priority'	=> '',
-											'postprocess'	=> '',
-											'script'	=> ''),
-
-								'rssfeed9' =>	array(	'label' 	=> 'NZBMatrix - Music (Loseless)',
-											'type'	 	=> 'rss',
-											'url'		=> 'http://rss.nzbmatrix.com/rss.php?subcat=23',
-											'category'		=> 'music',
-											'priority'	=> '',
-											'postprocess'	=> '',
-											'script'	=> ''),
-
-
+$settings_init['wRSS'] =	array(  'rssfeeds' =>	array(	'label'	=>	'RSS Feeds',
+								'value' =>	array(	'rssfeed1' =>	array(	'label' 	=> 'mediafrontpage on github',
+														'type'	 	=> 'atom',
+														'url'		=> 'https://github.com/nick8888/mediafrontpage/commits/master.atom',
+														'category'	=> '',
+														'priority'	=> '',
+														'postprocess'	=> '',
+														'script'	=> ''),
+											'rssfeed2' =>	array(	'label' 	=> 'xbmc.org',
+														'type'	 	=> 'rss',
+														'url'		=> 'http://xbmc.org/feed/',
+														'category'	=> '',
+														'priority'	=> '',
+														'postprocess'	=> '',
+														'script'	=> ''),
+											'rssfeed3' =>	array(	'label' 	=> 'NZBMatrix - Sports',
+														'type'	 	=> 'rss',
+														'url'		=> 'http://rss.nzbmatrix.com/rss.php?subcat=7',
+														'category'	=> 'sports',
+														'priority'	=> '',
+														'postprocess'	=> '',
+														'script'	=> ''),
+											'rssfeed4' =>	array(	'label' 	=> 'NZBMatrix - TV Shows (DivX)',
+														'type'	 	=> 'rss',
+														'url'		=> 'http://rss.nzbmatrix.com/rss.php?subcat=6',
+														'category'	=> 'tv',
+														'priority'	=> '',
+														'postprocess'	=> '',
+														'script'	=> ''),
+											'rssfeed5' =>	array(	'label' 	=> 'NZBMatrix - TV Shows (HD x264)',
+														'type'	 	=> 'rss',
+														'url'		=> 'http://rss.nzbmatrix.com/rss.php?subcat=41',
+														'category'	=> 'tv',
+														'priority'	=> '',
+														'postprocess'	=> '',
+														'script'	=> ''),
+											'rssfeed6' =>	array(	'label' 	=> 'NZBMatrix - Movies (DivX)',
+														'type'	 	=> 'rss',
+														'url'		=> 'http://rss.nzbmatrix.com/rss.php?subcat=2',
+														'category'	=> 'movies',
+														'priority'	=> '',
+														'postprocess'	=> '',
+														'script'	=> ''),
+											'rssfeed7' =>	array(	'label' 	=> 'NZBMatrix - Movies (HD x264)',
+														'type'	 	=> 'rss',
+														'url'		=> 'http://rss.nzbmatrix.com/rss.php?subcat=42',
+														'category'	=> 'movies',
+														'priority'	=> '',
+														'postprocess'	=> '',
+														'script'	=> ''),
+											'rssfeed8' =>	array(	'label' 	=> 'NZBMatrix - Music (MP3)',
+														'type'	 	=> 'rss',
+														'url'		=> 'http://rss.nzbmatrix.com/rss.php?subcat=22',
+														'category'	=> 'music',
+														'priority'	=> '',
+														'postprocess'	=> '',
+														'script'	=> ''),
+											'rssfeed9' =>	array(	'label' 	=> 'NZBMatrix - Music (Loseless)',
+														'type'	 	=> 'rss',
+														'url'		=> 'http://rss.nzbmatrix.com/rss.php?subcat=23',
+														'category'	=> 'music',
+														'priority'	=> '',
+														'postprocess'	=> '',
+														'script'	=> '')
+										)
 								)
 					);
 
@@ -295,19 +290,21 @@ function displayRSS($rssfeed, $count = 10, $returnonly = false) {
 function wRSSSettings($settingsDB) {
 	echo "<form action='settings.php?w=wRSS' method='post'>\n";
 	foreach ($settingsDB as $setting) {
-		if ($setting['Id'] == 'rssfeeds') {
-			$rssfeeds = unserialize($setting['Value']);
-			$i = 1;
-			foreach ($rssfeeds as $rssfeed){
-				echo "\t<strong>RSS Feed ".$i.":</strong><br />";
-				echo "\t\tLabel: <input type='text' value='".$rssfeed['label']."' name='rssfeed-".$i."-label'  />";
-				echo "\t\tType: <input type='text' value='".$rssfeed['type']."' name='rssfeed-".$i."-type'  />";
-				echo "\t\tURL: <input type='text' value='".$rssfeed['url']."' name='rssfeed-".$i."-url'  />";
-				echo "\t\tCategory: <input type='text' value='".$rssfeed['category']."' name='rssfeed-".$i."category'  />";
-				echo "\t\tPriority: <input type='text' value='".$rssfeed['priority']."' name='rssfeed-".$i."-priority'  />";
-				echo "\t\tPost Process: <input type='text' value='".$rssfeed['postprocess']."' name='rssfeed-".$i."-postprocess'  />";
-				echo "\t\tScript: <input type='text' value='".$rssfeed['script']."' name='rssfeed-".$i."-script'  /><br /><br />\n";
-				$i++;
+		if ($setting['Widget'] == 'wRSS' ) {
+			if ($setting['Id'] == 'rssfeeds') {
+				$rssfeeds = unserialize($setting['Value']);
+				$i = 1;
+				foreach ($rssfeeds as $rssfeed){
+					echo "\t<strong>RSS Feed ".$i.":</strong><br />";
+					echo "\t\tLabel: <input type='text' value='".$rssfeed['label']."' name='rssfeed-".$i."-label'  />";
+					echo "\t\tType: <input type='text' value='".$rssfeed['type']."' name='rssfeed-".$i."-type'  />";
+					echo "\t\tURL: <input type='text' value='".$rssfeed['url']."' name='rssfeed-".$i."-url'  />";
+					echo "\t\tCategory: <input type='text' value='".$rssfeed['category']."' name='rssfeed-".$i."category'  />";
+					echo "\t\tPriority: <input type='text' value='".$rssfeed['priority']."' name='rssfeed-".$i."-priority'  />";
+					echo "\t\tPost Process: <input type='text' value='".$rssfeed['postprocess']."' name='rssfeed-".$i."-postprocess'  />";
+					echo "\t\tScript: <input type='text' value='".$rssfeed['script']."' name='rssfeed-".$i."-script'  /><br /><br />\n";
+					$i++;
+				}
 			}
 		} 
 	}
