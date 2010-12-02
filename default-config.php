@@ -50,32 +50,7 @@ $navlink["Sickbeard"] = "/sickbeard";
 $navlink["Couch Potato"] = "/couchpotato";
 $navlink["TV Headend"] = "/tvheadend";
 $navlink["Sabnzbd"] = "/sabnzbd";
-
-// enter shortcut links for control section
-$shortcut;
-$shortcut["Shutdown XBMC"] = array("cmd" => 'shutdown');
-$shortcut["Update XBMC Video Library"] = array("cmd" => 'vidscan');
-$shortcut["Clean XBMC Video Library"] = array("xbmcsend" => 'CleanLibrary(video)'); // Optionally add 'host' => 'localhost', 'port' => 9777 to connect to a different machine.
-$shortcut["Update XBMC Audio Library"] = array("json" => '{"jsonrpc": "2.0", "method": "AudioLibrary.ScanForContent", "id" : 1 }');
-$shortcut["Google"] = "http://www.google.com/";
-/*
-$shortcut["Input - XBMC"] = "/input/xbmc";
-$shortcut["Input - Pay TV"] = "/input/cable";
-$shortcut["Input - Games"] = "/input/games";
-$shortcut["Now Playing"] = "/nowplaying";
-$shortcut["Turn TV On"] = "/tv/on";
-$shortcut["Turn TV Off"] = "/tv/off";
-$shortcut["Turn Xbox On"] = "/xbox/on";
-$shortcut["Turn Xbox Off"] = "/xbox/off";
-*/
-
-// enter directories for hard drive section
-$drive;
-$drive["/"] = "/";
-$drive["Sata 1"] = "/media/sata1/";
-$drive["Sata 2"] = "/media/sata2/";
-$drive["Sata 3"] = "/media/sata3/";
-$drive["Sata 4"] = "/media/sata4/";
+$navlink["Settings"] = "settings.php";
 
 // enter rss feeds. Ensure sabnzbd > config > index sites is set. Supports cat, pp, script, priority as per the sabnzbd api.
 $rssfeeds["NZBMatrix - TV Shows (DivX)"]    = array("url" => "http://rss.nzbmatrix.com/rss.php?subcat=6", "cat" => "tv");

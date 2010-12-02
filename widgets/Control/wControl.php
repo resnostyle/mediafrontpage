@@ -14,29 +14,29 @@ $widget_init = array(	'Id' 			=> "wControl",
 			'Call'			=> "",
 			'Loader'		=> "",
 			'Interval'		=> "",
-			'Script'		=> ""
+			'Script'		=> "",
+
 		    );
 
-$settings_wControl = array(	'shortcuts' =>	array(	'id'	=>	'shortcuts',
-							'label'	=>	'Shortcuts',
-							'value' =>	array(	'shortcut1' =>	array(	'label' 	=> 'Shutdown XBMC',
-													'type'	 	=> 'cmd',
-													'action'	=> 'shutdown'),
-										'shortcut2' =>	array(	'label' 	=> 'Update XBMC Video Library',
-													'type'	 	=> 'cmd',
-													'action'	=> 'vidscan'),
-										'shortcut3' =>	array(	'label' 	=> 'Clean XBMC Video Library',
-													'type'	 	=> 'xbmcsend',
-													'action'	=> 'CleanLibrary(video)'),
-										'shortcut4' =>	array(	'label' 	=> 'Update XBMC Audio Library',
-													'type'	 	=> 'json',
-													'action'	=> '{"jsonrpc": "2.0", "method": "AudioLibrary.ScanForContent", "id" : 1 }'),
-										'shortcut5' =>	array(	'label' 	=> 'Google',
-													'type'	 	=> 'link',
-													'action'	=> 'http://www.google.com')
-										)
-							)
-			);
+$settings_init['wControl'] =	array(	'id'	=>	'shortcuts',
+					'label'	=>	'Shortcuts',
+					'value' =>	array(	'shortcut1' =>	array(	'label' 	=> 'Shutdown XBMC',
+											'type'	 	=> 'cmd',
+											'action'	=> 'shutdown'),
+								'shortcut2' =>	array(	'label' 	=> 'Update XBMC Video Library',
+											'type'	 	=> 'cmd',
+											'action'	=> 'vidscan'),
+								'shortcut3' =>	array(	'label' 	=> 'Clean XBMC Video Library',
+											'type'	 	=> 'xbmcsend',
+											'action'	=> 'CleanLibrary(video)'),
+								'shortcut4' =>	array(	'label' 	=> 'Update XBMC Audio Library',
+											'type'	 	=> 'json',
+											'action'	=> '{"jsonrpc": "2.0", "method": "AudioLibrary.ScanForContent", "id" : 1 }'),
+								'shortcut5' =>	array(	'label' 	=> 'Google',
+											'type'	 	=> 'link',
+											'action'	=> 'http://www.google.com')
+								)
+					);
 
 
 function widgetControlHeader() {
@@ -198,9 +198,7 @@ function wControlSettings($settingsDB) {
 				echo "\t\tAction: <input type='text' value='".$shortcut['action']."' name='shortcut-".$i."-action'  /><br /><br />\n";
 				$i++;
 			}
-		} else {
-			echo "\t\t<strong>".$setting['Label'].":</strong> <input type='text' value='".unserialize($setting['Value'])."' name='".$setting['Id']."'  /><br /><br />\n";
-		}
+		} 
 	}
 	echo "\t\t<input type='submit' value='Update' />\n";
 	echo "</form>\n";
@@ -220,11 +218,6 @@ function wControlUpdateSettings($post) {
 				$i++;
 			}
 		}	 
-		// Update other settings in database
-		else {  
-			updateSetting($id, $value);
-
-		}
 	}
 	updateSetting('shortcuts', $shortcuts);
 } 

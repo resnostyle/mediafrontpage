@@ -26,11 +26,14 @@ foreach (glob("widgets/*/w*.php") as $widgetfile) {
 		}
 	}
 	// Add widget settings to database
-	if(!empty(${"settings_".$widget_init['Id']})){
+	/*if(!empty(${"settings_".$widget_init['Id']})){
 		$widgetSettings = ${"settings_".$widget_init['Id']};
-		addSettings($widgetSettings);
-	}
+		addSettings($setting);
+	}*/
 }
+
+		addSettings($settings_init);
+
 
 // Get widgets
 $widgets = getAllWidgets();
