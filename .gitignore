@@ -1,0 +1,6 @@
+.DS_Store
+layout.php
+config.php
+m/mobileconfig.php
+cache/*
+settings.db
