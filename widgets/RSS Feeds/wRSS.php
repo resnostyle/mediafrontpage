@@ -1,5 +1,6 @@
 <?php
-
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
 $widget_init = array(	'Id' 			=> "wRSS", 
 			'Child'			=> "false",
 			'Type' 			=> "inline", 
@@ -17,13 +18,86 @@ $widget_init = array(	'Id' 			=> "wRSS",
 			'Script'		=> ""
 		    );
 
+$settings_init['wRSS'] =	array(	'id'	=>	'rssfeeds',
+					'label'	=>	'RSS Feeds',
+					'value' =>	array(	'rssfeed1' =>	array(	'label' 	=> 'mediafrontpage on github',
+											'type'	 	=> 'atom',
+											'url'		=> 'https://github.com/nick8888/mediafrontpage/commits/master.atom',
+											'category'		=> '',
+											'priority'	=> '',
+											'postprocess'	=> '',
+											'script'	=> ''),
+								'rssfeed2' =>	array(	'label' 	=> 'xbmc.org',
+											'type'	 	=> 'rss',
+											'url'		=> 'http://xbmc.org/feed/',
+											'category'		=> '',
+											'priority'	=> '',
+											'postprocess'	=> '',
+											'script'	=> ''),
+								'rssfeed3' =>	array(	'label' 	=> 'NZBMatrix - Sports',
+											'type'	 	=> 'rss',
+											'url'		=> 'http://rss.nzbmatrix.com/rss.php?subcat=7',
+											'category'		=> 'sports',
+											'priority'	=> '',
+											'postprocess'	=> '',
+											'script'	=> ''),
+								'rssfeed4' =>	array(	'label' 	=> 'NZBMatrix - TV Shows (DivX)',
+											'type'	 	=> 'rss',
+											'url'		=> 'http://rss.nzbmatrix.com/rss.php?subcat=6',
+											'category'		=> 'tv',
+											'priority'	=> '',
+											'postprocess'	=> '',
+											'script'	=> ''),
+								'rssfeed5' =>	array(	'label' 	=> 'NZBMatrix - TV Shows (HD x264)',
+											'type'	 	=> 'rss',
+											'url'		=> 'http://rss.nzbmatrix.com/rss.php?subcat=41',
+											'category'		=> 'tv',
+											'priority'	=> '',
+											'postprocess'	=> '',
+											'script'	=> ''),
+								'rssfeed6' =>	array(	'label' 	=> 'NZBMatrix - Movies (DivX)',
+											'type'	 	=> 'rss',
+											'url'		=> 'http://rss.nzbmatrix.com/rss.php?subcat=2',
+											'category'		=> 'movies',
+											'priority'	=> '',
+											'postprocess'	=> '',
+											'script'	=> ''),
+
+								'rssfeed7' =>	array(	'label' 	=> 'NZBMatrix - Movies (HD x264)',
+											'type'	 	=> 'rss',
+											'url'		=> 'http://rss.nzbmatrix.com/rss.php?subcat=42',
+											'category'		=> 'movies',
+											'priority'	=> '',
+											'postprocess'	=> '',
+											'script'	=> ''),
+
+								'rssfeed8' =>	array(	'label' 	=> 'NZBMatrix - Music (MP3)',
+											'type'	 	=> 'rss',
+											'url'		=> 'http://rss.nzbmatrix.com/rss.php?subcat=22',
+											'category'		=> 'music',
+											'priority'	=> '',
+											'postprocess'	=> '',
+											'script'	=> ''),
+
+								'rssfeed9' =>	array(	'label' 	=> 'NZBMatrix - Music (Loseless)',
+											'type'	 	=> 'rss',
+											'url'		=> 'http://rss.nzbmatrix.com/rss.php?subcat=23',
+											'category'		=> 'music',
+											'priority'	=> '',
+											'postprocess'	=> '',
+											'script'	=> ''),
+
+
+								)
+					);
+
 function widgetRSSHeader() {
 	echo <<< RSSHEADER
 <script type="text/javascript" language="javascript">
 	<!--
 		function showRSS(str) {
 			if (str.length==0) {
-				document.getElementById("rssList").innerHTML="";
+				document.getElementById("rssOutput").innerHTML="";
 				return;
 			}
 			if (window.XMLHttpRequest) {
@@ -35,7 +109,7 @@ function widgetRSSHeader() {
 			}
 			xmlhttp.onreadystatechange = function() {
 				if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-					document.getElementById("rssList").innerHTML=xmlhttp.responseText;
+					document.getElementById("rssOutput").innerHTML=xmlhttp.responseText;
 				}
 			}
 			xmlhttp.open("GET","widgets/RSS Feeds/wRSS.php?style=s&rss="+str,true);
@@ -78,46 +152,101 @@ function widgetRSSHeader() {
 
 RSSHEADER;
 }
-function widgetRSS() {
-	global $rssfeeds;
+/*function widgetRSS() {
+	global $settings;
 
+	$rssfeeds = $settings['rssfeeds'];
 	echo "<form>\n";
 	echo "\t<select onchange=\"showRSS(this.value);\">\n";
-	foreach($rssfeeds as $name => $feed) {
-		echo "\t\t<option value=\"".$name."\">".$name."</option>\n";
+	foreach($rssfeeds as $rssfeed) {
+		echo "\t\t<option value=\"".$rssfeed['label']."\">".$rssfeed['label']."</option>\n";
 	}
 	echo "\t</select>\n";
 	echo "</form>\n";
 	echo "<div id=\"rssList\">";
 	displayRSS(reset($rssfeeds));
 	echo "</div>\n";
+}*/
+function widgetRSS($formaction = "") {
+	global $settings;
+
+	$rssfeeds = $settings['rssfeeds'];
+	$response = sabadd();
+	if(!empty($response)) {
+		$responsejson = json_decode($response, true);
+		if(!empty($responsejson)) {
+			if($responsejson['status']) {
+				echo "<p>Item successfully added to SABnzdd+.</p>\n";
+			} else {
+				echo "<p>Problem adding link to SABnzdd+.</p>\n<p>Error: ".$responsejson["error"]."</p>\n";
+			}
+		} else {
+			echo "<p>Problem calling SABnzdd+.</p>\n<pre>\n".$response."\n</pre>\n";
+		}
+	}
+	
+	if(!empty($formaction)) {
+		echo "<form action=\"".$formaction."\" method=\"get\">\n";
+		echo "<input type=\"hidden\" name=\"style\" value=\"".(!empty($_GET['style']) ? $_GET['style'] : "m")."\" />";
+		echo "<input type=\"hidden\" name=\"w\" value=\"wRSS\" />";
+		echo "\t<select name=\"feed\">\n";
+	} else {
+		echo "<form>\n";
+		echo "\t<select onchange=\"showRSS(this.value);\">\n";
+	}
+	foreach($rssfeeds as $rssfeed) {
+		echo "\t\t<option value=\"".$rssfeed['label']."\"".((!empty($_GET['feed']) && ($_GET['feed'] == $rssfeed['label'])) ? " selected=\"selected\"" : "").">".$rssfeed['label']."</option>\n";
+	}
+	echo "\t</select>\n";
+	if(!empty($formaction)) {
+		echo "\t<input type=\"submit\" value=\"Go\" />\n";
+	}
+	echo "</form>\n";
+	echo "<div id=\"rssOutput\">";
+	if(!empty($_GET['feed']) && !empty($rssfeeds[$_GET['feed']])) {
+		displayRSS($rssfeeds[$_GET['feed']]);
+	} else {
+		displayRSS(reset($rssfeeds));
+	}
+	echo "</div>\n";
 }
+
 function sab_addurl($link, $name, $rssfeed){
 	global $saburl, $sabapikey;
-	global $rssfeeds;
+	global $settings;
+	$rssfeeds = $settings['rssfeeds'];
 
 	$queryurl = $saburl."api?mode=addurl&name=".urlencode($link)."&nzbname=".urlencode($name);
-	$queryurl .= (!empty($rssfeed['cat']) ? "&cat=".urlencode($rssfeed['cat']) : "");
+	$queryurl .= (!empty($rssfeed['category']) ? "&category=".urlencode($rssfeed['category']) : "");
 	$queryurl .= (!empty($rssfeed['script']) ? "&script=".$rssfeed['script'] : "");
-	$queryurl .= (!empty($rssfeed['pp']) ? "&pp=".$rssfeed['pp'] : "");
+	$queryurl .= (!empty($rssfeed['postprocess']) ? "&postprocess=".$rssfeed['postprocess'] : "");
 	$queryurl .= (!empty($rssfeed['priority']) ? "&priority=".$rssfeed['priority'] : "");
 	$queryurl .= "&output=json&apikey=".$sabapikey;
 	return $queryurl;
+}
+function sabadd($sabaddurl = "") {
+	$response = "";
+	
+	if(!empty($_GET['sabadd']) && empty($sabaddurl)) {
+		$sabaddurl = ($_GET['sabadd']);
+	}
+	if(!empty($sabaddurl)) {
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_HTTPGET, 1);
+		curl_setopt($ch, CURLOPT_URL, $sabaddurl);
+
+		$response = curl_exec($ch);
+		curl_close($ch);
+	}
+
+	return $response;
 }
 function displayRSS($rssfeed, $count = 10, $returnonly = false) {
 	$return = "";
 	if(!empty($rssfeed['url'])) {
 		$xmlDoc = new DOMDocument();
 		$xmlDoc->load($rssfeed['url']);
-
-		//get elements from "<channel>"
-		//$channel = $xmlDoc->getElementsByTagName('channel')->item(0);
-		//$channel_title = $channel->getElementsByTagName('title')->item(0)->childNodes->item(0)->nodeValue;
-		//$channel_link = $channel->getElementsByTagName('link')->item(0)->childNodes->item(0)->nodeValue;
-		//$channel_desc = $channel->getElementsByTagName('description')->item(0)->childNodes->item(0)->nodeValue;
-
-		//output elements from "<channel>"
-		//$return .= "<p><a href='".$channel_link."'>".$channel_title."</a></p>");
 
 		if(!empty($rssfeed['type']) && ($rssfeed['type'] == 'atom')) {
 			//get and output "<item>" elements
@@ -143,9 +272,9 @@ function displayRSS($rssfeed, $count = 10, $returnonly = false) {
 			$item_desc = str_replace("'", "", str_replace("\"", "'", $item_desc));
 			$return .= "<p class=\"".($alt ? " alt" : "")."\">";
 
-			if(!empty($rssfeed['cat']) || !empty($rssfeed['script']) || !empty($rssfeed['pp']) || !empty($rssfeed['priority'])) {
+			if(!empty($rssfeed['category']) || !empty($rssfeed['script']) || !empty($rssfeed['postprocess']) || !empty($rssfeed['priority'])) {
 				$return .= "<a href=\"#\" class=\"sablink\" onclick=\"sabAddUrl('".htmlentities(sab_addurl($item_link, $item_title, $rssfeed))."'); return false;\">";
-				$return .= "<img class=\"sablink\" src=\"media/sab2_16.png\" alt=\"Download with SABnzdd+\"/>";
+				$return .= "<img class=\"sablink\" src=\"style/images/sab2_16.png\" alt=\"Download with SABnzdd+\"/>";
 				$return .= "</a>";
 			}
 
@@ -163,6 +292,55 @@ function displayRSS($rssfeed, $count = 10, $returnonly = false) {
 	}
 	return $return;
 }
+function wRSSSettings($settingsDB) {
+	echo "<form action='settings.php?w=wRSS' method='post'>\n";
+	foreach ($settingsDB as $setting) {
+		if ($setting['Id'] == 'rssfeeds') {
+			$rssfeeds = unserialize($setting['Value']);
+			$i = 1;
+			foreach ($rssfeeds as $rssfeed){
+				echo "\t<strong>RSS Feed ".$i.":</strong><br />";
+				echo "\t\tLabel: <input type='text' value='".$rssfeed['label']."' name='rssfeed-".$i."-label'  />";
+				echo "\t\tType: <input type='text' value='".$rssfeed['type']."' name='rssfeed-".$i."-type'  />";
+				echo "\t\tURL: <input type='text' value='".$rssfeed['url']."' name='rssfeed-".$i."-url'  />";
+				echo "\t\tCategory: <input type='text' value='".$rssfeed['category']."' name='rssfeed-".$i."category'  />";
+				echo "\t\tPriority: <input type='text' value='".$rssfeed['priority']."' name='rssfeed-".$i."-priority'  />";
+				echo "\t\tPost Process: <input type='text' value='".$rssfeed['postprocess']."' name='rssfeed-".$i."-postprocess'  />";
+				echo "\t\tScript: <input type='text' value='".$rssfeed['script']."' name='rssfeed-".$i."-script'  /><br /><br />\n";
+				$i++;
+			}
+		} 
+	}
+	echo "\t\t<input type='submit' value='Update' />\n";
+	echo "</form>\n";
+}
+
+function wRSSUpdateSettings($post) {
+	$i = 1;
+	foreach ($post as $id => $value) {
+		// Create rssfeeds array
+		if (strpos($id, 'rssfeed') !== false) {				
+			if (strpos($id, 'label') !== false) {
+				$rssfeeds["rssfeed".$i]['label'] = $value;
+			} elseif (strpos($id, 'type') !== false) {
+				$rssfeeds["rssfeed".$i]['type'] = $value;
+			} elseif (strpos($id, 'url') !== false) {
+				$rssfeeds["rssfeed".$i]['url'] = $value;
+			} elseif (strpos($id, 'category') !== false) {
+				$rssfeeds["rssfeed".$i]['category'] = $value;
+
+			} elseif (strpos($id, 'priority') !== false) {
+				$rssfeeds["rssfeed".$i]['priority'] = $value;
+			} elseif (strpos($id, 'postprocess') !== false) {
+				$rssfeeds["rssfeed".$i]['postprocess'] = $value;
+			} elseif (strpos($id, 'script') !== false) {
+				$rssfeeds["rssfeed".$i]['script'] = $value;
+				$i++;
+			}
+		}	 
+	}
+	updateSetting('rssfeeds', $rssfeeds);
+} 
 if(!empty($_GET['style']) && ($_GET['style'] == "a")){
 	$sablink = file_get_contents("php://input");
 
@@ -178,20 +356,28 @@ if(!empty($_GET['style']) && ($_GET['style'] == "a")){
 }
 
 if(!empty($_GET['style']) && (($_GET['style'] == "w") || ($_GET['style'] == "s"))) {
-	require_once "../../config.php";
-	global $rssfeeds;
+	include_once "../../functions.php";
 
+	$settingsDB = getAllSettings('sqlite:../../settings.db');
+	$settings = formatSettings($settingsDB);
+
+	$rssfeeds = $settings['rssfeeds'];
 	$count = (!empty($_GET['c'])) ? $_GET['c'] : 10;
 	if(!empty($_GET['rss']) || !empty($_GET['rssurl'])) {
 		if(!empty($_GET['rssurl'])) {
-			$rssfeed = array('url' => $_GET['rssurl']);
+			$rssfeed['url'] = $_GET['rssurl'];
 		} else {
-			$rssfeed = (!empty($rssfeeds[$_GET['rss']]) ? $rssfeeds[$_GET['rss']] : array());
+			foreach ($rssfeeds as $feed) {
+					//echo $_GET['rss']."<br/>";
+					//echo $feed['label']."<br/>";
+				if ($feed['label'] == $_GET['rss']) {
+					$rssfeed = $feed;
+				}
+			}
 		}
 	} else {
 		$rssfeed = reset($rssfeeds);
 	}
-
 	if($_GET['style'] == "w") {
 		?>
 		<html>

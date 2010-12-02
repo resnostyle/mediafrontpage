@@ -99,9 +99,9 @@ function updateSetting($id, $value) {
 		print 'Exception : '.$e->getMessage();
 	}
 }
-function getAllSettings() {
+function getAllSettings($database = 'sqlite:settings.db') {
 		// Open the database
-	try {	$db = new PDO('sqlite:settings.db');
+	try {	$db = new PDO($database);
 
 		// Fetch into an PDOStatement object
 		$request = $db->prepare("SELECT * FROM Settings");
@@ -115,6 +115,15 @@ function getAllSettings() {
 
 	} catch(PDOException $e) {
 		print 'Exception : '.$e->getMessage();
+	}
+
+	return $settings;
+}
+function formatSettings($settingsDB) {
+	foreach ($settingsDB as $setting) {
+		$id = $setting['Id'];
+		$value = unserialize($setting['Value']);
+		$settings[$id] = $value;
 	}
 	return $settings;
 }

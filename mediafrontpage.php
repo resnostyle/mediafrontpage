@@ -25,15 +25,11 @@ foreach (glob("widgets/*/w*.php") as $widgetfile) {
 			$$part['Id']->addWidget();
 		}
 	}
-	// Add widget settings to database
-	/*if(!empty(${"settings_".$widget_init['Id']})){
-		$widgetSettings = ${"settings_".$widget_init['Id']};
-		addSettings($setting);
-	}*/
+
 }
 
-		addSettings($settings_init);
-
+// Add settings
+addSettings($settings_init);
 
 // Get widgets
 $widgets = getAllWidgets();
@@ -41,13 +37,8 @@ $widgets = getAllWidgets();
 //Get settings
 $settingsDB = getAllSettings();
 
-foreach ($settingsDB as $setting) {
+$settings = formatSettings($settingsDB);
 
-	$id = $setting['Id'];
-	$value = unserialize($setting['Value']);
-	$settings[$id] = $value;
-
-}
 
 
 //echo print_r($settings,1);	

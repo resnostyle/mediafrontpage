@@ -15,7 +15,6 @@ $widget_init = array(	'Id' 			=> "wControl",
 			'Loader'		=> "",
 			'Interval'		=> "",
 			'Script'		=> "",
-
 		    );
 
 $settings_init['wControl'] =	array(	'id'	=>	'shortcuts',

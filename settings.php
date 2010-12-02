@@ -35,7 +35,6 @@ foreach($widgets as $widget) {
 }
 // If there are any updated settings add them to database
 if (!empty($_POST)) {
-//	echo print_r($_POST,1);
 	$updateFunction = $_GET['w']."UpdateSettings";
 	$updateFunction($_POST);
 }
