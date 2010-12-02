@@ -212,8 +212,10 @@ function changeLinks($body) {
 	return $body;
 }
 function comingSoonUrl($url = "") {
-	global $sickbeardcomingepisodes;
+	global $settings;
 
+	$sickbeardcomingepisodes = $settings['sickbeardcomingepisodes'];
+	
 	if(empty($url)) {
 		if(!(strpos($sickbeardcomingepisodes, "http") === 0)){
 			$url = "http://".$_SERVER['PHP_AUTH_USER'].":".$_SERVER['PHP_AUTH_PW']."@".$_SERVER['SERVER_NAME'].((strpos($sickbeardcomingepisodes, "/") === 0)?"":"/").$sickbeardcomingepisodes;
@@ -279,7 +281,6 @@ function wComingEpisodesUpdateSettings($post) {
 		updateSetting($id,$value); 
 	}
 } 
-
 if(!empty($_GET["style"]) && (($_GET["style"] == "s") || ($_GET["style"] == "w"))) {
 	include_once "../../functions.php";
 
