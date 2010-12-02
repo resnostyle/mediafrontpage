@@ -2,7 +2,7 @@ html,body {
 	height: 100%; -webkit-font-smoothing: antialiased;
 }
 body {
-	background:url(../media/background.png) #222528;
+	background:url(../images/background.png) #222528;
 	font-family: 'Helvetica Neue','HelveticaNeue',Helvetica, Arial, sans-serif;
 	font-size:12px;
 	line-height:140%;

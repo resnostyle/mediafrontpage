@@ -2,14 +2,10 @@
 require_once "config.php";
 require_once "functions.php";
 require_once "widgets.php";
+//require_once "settings.php";
 
-//turn off warnings
-$errlevel = error_reporting();
-error_reporting(E_ALL & ~E_WARNING);
-
-// Turn on warnings
-error_reporting($errlevel); 
-
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
 // Add Widgets
 foreach (glob("widgets/*/w*.php") as $widgetfile) {
 	include_once $widgetfile;
@@ -29,19 +25,38 @@ foreach (glob("widgets/*/w*.php") as $widgetfile) {
 			$$part['Id']->addWidget();
 		}
 	}
-	// Get widgets
-	$widgets = getAllWidgets();
+	// Add widget settings to database
+	if(!empty(${"settings_".$widget_init['Id']})){
+		$widgetSettings = ${"settings_".$widget_init['Id']};
+		addSettings($widgetSettings);
+	}
 }
-	
+
+// Get widgets
+$widgets = getAllWidgets();
+
+//Get settings
+$settingsDB = getAllSettings();
+
+foreach ($settingsDB as $setting) {
+
+	$id = $setting['Id'];
+	$value = unserialize($setting['Value']);
+	$settings[$id] = $value;
+
+}
+
+
+//echo print_r($settings,1);	
 ?>
 <html>
 	<head>
 		<title>Media Front Page</title>
-		<script type="text/javascript" language="javascript" src="js/ajax.js"></script>
-		<script type="text/javascript" language="javascript" src="js/popuptext.js"></script>
+		<script type="text/javascript" language="javascript" src="style/js/ajax.js"></script>
+		<script type="text/javascript" language="javascript" src="style/js/popuptext.js"></script>
 		<script type="text/javascript" src="http://jqueryjs.googlecode.com/files/jquery-1.2.6.min.js"></script>
-		<script type="text/javascript" src="js/highslide/highslide.js"></script>
-		<link rel="stylesheet" type="text/css" href="js/highslide/highslide.css" />
+		<script type="text/javascript" src="style/js/highslide/highslide.js"></script>
+		<link rel="stylesheet" type="text/css" href="style/js/highslide/highslide.css" />
 		<script type="text/javascript">
 			//<![CDATA[
 			// override Highslide settings here
@@ -71,9 +86,9 @@ foreach (glob("widgets/*/w*.php") as $widgetfile) {
 				border: 0;
 			}
 		</style>		
-		<link href="css/widget.css" rel="stylesheet" type="text/css" />	
-		<link href="css/front.css" rel="stylesheet" type="text/css" />
-		<link href="layouts/3col-equal.css" rel="stylesheet" type="text/css" />
+		<link href="style/css/widget.css" rel="stylesheet" type="text/css" />	
+		<link href="style/css/front.css" rel="stylesheet" type="text/css" />
+		<link href="style/layouts/3col-equal.css" rel="stylesheet" type="text/css" />
 
 		<!-- START: Dynamic Header Inserts From Widgets -->
 <?php
@@ -138,7 +153,7 @@ foreach (glob("widgets/*/w*.php") as $widgetfile) {
  ?>
 		<!-- END: Dynamic Inserts From Widgets -->
 		</div><!-- #main -->
-	    	<script type="text/javascript" src="js/jquery.js"></script>
-    		<script type="text/javascript" src="js/widget.js"></script>
+	    	<script type="text/javascript" src="style/js/jquery.js"></script>
+    		<script type="text/javascript" src="style/js/widget.js"></script>
 	</body>
 </html>

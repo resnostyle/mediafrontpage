@@ -35,7 +35,7 @@
 #main .widget .widget-head a.remove  {
     float: right;
     display: inline;
-    background: url(../media/buttons.gif) no-repeat -24px 0;
+    background: url(../images/buttons.gif) no-repeat -24px 0;
     width: 14px;
     height: 14px;
     margin: 8px 0;
@@ -45,7 +45,7 @@
 #main .widget .widget-head a.edit  {
     float: right;
     display: inline;
-    background: url(../media/buttons.gif) no-repeat 0 0;
+    background: url(../images/buttons.gif) no-repeat 0 0;
     width: 24px;
     height: 14px;
     margin: 8px 0;
@@ -55,7 +55,7 @@
 #main .widget .widget-head a.collapse  {
     float: left;
     display: inline;
-    background: url(../media/buttons.gif) no-repeat -52px 0;
+    background: url(../images/buttons.gif) no-repeat -52px 0;
     width: 14px;
     height: 14px;
     text-indent: -9999em;

@@ -4,7 +4,7 @@
   echo"<html>";
   echo"  <head>";
   echo"    <title>Navigation</title>";
-  echo"    <link rel='stylesheet' type='text/css' href='css/nav.css'>";
+  echo"    <link rel='stylesheet' type='text/css' href='style/css/nav.css'>";
   echo"  </head>";
   echo"  <body>";
   echo"    <div id=header>";

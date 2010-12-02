@@ -2,7 +2,7 @@
 require_once "config.php";
 
 if(!empty($_GET["show"])) {
-	$cachefile = dirname(__FILE__)."/sbpcache/".$_GET["show"].".tbn";
+	$cachefile = dirname(__FILE__)."/cache/".$_GET["show"].".tbn";
 	if(file_exists($cachefile)) {
 		$image_out = file_get_contents($cachefile);
 		header('Content-type: image/png');
@@ -10,8 +10,8 @@ if(!empty($_GET["show"])) {
 	} else {
 		// Display image and write to cache.
 		// For the cache to work you need to create a director in the same location as this file:
-		//   $ mkdir sbpcache
-		//   $ chmod 777 sbpcache
+		//   $ mkdir cache
+		//   $ chmod 777 cache
 		resizedimage($sickbeardurl."/showPoster/?show=".$_GET["show"], $cachefile);
 	}
 }

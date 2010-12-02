@@ -2,20 +2,42 @@
 
 $widget_init = array(	'Id' 			=> "wControl",
 			'Child'			=> "false",
-			'Type' 			=> "inline", 
-			'Title' 		=> "Control", 
-			'Function' 		=> "widgetControl(\"widgets/wControl.php\", true);",
-			'HeaderFunction' 	=> "widgetControlHeader();", 
+			'Type' 			=> "inline",
+			'Title' 		=> "Control",
+			'Function' 		=> "widgetControl(\"widgets/Control/wControl.php\", true);",
+			'HeaderFunction' 	=> "widgetControlHeader();",
 			'Stylesheet' 		=> "",
-			'Section' 		=> 1, 
+			'Section' 		=> 1,
 			'Position' 		=> 3,
 			'Parts'			=> "",
-			'Block' 		=> "",  
+			'Block' 		=> "",
 			'Call'			=> "",
 			'Loader'		=> "",
 			'Interval'		=> "",
 			'Script'		=> ""
 		    );
+
+$settings_wControl = array(	'shortcuts' =>	array(	'id'	=>	'shortcuts',
+							'label'	=>	'Shortcuts',
+							'value' =>	array(	'shortcut1' =>	array(	'label' 	=> 'Shutdown XBMC',
+													'type'	 	=> 'cmd',
+													'action'	=> 'shutdown'),
+										'shortcut2' =>	array(	'label' 	=> 'Update XBMC Video Library',
+													'type'	 	=> 'cmd',
+													'action'	=> 'vidscan'),
+										'shortcut3' =>	array(	'label' 	=> 'Clean XBMC Video Library',
+													'type'	 	=> 'xbmcsend',
+													'action'	=> 'CleanLibrary(video)'),
+										'shortcut4' =>	array(	'label' 	=> 'Update XBMC Audio Library',
+													'type'	 	=> 'json',
+													'action'	=> '{"jsonrpc": "2.0", "method": "AudioLibrary.ScanForContent", "id" : 1 }'),
+										'shortcut5' =>	array(	'label' 	=> 'Google',
+													'type'	 	=> 'link',
+													'action'	=> 'http://www.google.com')
+										)
+							)
+			);
+
 
 function widgetControlHeader() {
 	echo <<< CONTROLHEADER
@@ -49,8 +71,7 @@ function widgetControlHeader() {
 CONTROLHEADER;
 }
 function widgetMenu($baseurl) {
-	global $shortcut;
-
+	global $settings;
 	if(empty($_GET["style"])) {
 		$style = "w";
 	} else {
@@ -59,33 +80,37 @@ function widgetMenu($baseurl) {
 
 	echo "<ul class=\"widget-list\">\n";
 	$alt = false;
-	foreach( $shortcut as $shortcutlabel => $shortcutmixed) {
-		if(is_array($shortcutmixed)) {
-			if(!empty($shortcutmixed["json"])) {
-				$href = $baseurl."?w=wControl&style=".$style."&json=".urlencode($shortcutmixed["json"]);
-			}
-			if(!empty($shortcutmixed["cmd"])) {
-				$href = $baseurl."?w=wControl&style=".$style."&cmd=".$shortcutmixed["cmd"];
-			}
-			if(!empty($shortcutmixed["xbmcsend"])) {
-				$href = $baseurl."?w=wControl&style=".$style."&xbmcsend=".urlencode($shortcutmixed["xbmcsend"]).(!empty($shortcutmixed["host"]) ? "&host=".$shortcutmixed["host"] : "").(!empty($shortcutmixed["port"]) ? "&port=".$shortcutmixed["port"] : "").(!empty($mfpapikey) ? "&apikey=".$mfpapikey : "");
-			}
-			if(!empty($shortcutmixed["shell"])) {
-				$href = $baseurl."?w=wControl&style=".$style."&shell=".urlencode($shortcutmixed["shell"]).(!empty($mfpapikey) ? "&apikey=".$mfpapikey : "");
+
+	foreach ($settings['shortcuts'] as $shortcut) {
+		if($shortcut['type'] !== 'link') {
+
+			if(!empty($shortcut['type'])) {
+				switch ($shortcut['type']) {
+					case "cmd":
+					case "json":
+						$href = $baseurl."?w=wControl&style=".$style."&".$shortcut['type']."=".urlencode($shortcut['action']);
+						break;
+					case "xbmcsend":
+						$href = $baseurl."?w=wControl&style=".$style."&xbmcsend=".urlencode($shortcut["action"]).(!empty($shortcut["host"]) ? "&host=".$shortcut["host"] : "").(!empty($shortcut["port"]) ? "&port=".$shortcut["port"] : "").(!empty($mfpapikey) ? "&apikey=".$mfpapikey : "");
+						break;
+					case "shell" :
+						$href = $baseurl."?w=wControl&style=".$style."&shell=".urlencode($shortcut["action"]).(!empty($mfpapikey) ? "&apikey=".$mfpapikey : "");
+						break;
+				}
 			}
 			if($style == "m") {
-				echo "\t<li".(($alt) ? " class=\"alt\"" : "")."><a class=\"shortcut\" href=\"".$href."\">".$shortcutlabel."</a><br/></li>\n";
+				echo "\t<li".(($alt) ? " class=\"alt\"" : "")."><a class=\"shortcut\" href=\"".$href."\">".$shortcut['label']."</a><br/></li>\n";
 			} elseif($style == "w") {
-				echo "\t<li".(($alt) ? " class=\"alt\"" : "")."><a class=\"shortcut\" onclick=\"cmdControl('".$href."');\" href=\"#\">".$shortcutlabel."</a><br/></li>\n";
+				echo "\t<li".(($alt) ? " class=\"alt\"" : "")."><a class=\"shortcut\" onclick=\"cmdControl('".$href."');\" href=\"#\">".$shortcut['label']."</a><br/></li>\n";
 			}
 		} else {
-			echo "\t<li".(($alt) ? " class=\"alt\"" : "")."><a class=\"shortcut\" href=\"".$shortcutmixed."\">".$shortcutlabel."</a><br/></li>\n";
+			echo "\t<li".(($alt) ? " class=\"alt\"" : "")."><a class=\"shortcut\" href=\"".$shortcut['action']."\">".$shortcut['label']."</a><br/></li>\n";
 		}
 		$alt = !$alt;
 	}
 	echo "</ul>\n";
 }
-function widgetControl($baseurl = "widgets/wControl.php", $forcemenu = false) {
+function widgetControl($baseurl = "widgets/Control/wControl.php", $forcemenu = false) {
 	global $mfpsecured, $mfpapikey;
 
 	$json = '{"status":true}';
@@ -94,23 +119,23 @@ function widgetControl($baseurl = "widgets/wControl.php", $forcemenu = false) {
 		$displayMenu = ($_GET["style"] == "m");
 		if(!empty($_GET["cmd"])) {
 			switch ($_GET["cmd"]) {
-				case "shutdown":  // Shutdown
+				case "shutdown":
 					$results = jsonmethodcall("System.Shutdown");
 					break;
-   				case "suspend":  // Suspend
+   				case "suspend":
 					$results = jsonmethodcall("System.Suspend");
 					break;                  
-   				case "hibernate":  // Hibernate
+   				case "hibernate":
 					$results = jsonmethodcall("System.Hibernate");
 					break;
-				case "reboot":    // Reboot
+				case "reboot":
 					$results = jsonmethodcall("System.Reboot");
 					break;
-   				case "exit":  // Exit
+   				case "exit":
 				case "quit":
 					$results = jsonmethodcall("XBMC.Quit");
 					break;                    
-				case "vidscan":  // Video Library ScanForContent
+				case "vidscan":
 					$results = jsonmethodcall("VideoLibrary.ScanForContent");
 					break;
 				default:
@@ -160,11 +185,53 @@ function widgetControl($baseurl = "widgets/wControl.php", $forcemenu = false) {
 	}
 }
 
-if(!empty($_GET["style"]) && ($_GET["style"] == "w")) {
-	require_once "../config.php";
-	require_once "../functions.php";
-
-	widgetControl();
+function wControlSettings($settingsDB) {
+	echo "<form action='settings.php?w=wControl' method='post'>\n";
+	foreach ($settingsDB as $setting) {
+		if ($setting['Id'] == 'shortcuts') {
+			$shortcuts = unserialize($setting['Value']);
+			$i = 1;
+			foreach ($shortcuts as $shortcut){
+				echo "\t<strong>Shortcut ".$i.":</strong>";
+				echo "\t\tLabel: <input type='text' value='".$shortcut['label']."' name='shortcut-".$i."-label'  />";
+				echo "\t\tType: <input type='text' value='".$shortcut['type']."' name='shortcut-".$i."-type'  />";
+				echo "\t\tAction: <input type='text' value='".$shortcut['action']."' name='shortcut-".$i."-action'  /><br /><br />\n";
+				$i++;
+			}
+		} else {
+			echo "\t\t<strong>".$setting['Label'].":</strong> <input type='text' value='".unserialize($setting['Value'])."' name='".$setting['Id']."'  /><br /><br />\n";
+		}
+	}
+	echo "\t\t<input type='submit' value='Update' />\n";
+	echo "</form>\n";
 }
 
+function wControlUpdateSettings($post) {
+	$i = 1;
+	foreach ($post as $id => $value) {
+		// Create shortcuts array
+		if (strpos($id, 'shortcut') !== false) {				
+			if (strpos($id, 'label') !== false) {
+				$shortcuts["shortcut".$i]['label'] = $value;
+			} elseif (strpos($id, 'type') !== false) {
+				$shortcuts["shortcut".$i]['type'] = $value;
+			} elseif (strpos($id, 'action') !== false) {
+				$shortcuts["shortcut".$i]['action'] = $value;
+				$i++;
+			}
+		}	 
+		// Update other settings in database
+		else {  
+			updateSetting($id, $value);
+
+		}
+	}
+	updateSetting('shortcuts', $shortcuts);
+} 
+
+if(!empty($_GET["style"]) && ($_GET["style"] == "w")) {
+	require_once "../../config.php";
+	require_once "../../functions.php";
+	widgetControl();
+}
 ?>

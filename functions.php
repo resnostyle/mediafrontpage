@@ -58,4 +58,64 @@ function formattimes($input1, $input2) {
 
 	return $output1." - ".$output2;
 }
+function addSettings($settings) {
+		// Open the database
+	try {   $db = new PDO('sqlite:settings.db');
+
+		// Create the database if it doesn't exist
+		$db->exec("CREATE TABLE Settings (Id TEXT PRIMARY KEY, Label TEXT, Value TEXT)");
+
+		// Add each setting to database
+		foreach ($settings as $setting) {
+			//echo print_r($Value,1);
+			// Prepare the SQL Statement
+			$sql = "INSERT INTO Settings (Id, Label, Value) VALUES (:Id, :Label, :Value);";
+			$q = $db->prepare($sql);
+			$q->execute(array(	':Id'	=>$setting['id'],
+						':Label'=>$setting['label'],
+						':Value'=>serialize($setting['value'])));
+		}
+
+	} catch(PDOException $e) {
+		print 'Exception : '.$e->getMessage();
+	}
+
+	// Close the database connection
+	$db = NULL;
+}
+function updateSetting($id, $value) {
+
+		// Open the database
+	try {	$db = new PDO('sqlite:settings.db');
+
+		// Replace value in specified column for this widget
+		$request = $db->prepare("UPDATE Settings SET Value='".serialize($value)."' WHERE Id='".$id."'");
+		$request->execute();
+
+		// Close the database connection
+		$db = null;
+
+	} catch(PDOException $e) {
+		print 'Exception : '.$e->getMessage();
+	}
+}
+function getAllSettings() {
+		// Open the database
+	try {	$db = new PDO('sqlite:settings.db');
+
+		// Fetch into an PDOStatement object
+		$request = $db->prepare("SELECT * FROM Settings");
+		$request->execute();
+
+		// Into array
+		$settings = $request->fetchAll();
+
+  		// Close the database connection
+    		$db = null;
+
+	} catch(PDOException $e) {
+		print 'Exception : '.$e->getMessage();
+	}
+	return $settings;
+}
 ?>

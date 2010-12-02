@@ -3,7 +3,7 @@ html,body {
 }
 
 body {
-  background:url(../media/bgNav.png);
+  background:url(../images/bgNav.png);
   font-family: 'Helvetica Neue','HelveticaNeue',Helvetica, Arial, sans-serif;
   font-size:100%;
   color: #eee;
@@ -62,7 +62,7 @@ a:visited {
 --------------------*/
 
 #home {
-  background: url(../media/home.png) no-repeat;   
+  background: url(../images/home.png) no-repeat;   
   text-indent: -9999em;
   height:25px;
   width:56px
@@ -113,7 +113,7 @@ a:visited {
   padding:0 26px 0 24px;
   position: relative;
   text-shadow: rgba(0,0,0,.5) 0px 1px 0px;
-  background:url(../media/bgNavSep.png) no-repeat right center;
+  background:url(../images/bgNavSep.png) no-repeat right center;
 }
 
 #nav-menu li a:hover {
