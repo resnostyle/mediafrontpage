@@ -17,6 +17,12 @@ $widget_init = array(	'Id' 			=> "wSabnzbd",
 			'Script'		=> ""
 		    );
 
+$settings_init['wSabnzbd'] =	array(  'saburl'    => 	array(	'label'	=>	'Sabnzbd URL',
+								'value' =>	'http://localhost:8080/sabnzbd/'),
+					'sabapikey' =>	array(	'label'	=>	'Sabnzbd API Key',
+								'value' =>	'')
+					);
+
 function widgetSabnzbdHeader() {
 	echo <<< SABNZBDHEADER
 		<script type="text/javascript" language="javascript">
@@ -42,7 +48,12 @@ SABNZBDHEADER;
 }
 
 function sabQuery($command, $values = array()) {
-	global $saburl, $sabapikey;
+	include_once "../../functions.php";
+
+	$settingsDB = getAllSettings('sqlite:../../settings.db');
+	$settings = formatSettings($settingsDB);
+	$saburl = $settings['saburl'];
+	$sabapikey = $settings['sabapikey'];
 
 	$getParameter = "";
 	foreach ($values as $key => $value) {
@@ -63,8 +74,12 @@ function sabQuery($command, $values = array()) {
 }
 
 function sabStatus($count = 15) {
-	global $saburl, $sabapikey;
+	include_once "../../functions.php";
 
+	$settingsDB = getAllSettings('sqlite:../../settings.db');
+	$settings = formatSettings($settingsDB);
+	$saburl = $settings['saburl'];
+	$sabapikey = $settings['sabapikey'];
 
 	//$sabqueue = sabQuery("qstatus");
 	$sabqueueAdvanced = sabQuery("queue");
@@ -87,17 +102,15 @@ function sabStatus($count = 15) {
 			echo "\t\t\t<p><a href=\"".$cmdPauseResume."\" target=\"nothing\">$state</a>";	
 		}
 
-		//href link is the resume URL for all the queue
 		echo " - Speed: ".$sabqueue["speed"]." - Timeleft: ".$sabqueue["timeleft"]."</p>\n";
 		$totalQ = (int)$sabqueue["mb"];
 		$remainingQ = (int)$sabqueue["mbleft"];
 		if($totalQ!=0){
 			$percentageQ = (int)((($totalQ - $remainingQ) / $totalQ)*100);
-			//Total progress bar with Time Left and MB left/ MB remainig as you can see from previous posts. It only shows up when the queue is not paused
+			//Total progress bar
 			echo "\t\t\t<div id=\"sab-total\" class=\"progressbar\"><div class=\"progress\" style=\"width:".$percentageQ."%\"></div><div class=\"progresslabel\">".$sabqueue['sizeleft']." / ".$sabqueue['size']."</div></div>\n";
 		}
 	} else {
-		//href link is the pause URL for all the queue
 		$cmdPauseResume = $ajaxurl."cmd=".((strtolower($state) == "paused") ? "resume" : "pause");
 		if(!empty($_GET['style']) && ($_GET['style'] == "w")) {
 			echo "\t\t\t<p><a href=\"#\" onclick=\"cmdSabnzbd('".$cmdPauseResume."');\">$state</a></p>\n";	
@@ -140,11 +153,11 @@ function sabStatus($count = 15) {
 						$name = $fullname;
 					}
 					if(!empty($_GET['style']) && ($_GET['style'] == "w")) {
-						$actions = "<img src=\"".$pathtoimages."media/btnPlayPause.png\" onclick=\"cmdSabnzbd('".$cmdPauseResume."');\" />";
-						$actions .= "<img src=\"".$pathtoimages."media/btnQueueDelete.png\" onclick=\"cmdSabnzbd('".$cmdDelete."');\" />";
+						$actions = "<img src=\"".$pathtoimages."style/images/btnPlayPause.png\" onclick=\"cmdSabnzbd('".$cmdPauseResume."');\" />";
+						$actions .= "<img src=\"".$pathtoimages."style/images/btnQueueDelete.png\" onclick=\"cmdSabnzbd('".$cmdDelete."');\" />";
 					} else {
-						$actions = "<a href=\"".$cmdPauseResume."\" target=\"nothing\"><img src=\"".$pathtoimages."media/btnPlayPause.png\" /></a>";
-						$actions .= "<a href=\"".$cmdDelete."\" target=\"nothing\"><img src=\"".$pathtoimages."media/btnQueueDelete.png\" /></a>";
+						$actions = "<a href=\"".$cmdPauseResume."\" target=\"nothing\"><img src=\"".$pathtoimages."style/images/btnPlayPause.png\" /></a>";
+						$actions .= "<a href=\"".$cmdDelete."\" target=\"nothing\"><img src=\"".$pathtoimages."style/images/btnQueueDelete.png\" /></a>";
 					}
 					echo "\t\t\t<div class=\"queueitem\">\n";
 					echo "\t\t\t\t<div class=\"progressbar\">\n";
@@ -164,15 +177,30 @@ function sabStatus($count = 15) {
 	echo "\t\t</div><!-- #sab-queue -->\n";
 
 }
+function wSabnzbdSettings($settingsDB) {
+	echo "<form action='settings.php?w=wSabnzbd' method='post'>\n";
+	foreach ($settingsDB as $setting) {
+		if ($setting['Widget'] == 'wSabnzbd' ) {
+			$setting['Value'] = unserialize($setting['Value']);
+			echo "\t\t".$setting['Label'].": <input type='text' value='".$setting['Value']."' name='".$setting['Id']."'  /><br />\n";
+		}
+	}
+	echo "\t\t<input type='submit' value='Update' />\n";
+	echo "</form>\n";
+}
+function wSabnzbdUpdateSettings($post) {
+	$i = 1;
+	foreach ($post as $id => $value) {
+		updateSetting($id,$value); 
+	}
+} 
 
 if(!empty($_GET['cmd'])) {
-	require_once "../../config.php";
 
 	sabQuery(urldecode($_GET['cmd']));
 }
 
 if(!empty($_GET['style']) && (($_GET['style'] == "w") || ($_GET['style'] == "s"))) {
-	require_once "../../config.php";
 
 	$count = (!empty($_GET['c'])) ? $_GET['c'] : 15;
 	if($_GET['style'] == "w") {

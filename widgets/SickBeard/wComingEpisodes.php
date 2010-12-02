@@ -16,11 +16,9 @@ $widget_init = array(	'Id' 			=> "wComingEpisodes",
 			'Interval'		=> "",
 			'Script'		=> ""
 		    );
-$settings_init['wComingEpisodes'] =	array(  'sickbeardcomingepisodes' => 	array(	'id'	=>	'sickbeardcomingepisodes',
-											'label'	=>	'Coming Episodes URL',
+$settings_init['wComingEpisodes'] =	array(  'sickbeardcomingepisodes' => 	array(	'label'	=>	'Coming Episodes URL',
 											'value' =>	'http://user:password@COMPUTER:PORT/sickbeard/comingEpisodes/'),
-						'sickbeardurl'		  =>	array(	'id'	=>	'sickbeardurl',
-											'label'	=>	'Sickbeard URL',
+						'sickbeardurl'		  =>	array(	'label'	=>	'Sickbeard URL',
 											'value' =>	'http://user:password@COMPUTER:PORT/sickbeard/')
 					);
 

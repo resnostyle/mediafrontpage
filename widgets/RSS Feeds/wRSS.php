@@ -147,21 +147,7 @@ function widgetRSSHeader() {
 
 RSSHEADER;
 }
-/*function widgetRSS() {
-	global $settings;
 
-	$rssfeeds = $settings['rssfeeds'];
-	echo "<form>\n";
-	echo "\t<select onchange=\"showRSS(this.value);\">\n";
-	foreach($rssfeeds as $rssfeed) {
-		echo "\t\t<option value=\"".$rssfeed['label']."\">".$rssfeed['label']."</option>\n";
-	}
-	echo "\t</select>\n";
-	echo "</form>\n";
-	echo "<div id=\"rssList\">";
-	displayRSS(reset($rssfeeds));
-	echo "</div>\n";
-}*/
 function widgetRSS($formaction = "") {
 	global $settings;
 
@@ -207,9 +193,10 @@ function widgetRSS($formaction = "") {
 }
 
 function sab_addurl($link, $name, $rssfeed){
-	global $saburl, $sabapikey;
 	global $settings;
 	$rssfeeds = $settings['rssfeeds'];
+	$saburl = $settings['saburl'];
+	$sabapikey = $settings['sabapikey'];
 
 	$queryurl = $saburl."api?mode=addurl&name=".urlencode($link)."&nzbname=".urlencode($name);
 	$queryurl .= (!empty($rssfeed['category']) ? "&category=".urlencode($rssfeed['category']) : "");

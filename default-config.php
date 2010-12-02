@@ -35,11 +35,6 @@ $xbmcdbconn = array(
 	);
 */
 
-
-// enter SABnzbd+ URL and API key
-$saburl = 'http://localhost:8080/sabnzbd/';  // The full URL you use to access SABnzbd.
-$sabapikey = '';                             // SABnzbd's API Key found in Config>General.
-
 // enter navigation bar links
 $navlink["XBMC"] = "http://localhost:8080";
 $navlink["Sickbeard"] = "/sickbeard";
