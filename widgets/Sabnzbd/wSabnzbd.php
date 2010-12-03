@@ -185,7 +185,7 @@ function wSabnzbdSettings($settingsDB) {
 			echo "\t\t".$setting['Label'].": <input type='text' value='".$setting['Value']."' name='".$setting['Id']."'  /><br />\n";
 		}
 	}
-	echo "\t\t<input type='submit' value='Update' />\n";
+	echo "\t\t<input type='submit' value='Save' />\n";
 	echo "</form>\n";
 }
 function wSabnzbdUpdateSettings($post) {

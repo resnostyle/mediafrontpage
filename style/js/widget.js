@@ -54,7 +54,7 @@ var widgets = {
                 }).appendTo($(settings.handleSelector, this));
             }
             
-           if (thisWidgetSettings.editable) {
+       /*    if (thisWidgetSettings.editable) {
                 $('<a href="#" class="edit">EDIT</a>').mousedown(function (e) {
                     // STOP event bubbling 
                     e.stopPropagation();    
@@ -73,7 +73,7 @@ var widgets = {
                     .append('<ul><li class="item"><label>Title:</label><input value="' + $('h3',this).text() + '"/></li>')
                     .append('</ul>')
                     .insertAfter($(settings.handleSelector,this));
-            }
+            }*/
             
             if (thisWidgetSettings.collapsible) {
                 $('<a href="#" class="collapse">COLLAPSE</a>').mousedown(function (e) {

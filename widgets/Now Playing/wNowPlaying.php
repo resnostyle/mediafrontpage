@@ -96,7 +96,8 @@ NOWPLAYINGHEADER;
 ?>
 <?php
 function displayNowPlaying($static = false) {
-	global $xbmcimgpath;
+	global $settings;
+	$xbmcimgpath = $settings['xbmcimgpath'];
 	
 	echo "<div id=\"nowplaying\">\n";
 
@@ -216,7 +217,8 @@ function displayNowPlaying($static = false) {
 	echo "</div>\n";
 }
 function processCommand($command) {
-	global $xbmcimgpath;
+	global $settings;
+	$xbmcimgpath = $settings['xbmcimgpath'];
 	
 	if ($command == "ShowPlaylist") {
 
@@ -299,14 +301,12 @@ function processCommand($command) {
 }
 
 if (!empty($_GET['ajax']) && ($_GET['ajax'] == "w")) {
-	require_once "../../config.php";
 	require_once "../../functions.php";
 	displayNowPlaying();
 }
 ?>
 <?php
 if (!empty($_GET['ajax']) && ($_GET['ajax'] == "c")) {
-	require_once "../../config.php";
 	require_once "../../functions.php";
 
 	if (!empty($_GET['command'])) {
@@ -322,7 +322,6 @@ if (!empty($_GET['ajax']) && ($_GET['ajax'] == "c")) {
 }
 
 if (!empty($_GET['style']) && (($_GET['style'] == "w") || ($_GET['style'] == "s"))) {
-	require_once "../../config.php";
 
 	if ($_GET['style'] == "w") {
 ?>

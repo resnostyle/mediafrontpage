@@ -1,8 +1,6 @@
 <?php
-require_once "config.php";
 require_once "functions.php";
 require_once "widgets.php";
-//require_once "settings.php";
 
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
@@ -27,6 +25,38 @@ foreach (glob("widgets/*/w*.php") as $widgetfile) {
 	}
 
 }
+// Global settings
+$settings_init['global'] =	array(  'navlinks' =>	array(	'label'	=>	'Navigation Bar Links',
+								'value' =>	array(	'navlink1' =>	array(	'label' 	=> 'XBMC',
+														'url'		=> 'http://localhost:8080'),
+											'navlink2' =>	array(	'label' 	=> 'SickBeard',
+														'url'		=> 'http://localhost:8080'),
+											'navlink3' =>	array(	'label' 	=> 'Couch Potato',
+														'url'		=> 'http://localhost:8080'),
+											'navlink4' =>	array(	'label' 	=> 'Sabnzbd',
+														'url'		=> 'http://localhost:8080'),
+											'navlink5' =>	array(	'label' 	=> 'TV Headend',
+														'url'		=> 'http://localhost:8080'),
+											'navlink6' =>	array(	'label' 	=> 'Settings',
+														'url'		=> 'settings.php')
+										)
+								),
+				'customstylesheets' =>	array(	'label'	=>	'Custom Stylesheets',
+								'value' =>	array(	'customstylesheet1' =>	array(	'label' 	=> 'Light Theme',
+															'path'	=> 'style/css/lighttheme.css',
+															'enabled'	=> 'false'),
+											'customstylesheet2' =>	array(	'label' 	=> 'Minimal Coming Episodes',
+															'path'	=> 'style/css/comingepisodes-minimal-poster.css',
+															'enabled'	=> 'false')
+										)
+								),
+					'mfpsecured' =>	array(	'label'	=>	'MFP Secured',
+								'value' =>	'false'),
+					'mfpapikey' =>	array(	'label'	=>	'MFP API Key',
+								'value' =>	'12345678923829482293882')
+					);
+
+
 
 // Add settings
 addSettings($settings_init);
@@ -39,9 +69,6 @@ $settingsDB = getAllSettings();
 
 $settings = formatSettings($settingsDB);
 
-
-
-//echo print_r($settings,1);	
 ?>
 <html>
 	<head>
@@ -89,11 +116,17 @@ $settings = formatSettings($settingsDB);
 		// Render widget headers 
 		foreach ($widgets as $widget) {
 			$directory = dirname($widget['File']);
-			//echo print_r($widget,1);
 			$$widget['Id']->renderWidgetHeaders($directory);
 		}    	
-		if(!empty($customStyleSheet)) {
-			echo "\t\t<link rel=\"stylesheet\" type=\"text/css\" href=\"".$customStyleSheet."\">\n";
+
+		$customstylesheets = $settings['customstylesheets'];
+
+		if(!empty($customstylesheets)) {
+			foreach ($customstylesheets as $customstylesheet) {
+				if ($customstylesheet['enabled'] !== 'false') {
+					echo "\t\t<link rel=\"stylesheet\" type=\"text/css\" href=\"".$customstylesheet['path']."\">\n";
+				}
+			}
 		}
 ?>
 		<!-- END: Dynamic Header Inserts From Widgets -->
@@ -151,3 +184,4 @@ $settings = formatSettings($settingsDB);
     		<script type="text/javascript" src="style/js/widget.js"></script>
 	</body>
 </html>
+

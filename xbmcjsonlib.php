@@ -1,8 +1,10 @@
 <?php
-require_once "config.php";
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+	
 
-$COMM_ERROR = "\n<p><strong>XBMC's JSON API did not respond.</strong></p>\n<p>Check your configuration (config.php) and that the JSON service variable is configured correctly and that the <a href=\"".$xbmcjsonservice."\">Service</a> is running.</p>\n";
-$JSON_ERROR = "\n<p><strong>XBMC's <a href=\"".$xbmcjsonservice."\">JSON API service</a> returned an Error.</strong></p>\n";
+$COMM_ERROR = "\n<p><strong>XBMC's JSON API did not respond.</strong></p>\n<p>Check your 'XBMC JSON Server Address' <a href='settings.php?w=wXBMC' >setting</a> is correct by putting that address in your browser. It should display 'JSONRPC active and working'</p>\n";
+$JSON_ERROR = "\n<p><strong>XBMC's JSON API service returned an Error.</strong></p>\n";
 $videodetailfields = '"genre", "director", "trailer", "tagline", "plot", "plotoutline", "title", "originaltitle", "lastplayed", "showtitle", "firstaired", "duration", "season", "episode", "runtime", "year", "playcount", "rating", "writer", "studio", "mpaa", "premiered", "album"';
 
 $xbmcJsonMethods = array(
@@ -206,11 +208,14 @@ function jsonmethodcall($method, $args = array(), $service_uri = "") {
 	return jsoncall($request, $service_uri);
 }
 function jsoncall($request, $service_uri = "") {
-	global $xbmcjsonservice;
 	global $DEBUG;
 	global $JSON_ERROR;
 	global $COMM_ERROR;
 	global $FORCE_UTF8;
+	require_once "functions.php";
+	$settingsDB = getAllSettings('sqlite:../../settings.db');
+	$settings = formatSettings($settingsDB);
+	$xbmcjsonservice = $settings['xbmcjsonservice'];
 	
 	if($service_uri == "") {
 		$service_uri = $xbmcjsonservice;
@@ -300,7 +305,8 @@ function sqlquerystring($method, $args = array()) {
 	}
 }
 function sqlitetoarray($sql, $dbname, $resultwrapper) {
-	global $xbmcdbconn;
+	global $settings;
+	$xbmcdbconn = $settings['xbmcdbconn'];
 
 	if(!empty($xbmcdbconn[$dbname]['dns'])) {
 		if ($dbhandle = new PDO($xbmcdbconn[$dbname]['dns'], $xbmcdbconn[$dbname]['username'], $xbmcdbconn[$dbname]['password'], $xbmcdbconn[$dbname]['options'])) { 

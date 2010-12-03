@@ -1,5 +1,4 @@
 <?php
-require_once "config.php";
 require_once "xbmcjsonlib.php";
 
 function to_readable_size($size) {
@@ -106,6 +105,9 @@ function updateSetting($id, $value) {
 function getAllSettings($database = 'sqlite:settings.db') {
 		// Open the database
 	try {	$db = new PDO($database);
+
+		// Debug PDO	
+ 		$db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
 
 		// Fetch into an PDOStatement object
 		$request = $db->prepare("SELECT * FROM Settings");

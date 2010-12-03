@@ -19,15 +19,7 @@ $widget_init = array(	'Id' 			=> "wHardDrives",
 
 $settings_init['wHardDrives'] =	array(  'drives' =>	array(	'label'	=>	'Drives',
 								'value' =>	array(	'drivepath1' =>	array(	'label' 	=> '/',
-														'location'	=> '/'),
-											'drivepath2' =>	array(	'label' 	=> 'TV Shows',
-														'location'	=> '/path/to/tvshows'),
-											'drivepath3' =>	array(	'label' 	=> 'Movies',
-														'location'	=> '/path/to/movies'),
-											'drivepath4' =>	array(	'label' 	=> 'Music',
-														'location'	=> '/path/to/music'),
-											'drivepath5' =>	array(	'label' 	=> 'Downloads',
-														'location'	=> '/path/to/downloads')
+														'location'	=> '/')
 											)
 								)
 					);
@@ -62,40 +54,63 @@ function widgetHardDrives() {
 	}
 }
 function wHardDrivesSettings($settingsDB) {
-	//echo print_r($settingsDB,1);
 	echo "<form action='settings.php?w=wHardDrives' method='post'>\n";
 	foreach ($settingsDB as $setting) {
 		if ($setting['Widget'] == 'wHardDrives' ) {
 			if ($setting['Id'] == 'drives') {
 				$drives = unserialize($setting['Value']);
 				$i = 1;
-				foreach ($drives as $drive){
-					echo "\t<strong>Drive ".$i.":</strong>";
-					echo "\t\tLabel: <input type='text' value='".$drive['label']."' name='drivepath-".$i."-label'  />";
-					echo "\t\tLocation: <input type='text' value='".$drive['location']."' name='drivepath-".$i."-location'  /><br /><br />\n";
-					$i++;
+				if (!empty($drives)) {
+					echo "\t<strong>Hard Drives:</strong><br />";
+					foreach ($drives as $drive){
+						echo "\t<strong>".$drive['label'].":</strong><br />";
+						echo "\t\tName:<input type='text' value='".$drive['label']."' name='drivepath-".$i."-label'  />";
+						echo "\t\tLocation: <input type='text' value='".$drive['location']."' name='drivepath-".$i."-location'  />";
+						echo "\t\tDel: <input type='checkbox' name='drivepath-".$i."-remove' value='true' /><br /><br />\n";
+						$i++;
+					}
 				}
+				echo "\t<strong>Add New Drive:</strong><br />";
+				echo "\t\tName: <input type='text' value='' name='adddrive-".$i."-label'  /><br /><br />";
 			}
 		} 
 	}
-	echo "\t\t<input type='submit' value='Update' />\n";
+	echo "\t\t<input type='submit' value='Save' />\n";
 	echo "</form>\n";
 }
 
 function wHardDrivesUpdateSettings($post) {
 	$i = 1;
-	foreach ($post as $id => $value) {
-		// Create drives array
-		if (strpos($id, 'drivepath') !== false) {				
-			if (strpos($id, 'label') !== false) {
-				$drivepaths["drivepath".$i]['label'] = $value;
-			} elseif (strpos($id, 'location') !== false) {
-				$drivepaths["drivepath".$i]['location'] = $value;
+	$drivepaths = "";
+	if (!empty($post)) {
+		foreach ($post as $id => $value) {
+			// Create drives array
+			if (strpos($id, 'drivepath') !== false) {				
+				if (strpos($id, 'label') !== false) {
+					$drivepaths["drivepath".$i]['label'] = $value;
+				} elseif (strpos($id, 'location') !== false) {
+					$drivepaths["drivepath".$i]['location'] = $value;
+					if (!isset($post['drivepath-'.$i.'-remove'])){
+						$i++;	
+					}	
+				} elseif (strpos($id, 'remove') !== false) {
+					if ($value == 'true') {
+						unset($drivepaths["drivepath".$i]);
+					}
+					$i++;		
+				}	
+			} elseif (strpos($id, 'adddrive') !== false) {				
+				if (!empty($value)) {
+					$drivepaths["drivepath".$i]['label'] = $value;
+					$drivepaths["drivepath".$i]['location'] = "";
+				} else {
+					$post['drivepath-'.$i.'-remove'] = 'true';
+				}
 				$i++;
-			}
-		}	 
+			}	 
+		}
+		updateSetting('drives', $drivepaths);
 	}
-	//echo print_r($drivepaths,1);
-	updateSetting('drives', $drivepaths);
+
 } 
 ?>

@@ -110,7 +110,9 @@ function widgetMenu($baseurl) {
 	echo "</ul>\n";
 }
 function widgetControl($baseurl = "widgets/Control/wControl.php", $forcemenu = false) {
-	global $mfpsecured, $mfpapikey;
+	global $settings;
+	$mfpsecured = $settings['mfpsecured'];
+	//$mfpapikey = $settings['mfpapikey'];
 
 	$json = '{"status":true}';
 	$errmsg = '';
@@ -157,7 +159,7 @@ function widgetControl($baseurl = "widgets/Control/wControl.php", $forcemenu = f
 				$errmsg = "Authorization failure";
 			}
 		} elseif(!empty($_GET["shell"])) {
-			if((!empty($mfpapikey) && !empty($_GET["apikey"]) && ($_GET["apikey"] == $mfpapikey)) || $mfpsecured) {
+			if((!empty($mfpapikey) && !empty($_GET["apikey"]) && ($_GET["apikey"] == $mfpapikey)) || $mfpsecured !== 'false') {
 				$request = stripslashes(urldecode($_GET["shell"]));
 				$results = shell_exec($request);
 				$json = '{"status":true, "message": "'.str_replace("\"", "\\\"", $results).'"}';
@@ -189,19 +191,25 @@ function wControlSettings($settingsDB) {
 	foreach ($settingsDB as $setting) {
 		if ($setting['Widget'] == 'wControl' ) {
 			if ($setting['Id'] == 'shortcuts') {
-				$shortcuts = unserialize($setting['Value']);
-				$i = 1;
-				foreach ($shortcuts as $shortcut){
-					echo "\t<strong>Shortcut ".$i.":</strong>";
-					echo "\t\tLabel: <input type='text' value='".$shortcut['label']."' name='shortcut-".$i."-label'  />";
-					echo "\t\tType: <input type='text' value='".$shortcut['type']."' name='shortcut-".$i."-type'  />";
-					echo "\t\tAction: <input type='text' value='".$shortcut['action']."' name='shortcut-".$i."-action'  /><br /><br />\n";
-					$i++;
+				if (!empty($setting['Value'])) {
+					echo "\t<strong>Shortcuts</strong><br />";
+					$shortcuts = unserialize($setting['Value']);
+					$i = 1;
+					foreach ($shortcuts as $shortcut){
+						echo "\t\t<strong>".$shortcut['label']."</strong><br/>";
+						echo "\t\tLabel: <input type='text' value='".$shortcut['label']."' name='shortcut-".$i."-label'  />";
+						echo "\t\tType: <input type='text' value='".$shortcut['type']."' name='shortcut-".$i."-type'  />";
+						echo "\t\tAction: <input type='text' value='".$shortcut['action']."' name='shortcut-".$i."-action'  />\n";
+						echo "\t\tDel: <input type='checkbox' name='shortcut-".$i."-remove' value='true' /><br /><br />\n";
+						$i++;
+					}
 				}
+				echo "\t<strong>Add Shortcut:</strong><br />";
+				echo "\t\tName: <input type='text' value='' name='addsc-".$i."-label'  /><br /><br />\n";
 			}
 		} 
 	}
-	echo "\t\t<input type='submit' value='Update' />\n";
+	echo "\t\t<input type='submit' value='Save' />\n";
 	echo "</form>\n";
 }
 
@@ -216,9 +224,27 @@ function wControlUpdateSettings($post) {
 				$shortcuts["shortcut".$i]['type'] = $value;
 			} elseif (strpos($id, 'action') !== false) {
 				$shortcuts["shortcut".$i]['action'] = $value;
+				if (!isset($post['shortcut-'.$i.'-remove'])){
+					$i++;		
+				}
+			} elseif (strpos($id, 'remove') !== false) {
+				if ($value == 'true') {
+					unset($shortcuts["shortcut".$i]);
+				}
+				$i++;		
+			}	
+		} elseif (strpos($id, 'addsc') !== false) {				
+			if (strpos($id, 'label') !== false) {
+				if (!empty($value)) {
+					$shortcuts["shortcut".$i]['label'] = $value;
+					$shortcuts["shortcut".$i]['type'] = "";
+					$shortcuts["shortcut".$i]['action'] = "";
+				} else {
+					$post['shortcut-'.$i.'-remove'] = 'true';
+				}
 				$i++;
 			}
-		}	 
+		}
 	}
 	updateSetting('shortcuts', $shortcuts);
 } 

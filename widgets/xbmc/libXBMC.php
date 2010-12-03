@@ -156,7 +156,7 @@ function executeVideo($style = "w", $action, $breadcrumb, $params = array()) {
 				displayVideoListEpisodes($videos, $style, $action, $breadcrumb, $params);
 			} else {
 				echo $COMM_ERROR;
-				echo "<pre>".jsonstring("VideoLibrary.GetRecentlyAddedEpisodes", $count)."</pre>";
+				//echo "<pre>".jsonstring("VideoLibrary.GetRecentlyAddedEpisodes", $count)."</pre>";
 			}
 			break;
 		case "m":  // Movies
@@ -181,7 +181,7 @@ function executeVideo($style = "w", $action, $breadcrumb, $params = array()) {
 				displayVideoListMovie($videos, $style, $action, $breadcrumb, $params);
 			} else {
 				echo $COMM_ERROR;
-				echo "<pre>".jsonstring("VideoLibrary.GetRecentlyAddedMovies")."</pre>";
+				//echo "<pre>".jsonstring("VideoLibrary.GetRecentlyAddedMovies")."</pre>";
 			}
 			break;
 		case "mv": // Music Videos
@@ -295,21 +295,22 @@ function displayLibraryMenu($style, $params) {
 	$arrResult = jsonmethodcall("JSONRPC.Version");
 	if(!is_array($arrResult)) {
 		echo $COMM_ERROR;
-	} else if ($style == "w") {
+	} else {
+		if ($style == "w") {
 			$data = array (
 						  "menu-lp" => array( "href" => "#", "onclick" => " onclick=\"".$params['onclickcmd']."('".$params['wrapper']."', '".$params['harness']."', 'lp', 'l', '', false);\"", "label" => "Photos")
 						, "menu-lv" => array( "href" => "#", "onclick" => " onclick=\"".$params['onclickcmd']."('".$params['wrapper']."', '".$params['harness']."', 'lv', 'l', '', false);\"", "label" => "Videos")
 						, "menu-lm" => array( "href" => "#", "onclick" => " onclick=\"".$params['onclickcmd']."('".$params['wrapper']."', '".$params['harness']."', 'lm', 'l', '', false);\"", "label" => "Music")
 					  );
-	} else {
+		} else {
 			$data = array (
 						  "menu-lp" => array( "href" => "?style=".$style."&a=lp&bc=l", "onclick" => "", "label" => "Photos")
 						, "menu-lv" => array( "href" => "?style=".$style."&a=lv&bc=l", "onclick" => "", "label" => "Videos")
 						, "menu-lm" => array( "href" => "?style=".$style."&a=lm&bc=l", "onclick" => "", "label" => "Music")
 					  );
+		}
+		renderMenu($data);
 	}
-
-	renderMenu($data);
 }
 function displayLibraryPhotoMenu($style, $params) {
 	echo "<ul class=\"widget-list\"><li>Not Supported Yet</li></ul>";

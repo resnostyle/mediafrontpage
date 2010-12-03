@@ -1,6 +1,9 @@
 <?php
- 
-  include "config.php";
+include_once "functions.php";
+	$settingsDB = getAllSettings();
+	$settings = formatSettings($settingsDB);
+	$navlinks = $settings['navlinks'];
+
   echo"<html>";
   echo"  <head>";
   echo"    <title>Navigation</title>";
@@ -13,11 +16,12 @@
   echo"      </div>";
   echo"      <div id=nav-menu>";
   echo"        <ul>";
-  foreach( $navlink as $navlinklabel => $navlinkpath) {
-    echo"          <li><a href='".$navlinkpath."' target=main>".$navlinklabel."</a></li>";
+  foreach( $navlinks as $navlink) {
+    echo"          <li><a href='".$navlink['url']."' target=main>".$navlink['label']."</a></li>";
   }
   echo"        </ul>";
   echo"      </div>";
   echo"    </div>";
   echo"  </body>";
   echo"</html>";
+?>

@@ -1,5 +1,4 @@
 <?php
-require_once "config.php";
 require_once "functions.php";
 
 function error_array($code, $message) {

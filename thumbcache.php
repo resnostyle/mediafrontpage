@@ -1,5 +1,4 @@
 <?php
-require_once "config.php";
 
 if(!empty($_GET["show"])) {
 	$cachefile = dirname(__FILE__)."/cache/".$_GET["show"].".tbn";
