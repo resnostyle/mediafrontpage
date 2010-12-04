@@ -43,6 +43,10 @@ $sickbeardurl = "http://user:password@COMPUTER:PORT/sickbeard/";
 $saburl = 'http://localhost:8080/sabnzbd/';  // The full URL you use to access SABnzbd.
 $sabapikey = '';                             // SABnzbd's API Key found in Config>General.
 
+//enter NZBmatrix login
+$nzbusername = '';		//username
+$nzbapi = '';			//api
+
 // enter navigation bar links
 $navlink;
 $navlink["XBMC"] = "http://localhost:8080";
