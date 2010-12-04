@@ -199,6 +199,10 @@ if (!empty($_GET['style']) && (($_GET['style'] == "w") || ($_GET['style'] == "s"
 	require_once "../../functions.php";
 	require_once "libXBMC.php";
 
+	$settingsDB = getAllSettings('sqlite:../../settings.db');
+	$settings = formatSettings($settingsDB);
+	$xbmcjsonservice = $settings['xbmcjsonservice'];
+	$xbmcimgpath = $settings['xbmcimgpath'];
 	$action = $_GET['a'];
 	$breadcrumb = (!empty($_GET['bc'])) ? $_GET['bc'] : "";
 

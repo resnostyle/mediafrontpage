@@ -1,7 +1,6 @@
 <?php
 error_reporting(E_ALL);
-ini_set('display_errors', '1');
-	
+ini_set('display_errors', '1');	
 
 $COMM_ERROR = "\n<p><strong>XBMC's JSON API did not respond.</strong></p>\n<p>Check your 'XBMC JSON Server Address' <a href='settings.php?w=wXBMC' >setting</a> is correct by putting that address in your browser. It should display 'JSONRPC active and working'</p>\n";
 $JSON_ERROR = "\n<p><strong>XBMC's JSON API service returned an Error.</strong></p>\n";

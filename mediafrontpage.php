@@ -89,7 +89,7 @@ $settings = formatSettings($settingsDB);
 			});
 			
 			hs.showCredits = false; 
-			hs.graphicsDir = 'js/highslide/graphics/';
+			hs.graphicsDir = 'style/js/highslide/graphics/';
 			hs.wrapperClassName = 'borderless';
 			//hs.outlineType = 'outer-glow';
 			//hs.outlineType = 'borderless';
@@ -146,7 +146,7 @@ $settings = formatSettings($settingsDB);
 				if ($widget['Section'] == $s) {
 					// Don't give child widgets their own widget box				
 					if ($widget['Child'] != 'true' && $widget['Type'] != 'empty') {
-						echo "\t\t<li id=\"".$widget['Id']."\" class=\"widget";
+						echo "\t\t<li id=\"".$widget['Id']."\" class=\"widget\"";
 		
 						// Is widget collapsed
 						if (!empty($widget["Display"])) {

@@ -1,4 +1,10 @@
 <?php
+require_once "functions.php";
+
+$settingsDB = getAllSettings();
+$settings = formatSettings($settingsDB);
+$sickbeardurl = $settings['sickbeardurl'];
+
 
 if(!empty($_GET["show"])) {
 	$cachefile = dirname(__FILE__)."/cache/".$_GET["show"].".tbn";
@@ -16,7 +22,9 @@ if(!empty($_GET["show"])) {
 }
 
 function sickbeardposter($imagesrc){
-	global $sickbeardurl;
+	global $settings;
+	$sickbeardurl = $settings['sickbeardurl'];
+	echo $sickbeardurl;
 	$pos = strpos($imagesrc, "/showPoster/?");
 	if($pos > 0) {
 		resizedimage($sickbeardurl.substr($imagesrc, $pos + 1));

@@ -3,7 +3,7 @@
 function executeVideo($style = "w", $action, $breadcrumb, $params = array()) {
 	global $COMM_ERROR;
 	global $videodetailfields;
-
+	global $settings;
 	$breadcrumbs = explode("|", $breadcrumb);
 	$previousaction = end($breadcrumbs);
 
@@ -425,7 +425,8 @@ function displayVideoFromList($videoList, $style, $action, $breadcrumb, $params)
 }
 
 function displayVideoEpisode($videoInfo, $style, $action, $breadcrumb, $params) {
-	global $xbmcimgpath;
+	global $settings; 
+	$xbmcimgpath = $settings['xbmcimgpath'];
 	
 	echo "<div id='recentTV'>\n";
 	echo "\t<div class='library-title'><h2>".$videoInfo['showtitle']."</h2></div>\n";
@@ -480,7 +481,8 @@ function displayVideoEpisode($videoInfo, $style, $action, $breadcrumb, $params) 
 }
 
 function displayVideoMovie($videoInfo, $style, $action, $breadcrumb, $params) {
-	global $xbmcimgpath;
+	global $settings; 
+	$xbmcimgpath = $settings['xbmcimgpath'];
 	
 	echo "<div id='movies'>\n";
 	echo "\t<div class='library-title'><h2>".$videoInfo['label']." &nbsp;(".$videoInfo['year'].")</h2></div>\n";
