@@ -22,7 +22,11 @@ $arrLayout = array(
 			"wComingEpisodes" => array(
 				"title" => "Coming Episodes",
 				"display" => ""
-			)
+			)/*,
+				"wSearch" => array(
+				"title" => "Search",
+				"display" => ""
+			)*/
 		),
 		"section3" => array(
 			"wNowPlaying" => array(
