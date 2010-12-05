@@ -20,8 +20,8 @@ error_reporting($errlevel);
 		<title>Media Front Page - Settings</title>
 		<!--<link href="settings.css" rel="stylesheet" type="text/css" /> -->
 		<script type="text/javascript" src="http://jqueryjs.googlecode.com/files/jquery-1.2.6.min.js"></script>
-		<link href="style/css/widget.css" rel="stylesheet" type="text/css" />	
-		<link href="style/layouts/3col-equal.css" rel="stylesheet" type="text/css" />
+		<link href="style/css/front.css" rel="stylesheet" type="text/css" />	
+		<link href="style/css/settings.css" rel="stylesheet" type="text/css" />	
 	</head>
 	<body>
 		<div id="page">
@@ -58,87 +58,85 @@ if (!empty($_GET['w'])) {
 ?>
 			</div><!-- #main -->
 		    	<script type="text/javascript" src="style/js/jquery.js"></script>
-			<script type="text/javascript" src="style/js/widget.js"></script>
+			<script type="text/javascript" src="style/js/settings.js"></script>
 		</div><!-- #page -->
 	</body>
 </html>
 
 <?php
 function globalSettings($settingsDB) {
-	echo "<form action='settings.php?w=global' method='post'>\n";
+	echo "\t\t\t\t<h1>MediaFrontPage Settings</h1><br/>\n";
+	echo "\t\t\t\t<form action='settings.php?w=global' method='post'>\n";
 	foreach ($settingsDB as $setting) {
 		if ($setting['Widget'] == 'global' ) {
 			if ($setting['Id'] == 'navlinks') {
 				$navlinks = unserialize($setting['Value']);
 				$i = 1;
 				if (!empty($navlinks)) {
-					echo "\t<ul id='section-1' class='section ui-sortable'>\n";
-					echo "\t<p><strong>Navigation Bar Link:</strong></p>";
+					echo "\t\t\t\t\t<ul class='section ui-sortable'>\n";
+					echo "\t\t\t\t\t\t<h3>Navigation Bar Links</h3>\n";
+
 					foreach ($navlinks as $navlink){
-						echo "\t\t<li class='widget collapsed'>\n";
-						echo "\t\t\t<div class='widget-head'>\n";
-						echo "\t\t\t\t<h3>".$navlink['label']."</h3>\n";
-						echo "\t\t\t</div><!-- .widget-head -->\n";
-						echo "\t\t\t<div class='widget-content'>\n";
-						echo "\t\t\t\t<p>";
-						echo "Name: <input type='text' value='".$navlink['label']."' name='navlink-".$i."-label'  />";
-						echo "URL: <input type='text' value='".$navlink['url']."' name='navlink-".$i."-url'  /></p>";
-						//echo "Del: <input type='checkbox' name='navlink-".$i."-remove' value='true' /></p>";
-						echo "\t\t\t</div><!-- .widget-content -->\n";
-						echo "</li><!-- .widget -->";
+						echo "\t\t\t\t\t\t<li class='setting collapsed'>\n";
+						echo "\t\t\t\t\t\t\t<div class='setting-head'>\n";
+						echo "\t\t\t\t\t\t\t\t<h3>".$navlink['label']."</h3>\n";
+						echo "\t\t\t\t\t\t\t</div><!-- .setting-head -->\n";
+						echo "\t\t\t\t\t\t\t<div class='setting-content'>\n";
+						echo "\t\t\t\t\t\t\t\t<p> Name: <input type='text' value='".$navlink['label']."' name='navlink-".$i."-label'  /> URL: <input type='text' value='".$navlink['url']."' name='navlink-".$i."-url'  /></p>\n";
+						echo "\t\t\t\t\t\t\t</div><!-- .setting-content -->\n";
+						echo "\t\t\t\t\t\t</li><!-- .setting -->\n";
 						$i++;
 					}
-						echo "\t\t<li class='widget collapsed'>\n";
-						echo "\t\t\t<div class='widget-head'>\n";
-						echo "\t\t\t\t<h3>Add New Link</h3>\n";
-						echo "\t\t\t</div><!-- .widget-head -->\n";
-						echo "\t\t\t<div class='widget-content'>\n";
-						echo "\t\t\t\t<p>";
-						echo "Name: <input type='text' value='' name='addlink-".$i."-label'  /></p>\n";
-						echo "\t\t\t</div><!-- .widget-content -->";
-						echo "\t\t</li><!-- .widget -->";
-						echo "\t</ul><!-- #section-1 -->";
+						echo "\t\t\t\t\t\t<div class='add'>\n";
+						echo "\t\t\t\t\t\t\t<div class='setting-head'>\n";
+						echo "\t\t\t\t\t\t\t\t<h3>Add New Link</h3>\n";
+						echo "\t\t\t\t\t\t\t</div><!-- .setting-head -->\n";
+						echo "\t\t\t\t\t\t\t<div class='setting-content'>\n";
+						echo "\t\t\t\t\t\t\t\t<p> Name: <input type='text' value='' name='addlink-".$i."-label'  /></p>\n";
+						echo "\t\t\t\t\t\t\t</div><!-- .setting-content -->\n";
+						echo "\t\t\t\t\t\t</div><!-- .add -->\n";
+						echo "\t\t\t\t\t</ul><!-- .section -->\n";
 				}
-
 			} elseif ($setting['Id'] == 'customstylesheets') {
 				$stylesheets = unserialize($setting['Value']);
 				$i = 1;
 				if (!empty($stylesheets)) {
-					echo "\t<ul id='section-2' class='section ui-sortable'>\n";
-					echo "\t<p><strong>Custom Stylesheets:</strong></p>";
+					echo "\t\t\t\t\t<ul class='section ui-sortable'>\n";
+					echo "\t\t\t\t\t\t<h3>Custom Stylesheets</h3>\n";
 					foreach ($stylesheets as $stylesheet){
-						echo "\t\t<li class='widget collapsed'>\n";
-						echo "\t\t\t<div class='widget-head'>\n";
-						echo "\t\t\t\t<h3>".$stylesheet['label']."</h3>\n";
-						echo "\t\t\t</div><!-- .widget-head -->\n";
-						echo "\t\t\t<div class='widget-content'>\n";
-						echo "\t\t\t\t<p>";
-						echo "Name <input type='text' value='".$stylesheet['label']."' name='customstylesheet-".$i."-label'  />";
-						echo "Path: <input type='text' value='".$stylesheet['path']."' name='customstylesheet-".$i."-path'  />";
-						echo "Enabled: <input type='text' value='".$stylesheet['enabled']."' name='customstylesheet-".$i."-enabled'  /></p>";
-						echo "\t\t\t</div><!-- .widget-content -->\n";
-						echo "</li><!-- .widget -->";
+						echo "\t\t\t\t\t\t<li class='setting collapsed'>\n";
+						echo "\t\t\t\t\t\t\t<div class='setting-head'>\n";
+						echo "\t\t\t\t\t\t\t\t<h3>".$stylesheet['label']."</h3>\n";
+						echo "\t\t\t\t\t\t\t</div><!-- .setting-head -->\n";
+						echo "\t\t\t\t\t\t\t<div class='setting-content'>\n";
+						echo "\t\t\t\t\t\t\t\t<p>Name <input type='text' value='".$stylesheet['label']."' name='customstylesheet-".$i."-label'  /> Path: <input type='text' value='".$stylesheet['path']."' name='customstylesheet-".$i."-path'  /> Enabled: <input type='text' value='".$stylesheet['enabled']."' name='customstylesheet-".$i."-enabled'  /></p>\n";
+						echo "\t\t\t\t\t\t\t</div><!-- .setting-content -->\n";
+						echo "\t\t\t\t\t\t</li><!-- .setting -->\n";
 						$i++;
 					}
 				}
-						echo "\t\t<li class='widget collapsed'>\n";
-						echo "\t\t\t<div class='widget-head'>\n";
-						echo "\t\t\t\t<h3>Add New Stylesheet</h3>\n";
-						echo "\t\t\t</div><!-- .widget-head -->\n";
-						echo "\t\t\t<div class='widget-content'>\n";
-						echo "\t\t\t\t<p>";
-						echo "Name: <input type='text' value='' name='addcs-".$i."-label'  /></p>\n";
-						echo "\t\t\t</div><!-- .widget-content -->";
-						echo "\t\t</li><!-- .widget -->";
-						echo "\t</ul><!-- #section-1 -->";
+						echo "\t\t\t\t\t\t<div class='add'>\n";
+						echo "\t\t\t\t\t\t\t<div class='setting-head'>\n";
+						echo "\t\t\t\t\t\t\t\t<h3>Add New Stylesheet</h3>\n";
+						echo "\t\t\t\t\t\t\t</div><!-- .setting-head -->\n";
+						echo "\t\t\t\t\t\t\t<div class='setting-content'>\n";
+						echo "\t\t\t\t\t\t\t\t<p> Name: <input type='text' value='' name='addcs-".$i."-label'  /></p>\n";
+						echo "\t\t\t\t\t\t\t</div><!-- .setting-content -->\n";
+						echo "\t\t\t\t\t\t</div><!-- .add -->\n";
+						echo "\t\t\t\t\t</ul><!-- .section -->\n";
 			} else {
+				echo" \t\t\t\t\t<div  class='section'>\n";
 				$setting['Value'] = unserialize($setting['Value']);
-				echo "\t\t".$setting['Label'].": <input type='text' value='".$setting['Value']."' name='".$setting['Id']."'  /><br />\n";
+				echo "\t\t\t\t\t\t<h3>".$setting['Label']."</h3>\n";
+				echo "\t\t\t\t\t\t<input type='text' value='".$setting['Value']."' name='".$setting['Id']."'  />\n";
+				echo" \t\t\t\t\t</div><!--  .section -->\n";
 			}
 		} 
 	}
-	echo "\t\t<input type='submit' value='Save' />\n";
-	echo "</form>\n";
+	echo "\t\t\t\t\t<div id='save' class='save'>\n";
+	echo "\t\t\t\t\t\t<input type='submit' value='Save' />\n";
+	echo "\t\t\t\t\t</div>\n";
+	echo "\t\t\t\t</form>\n";
 }
 
 function globalUpdateSettings($post) {
