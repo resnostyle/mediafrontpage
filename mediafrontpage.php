@@ -26,7 +26,7 @@ foreach (glob("widgets/*/w*.php") as $widgetfile) {
 
 }
 // Global settings
-$settings_init['global'] =	array(  'navlinks' =>	array(	'label'	=>	'Navigation Bar Links',
+$settings_init['Global'] =	array(  'navlinks' =>	array(	'label'	=>	'Navigation Bar Links',
 								'value' =>	array(	'navlink1' =>	array(	'label' 	=> 'XBMC',
 														'url'		=> 'http://localhost:8080'),
 											'navlink2' =>	array(	'label' 	=> 'SickBeard',
