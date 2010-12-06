@@ -78,16 +78,15 @@ function updateSettings($post) {
 	$i = 1;
 	if (!empty($post)) {
 		foreach ($post as $id => $value) {
-			if (!empty($value)) {
-				// Create setting arrays
-				$id = explode('-',$id);
-				$settingId = $id[0];
+			// Create setting arrays
+			$id = explode('-',$id);
+			$settingId = $id[0];
 
-				// Check if form item is part of a setting with multiple items
-				if (isset($id[2])) {
-					// Check if form item is new item (additem) or existing item	
-					if (isset($id[3])) {
-						if ($id[3] == 'additem') {
+			// Check if form item is part of a setting with multiple items
+			if (isset($id[2])) {
+				// Check if form item is new item (additem) or existing item	
+				if (isset($id[3])) {
+					if ($id[3] == 'additem') {
 						// Handle new items	
 						$settingsArrays[$settingId][$id[1]][$id[2]] = $value;	
 						// If new item then make sure all setting parts are included (even if empty)
@@ -97,13 +96,14 @@ function updateSettings($post) {
 							}
 						}		
 						$i++;
-						}		
-					} else  {
-						// Handle existing items
-						$settingsArrays[$settingId][$id[1]][$id[2]] = $value;					
-						$i++;	
-					}
-				} 
+					}		
+				} else  {
+					// Handle existing items
+					$settingsArrays[$settingId][$id[1]][$id[2]] = $value;					
+					$i++;				
+				}
+			} else { 
+				$settingsArrays[$settingId] = $value;
 			}
 		}
 		foreach ($settingsArrays as $settingId => $settingValue) { 
@@ -140,7 +140,11 @@ function displaySettingItems($setting) {
 			echo "\t\t\t\t\t\t\t<div class='setting-content'>\n";
 			echo "\t\t\t\t\t\t\t\t<p>";
 			foreach ($item as $label => $value) {
- 				echo " ".$label.": <input type='text' value='".$value."' name='".$setting['Id']."-".$i."-".$label."'  />";
+				if (empty($noadditem)) {
+	 				echo " ".$label.": <input type='text' value='".$value."' name='".$setting['Id']."-".$i."-".$label."'  />";
+				} else {
+					echo " ".$label.": <input type='text' value='".$value."' name='".$setting['Id']."-".$type."-".$label."'  />";
+				}
 			}
 			echo "</p>\n";
 			echo "\t\t\t\t\t\t\t</div><!-- .setting-content -->\n";
