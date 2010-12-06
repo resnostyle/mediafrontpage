@@ -186,69 +186,6 @@ function widgetControl($baseurl = "widgets/Control/wControl.php", $forcemenu = f
 	}
 }
 
-function wControlSettings($settingsDB) {
-	echo "<form action='settings.php?w=wControl' method='post'>\n";
-	foreach ($settingsDB as $setting) {
-		if ($setting['Widget'] == 'wControl' ) {
-			if ($setting['Id'] == 'shortcuts') {
-				if (!empty($setting['Value'])) {
-					echo "\t<strong>Shortcuts</strong><br />";
-					$shortcuts = unserialize($setting['Value']);
-					$i = 1;
-					foreach ($shortcuts as $shortcut){
-						echo "\t\t<strong>".$shortcut['label']."</strong><br/>";
-						echo "\t\tLabel: <input type='text' value='".$shortcut['label']."' name='shortcut-".$i."-label'  />";
-						echo "\t\tType: <input type='text' value='".$shortcut['type']."' name='shortcut-".$i."-type'  />";
-						echo "\t\tAction: <input type='text' value='".$shortcut['action']."' name='shortcut-".$i."-action'  />\n";
-						echo "\t\tDel: <input type='checkbox' name='shortcut-".$i."-remove' value='true' /><br /><br />\n";
-						$i++;
-					}
-				}
-				echo "\t<strong>Add Shortcut:</strong><br />";
-				echo "\t\tName: <input type='text' value='' name='addsc-".$i."-label'  /><br /><br />\n";
-			}
-		} 
-	}
-	echo "\t\t<input type='submit' value='Save' />\n";
-	echo "</form>\n";
-}
-
-function wControlUpdateSettings($post) {
-	$i = 1;
-	foreach ($post as $id => $value) {
-		// Create shortcuts array
-		if (strpos($id, 'shortcut') !== false) {				
-			if (strpos($id, 'label') !== false) {
-				$shortcuts["shortcut".$i]['label'] = $value;
-			} elseif (strpos($id, 'type') !== false) {
-				$shortcuts["shortcut".$i]['type'] = $value;
-			} elseif (strpos($id, 'action') !== false) {
-				$shortcuts["shortcut".$i]['action'] = $value;
-				if (!isset($post['shortcut-'.$i.'-remove'])){
-					$i++;		
-				}
-			} elseif (strpos($id, 'remove') !== false) {
-				if ($value == 'true') {
-					unset($shortcuts["shortcut".$i]);
-				}
-				$i++;		
-			}	
-		} elseif (strpos($id, 'addsc') !== false) {				
-			if (strpos($id, 'label') !== false) {
-				if (!empty($value)) {
-					$shortcuts["shortcut".$i]['label'] = $value;
-					$shortcuts["shortcut".$i]['type'] = "";
-					$shortcuts["shortcut".$i]['action'] = "";
-				} else {
-					$post['shortcut-'.$i.'-remove'] = 'true';
-				}
-				$i++;
-			}
-		}
-	}
-	updateSetting('shortcuts', $shortcuts);
-} 
-
 if(!empty($_GET["style"]) && ($_GET["style"] == "w")) {
 	require_once "../../functions.php";
 	widgetControl();

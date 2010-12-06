@@ -262,23 +262,6 @@ function displayComingSoon ($sickbeardurl) {
 	$body = str_replace("href=\"images/", "href=\"".$sickbeardurl."images/", $body);
 	echo $body;
 }
-function wComingEpisodesSettings($settingsDB) {
-	echo "<form action='settings.php?w=wComingEpisodes' method='post'>\n";
-	foreach ($settingsDB as $setting) {
-		if ($setting['Widget'] == 'wComingEpisodes' ) {
-			$setting['Value'] = unserialize($setting['Value']);
-			echo "\t\t".$setting['Label'].": <input type='text' value='".$setting['Value']."' name='".$setting['Id']."'  /><br />\n";
-		}
-	}
-	echo "\t\t<input type='submit' value='Update' />\n";
-	echo "</form>\n";
-}
-function wComingEpisodesUpdateSettings($post) {
-	$i = 1;
-	foreach ($post as $id => $value) {
-		updateSetting($id,$value); 
-	}
-} 
 if(!empty($_GET["style"]) && (($_GET["style"] == "s") || ($_GET["style"] == "w"))) {
 	include_once "../../functions.php";
 

@@ -140,60 +140,6 @@ function widgetMediaLibraryHeader($params = array('count' => 15)) {
 
 LIBRARYHEADER;
 }
-function wXBMCSettings($settingsDB) {
-	echo "<form action='settings.php?w=wXBMC' method='post'>\n";
-	foreach ($settingsDB as $setting) {
-		if ($setting['Widget'] == 'wXBMC' ) {
-			if ($setting['Id'] == 'xbmcdbconn') {
-				$databases = unserialize($setting['Value']);
-				$i = 1;
-				if (!empty($databases)) {
-					echo "\t<strong>XBMC Databases:</strong><br />";
-					foreach ($databases as $databasetype => $database){
-						echo "\t<strong>".$databasetype.":</strong><br />";
-						echo "\t\tDNS:<input type='text' value='".$database['dns']."' name='database-".$databasetype."-dns'  />";
-						echo "\t\tUsername: <input type='text' value='".$database['username']."' name='database-".$databasetype."-username'  />";
-						echo "\t\tPassword:<input type='text' value='".$database['password']."' name='database-".$databasetype."-password'  />";
-						echo "\t\tOptions: <input type='text' value='".print_r($database['options'],1)."' name='database-".$databasetype."-options'  /><br/><br/>";
-						$i++;
-					}
-				}
-			} else {
-				$setting['Value'] = unserialize($setting['Value']);
-				echo "\t\t".$setting['Label'].": <input type='text' value='".$setting['Value']."' name='".$setting['Id']."'  /><br /><br/>\n";
-			}
-		} 
-	}
-	echo "\t\t<input type='submit' value='Save' />\n";
-	echo "</form>\n";
-}
-function wXBMCUpdateSettings($post) {
-	$databases = "";
-	if (!empty($post)) {
-		foreach ($post as $id => $value) {
-			if (strpos($id, 'database') !== false) {
-				if (strpos($id, 'video') !== false) {
-					$dbtype = 'video';
-				} elseif (strpos($id, 'music') !== false) {
-					$dbtype = 'music';
-				}
-				// Create database array			
-				if (strpos($id, 'dns') !== false) {
-					$databases[$dbtype]['dns'] = $value;
-				} elseif (strpos($id, 'username') !== false) {
-					$databases[$dbtype]['username'] = $value;	
-				} elseif (strpos($id, 'password') !== false) {
-					$databases[$dbtype]['password'] = $value;	
-				} elseif (strpos($id, 'options') !== false) {
-					$databases[$dbtype]['options'] = $value;	
-				}		
-			} else {
-				updateSetting($id,$value); 
-			}
-		}
-		updateSetting('xbmcdbconn', $databases);
-	}
-} 
 
 if (!empty($_GET['style']) && (($_GET['style'] == "w") || ($_GET['style'] == "s"))) {
 	require_once "../../functions.php";

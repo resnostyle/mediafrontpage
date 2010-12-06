@@ -29,8 +29,7 @@ $widgets = getAllWidgets();
 // Display menu
 echo "\t\t\t\t<li class=\"menuitem global\"><a href=\"?w=Global\"><span>MediaFrontPage Settings</span></a></li>\n";
 foreach($widgets as $widget) {
-	$function = $widget['Id']."Settings";
-	if (function_exists($function)) {
+	if (isset($settings_init[$widget['Id']])) {
 		echo "\t\t\t\t<li class=\"menuitem ".$widget['Id']."\"><a href=\"?w=".$widget['Id']."\"><span>".$widget['Title']."</span></a></li>\n";
 	}
 }
@@ -77,6 +76,7 @@ if (!empty($_GET['w'])) {
 function updateSettings($post) {
 	$i = 1;
 	if (!empty($post)) {
+		//echo print_r($post,1);
 		foreach ($post as $id => $value) {
 			// Create setting arrays
 			$id = explode('-',$id);
@@ -87,15 +87,17 @@ function updateSettings($post) {
 				// Check if form item is new item (additem) or existing item	
 				if (isset($id[3])) {
 					if ($id[3] == 'additem') {
-						// Handle new items	
-						$settingsArrays[$settingId][$id[1]][$id[2]] = $value;	
-						// If new item then make sure all setting parts are included (even if empty)
-						foreach ( $settingsArrays[$settingId][$id[1]-1] as $type => $value) {
-							if (!isset($settingsArrays[$settingId][$id[1]][$type])) {
-								$settingsArrays[$settingId][$id[1]][$type] = "";
-							}
-						}		
-						$i++;
+						// Handle new items
+						if (!empty($value)) {	
+							$settingsArrays[$settingId][$id[1]][$id[2]] = $value;	
+							// If new item then make sure all setting parts are included (even if empty)
+							foreach ( $settingsArrays[$settingId][$id[1]-1] as $type => $value) {
+								if (!isset($settingsArrays[$settingId][$id[1]][$type])) {
+									$settingsArrays[$settingId][$id[1]][$type] = "";
+								}
+							}		
+							$i++;
+						}
 					}		
 				} else  {
 					// Handle existing items

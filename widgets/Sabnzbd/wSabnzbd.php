@@ -177,23 +177,6 @@ function sabStatus($count = 15) {
 	echo "\t\t</div><!-- #sab-queue -->\n";
 
 }
-function wSabnzbdSettings($settingsDB) {
-	echo "<form action='settings.php?w=wSabnzbd' method='post'>\n";
-	foreach ($settingsDB as $setting) {
-		if ($setting['Widget'] == 'wSabnzbd' ) {
-			$setting['Value'] = unserialize($setting['Value']);
-			echo "\t\t".$setting['Label'].": <input type='text' value='".$setting['Value']."' name='".$setting['Id']."'  /><br />\n";
-		}
-	}
-	echo "\t\t<input type='submit' value='Save' />\n";
-	echo "</form>\n";
-}
-function wSabnzbdUpdateSettings($post) {
-	$i = 1;
-	foreach ($post as $id => $value) {
-		updateSetting($id,$value); 
-	}
-} 
 
 if(!empty($_GET['cmd'])) {
 

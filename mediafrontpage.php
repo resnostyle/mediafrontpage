@@ -38,7 +38,7 @@ $settings_init['Global'] =	array(  'navlinks' =>	array(	'label'	=>	'Navigation B
 											'navlink5' =>	array(	'label' 	=> 'TV Headend',
 														'url'		=> 'http://localhost:8080'),
 											'navlink6' =>	array(	'label' 	=> 'Settings',
-														'url'		=> 'settings.php')
+														'url'		=> 'settings.php?w=Global')
 										)
 								),
 				'customstylesheets' =>	array(	'label'	=>	'Custom Stylesheets',
