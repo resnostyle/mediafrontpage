@@ -33,6 +33,11 @@ function sickbeardposter($imagesrc){
 
 function resizedimage($imageurl, $cache = "") {
 	// actual script begins here
+	// check to make sure the url is well formed - so that relative URLs don't break here, whilst they're needed elsewhere
+	if(strpos($imageurl, "://") === FALSE) {
+                $imageurl = "http://".$_SERVER["HTTP_HOST"].$imageurl;
+        }
+
 	$size = getimagesize($imageurl);
 	switch($size["mime"]){
 		case "image/jpeg":
