@@ -216,7 +216,7 @@ function comingSoonUrl($url = "") {
 	
 	if(empty($url)) {
 		if(!(strpos($sickbeardcomingepisodes, "http") === 0)){
-			$url = "http://".$_SERVER['PHP_AUTH_USER'].":".$_SERVER['PHP_AUTH_PW']."@".$_SERVER['SERVER_NAME'].((strpos($sickbeardcomingepisodes, "/") === 0)?"":"/").$sickbeardcomingepisodes;
+			$url = "http://".(isset($_SERVER['PHP_AUTH_USER'])?($_SERVER['PHP_AUTH_USER'].":".$_SERVER['PHP_AUTH_PW']."@"):"").$_SERVER['SERVER_NAME'].((strpos($sickbeardcomingepisodes, "/") === 0)?"":"/").$sickbeardcomingepisodes;
 		} else {
 			$url = $sickbeardcomingepisodes;
 		}
