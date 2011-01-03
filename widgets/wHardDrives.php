@@ -8,7 +8,7 @@ function widgetHardDrives() {
 	
 	$warningthreshold = 90;
 	
-	if(!empty($drive)) {
+	if(empty($drive)) {
 		echo "<table border=\"0\" id=\"harddrives\">\n";
 		echo "\t<col id=\"col-disk\" />\n";
 		echo "\t<col id=\"col-capacity\" />\n";
@@ -30,5 +30,9 @@ function widgetHardDrives() {
 		}
 		echo "</table>\n";
 	}
+        else{
+            echo 'You have not configured this feature in the config file yet.';
+
+        }
 }
 ?>
