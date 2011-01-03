@@ -1,6 +1,9 @@
 <?php
-require_once "config.php";
-require_once "functions.php";
+$filename = 'config.php';
+
+if (file_exists($filename)) {
+
+    require_once "functions.php";
 require_once "widgets.php";
 
 //turn off warnings
@@ -108,3 +111,12 @@ if (empty ($arrLayout)) {
     	<script type="text/javascript" src="js/widget.js"></script>
 		</body>
 </html>
+<?php
+}
+else {
+    //@todo registration script
+  echo "Please edit and rename the default-config.php to config.php, so we can get started!";
+
+}
+?>
+

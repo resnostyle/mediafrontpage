@@ -1,6 +1,8 @@
 <?php
- 
-  include "config.php";
+$filename = 'config.php';
+
+if (file_exists($filename)) {
+    require_once 'config.php';
   echo"<html>";
   echo"  <head>";
   echo"    <title>Navigation</title>";
@@ -21,3 +23,4 @@
   echo"    </div>";
   echo"  </body>";
   echo"</html>";
+}
